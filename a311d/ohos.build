@@ -1,0 +1,10 @@
+{
+    "subsystem": "amlogic_products",
+    "parts": {
+        "amlogic_products": {
+            "module_list": [
+                "//device/board/unionman/${device_name}:a311d_group"
+            ]
+        }
+    }
+}
