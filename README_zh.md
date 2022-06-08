@@ -28,4 +28,4 @@ Unionpi-Tiger参考:
 ## 相关仓
 
 * [vendor/unionman](https://gitee.com/openharmony/vendor_unionman)
-* [device\soc\amlogic](https://gitee.com/openharmony/device_soc_amlogic)
+* [device/soc/amlogic](https://gitee.com/openharmony/device_soc_amlogic)
