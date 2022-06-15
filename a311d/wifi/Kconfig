@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: GPL-2.0
+
+config DRIVERS_HDF_NETDEV_EXT
+    bool "Get Linux net device from HDF"
+        default n
+        help
+          Get Linux net device from HDF
+
+config RTL8822CS_WIFI_HDF
+    tristate "support rtl8822cs wifi(80211ac) HDF"
+    depends on DRIVERS_HDF_WIFI
+        select CFG80211
+        select MAC80211
+        select DRIVERS_HDF_NETDEV_EXT
+    help
+      This driver supports wifi for rtl8822cs HDF chipset.
+      This driver uses the kernel's wireless extensions subsystem.
+      If you choose to build a module, it'll be called rtl8822cs. Say M if unsure.
