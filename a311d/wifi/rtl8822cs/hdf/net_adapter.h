@@ -19,13 +19,9 @@
 #ifndef NET_ADAPTER_H
 #define NET_ADAPTER_H
 
-#ifdef __cplusplus
-#if __cplusplus
-extern "C" {
-#endif
-#endif
 #include <drv_types.h>
 #include "net_device.h"
+#include "osdep_intf.h"
 
 /* * Ask if a driver is ready to send */
 #define WAL_SIOCDEVPRIVATE (0x89F0) /* SIOCDEVPRIVATE */
@@ -68,10 +64,11 @@ uint32_t rtl_macaddr_check(const unsigned char *mac_addr);
 struct NetDevice* get_rtl_netdev(void);
 void* get_rtl_priv_data(void);
 
-#ifdef __cplusplus
-#if __cplusplus
-}
-#endif
-#endif
+int rtw_drv_entry(void);
+int rtw_ndev_init(struct net_device *dev);
+int rtw_xmit_entry(struct sk_buff *pkt, struct net_device *pnetdev);
+
+int netdev_open(struct net_device *pnetdev);
+int netdev_close(struct net_device *pnetdev);
 
 #endif

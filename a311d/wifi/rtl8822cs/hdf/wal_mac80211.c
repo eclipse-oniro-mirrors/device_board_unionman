@@ -27,11 +27,6 @@
 #include "osal_mem.h"
 #include "ioctl_cfg80211.h"
 
-#define OAM_SF_ANY (68)
-#define OSAL_ERR_CODE_PTR_NULL (100)
-#define oam_error_log(level, type, fmt, ...) printk(fmt, ##__VA_ARGS__)
-#define oam_info_log(level, type, fmt, ...) printk(fmt, ##__VA_ARGS__)
-
 #define RTK_FLAGS_AP (0x00000040)
 #define RTK_FLAGS_P2P_DEDICATED_INTERFACE (0x00000400)
 #define RTK_FLAGS_P2P_CONCURRENT (0x00000200)
@@ -96,23 +91,23 @@ struct wiphy* get_linux_wiphy_hdfdev(NetDevice *netDev)
 
 int32_t WalDisconnect(NetDevice *netDev, uint16_t reasonCode)
 {
-     struct net_device *ndev = NULL;
-     struct wiphy *wiphy = NULL;
+    struct net_device *ndev = NULL;
+    struct wiphy *wiphy = NULL;
 
-     if (netDev == NULL) {
-         HDF_LOGE("%s:NULL ptr!", __func__);
-         return HDF_FAILURE;
-     }
-     ndev = GetLinuxInfByNetDevice(netDev);
-     if (ndev == NULL) {
-         HDF_LOGE("%s:NULL ptr!", __func__);
-         return HDF_FAILURE;
-     }
-     wiphy = oal_wiphy_get();
-     if (!wiphy) {
-         HDF_LOGE("%s: wiphy is NULL", __func__);
-         return HDF_FAILURE;
-     }
+    if (netDev == NULL) {
+        HDF_LOGE("%s:NULL ptr!", __func__);
+        return HDF_FAILURE;
+    }
+    ndev = GetLinuxInfByNetDevice(netDev);
+    if (ndev == NULL) {
+        HDF_LOGE("%s:NULL ptr!", __func__);
+        return HDF_FAILURE;
+    }
+    wiphy = oal_wiphy_get();
+    if (!wiphy) {
+        HDF_LOGE("%s: wiphy is NULL", __func__);
+        return HDF_FAILURE;
+    }
 
     return cfg80211_rtw_disconnect(wiphy, ndev, reasonCode);
 }
@@ -148,7 +143,7 @@ static int32_t WifiScanSetSsid(const struct WlanScanRequest *params, struct cfg8
         }
 
         request->ssids[count].ssid_len = params->ssids[loop].ssidLen;
-        if (memcpy_s(request->ssids[count].ssid, 32, params->ssids[loop].ssid,
+        if (memcpy_s(request->ssids[count].ssid, 32, params->ssids[loop].ssid, \
             params->ssids[loop].ssidLen) != EOK) {
             continue;
         }
@@ -162,14 +157,19 @@ static int32_t WifiScanSetUserIe(const struct WlanScanRequest *params, struct cf
 {
     uint8_t *ie = NULL;
     if (params->extraIEsLen > WIFI_SCAN_EXTRA_IE_LEN_MAX) {
-        oam_error_log(0, OAM_SF_ANY, "%s:unexpected extra len!extraIesLen=%d", __func__, params->extraIEsLen);
+        HDF_LOGE("%s:unexpected extra len!extraIesLen=%d", __func__, params->extraIEsLen);
         return HDF_FAILURE;
     }
     if ((params->extraIEs != NULL) && (params->extraIEsLen != 0)) {
         ie = (uint8_t *)OsalMemCalloc(params->extraIEsLen);
         if (ie == NULL) {
-            oam_error_log(0, OAM_SF_ANY, "%s:oom", __func__);
-            goto fail;
+            HDF_LOGE("%s:oom", __func__);
+            if (request->ie != NULL) {
+                ie = (uint8_t *)request->ie;
+                OsalMemFree(ie);
+                request->ie = NULL;
+            }
+             return HDF_FAILURE;
         }
         (void)memcpy_s(ie, params->extraIEsLen, params->extraIEs, params->extraIEsLen);
         request->ie = ie;
@@ -177,14 +177,6 @@ static int32_t WifiScanSetUserIe(const struct WlanScanRequest *params, struct cf
     }
 
     return HDF_SUCCESS;
-
-fail:
-    if (request->ie != NULL) {
-        ie = (uint8_t *)request->ie;
-        OsalMemFree(ie);
-        request->ie = NULL;
-    }
-    return HDF_FAILURE;
 }
 
 static struct ieee80211_channel *GetChannelByFreq(const struct wiphy *wiphy, uint16_t center_freq)
@@ -1036,7 +1028,7 @@ static struct HdfMac80211P2POps g_p2pOps = {
 void HiMac80211Init(struct HdfChipDriver *chipDriver)
 {
     if (chipDriver == NULL) {
-        oam_error_log(0, OAM_SF_ANY, "%s:input is NULL!", __func__);
+        HDF_LOGE("%s:input is NULL!", __func__);
         return;
     }
     chipDriver->ops = &g_baseOps;

@@ -18,12 +18,11 @@
 
 #include <net/cfg80211.h>
 #include <linux/netdevice.h>
-#include "net_adapter.h"
 #include "net_device.h"
 #include "securec.h"
 #include "hdf_base.h"
 #include "hdf_wlan_utils.h"
-#include "osdep_intf.h"
+#include "net_adapter.h"
 
 #define OSAL_ERR_CODE_PTR_NULL 100
 
@@ -50,14 +49,6 @@ extern "C" {
 
 #define WIFI_SHIFT_BIT (8)
 #define WIFI_IFNAME_MAX_SIZE (16)
-
-#define adapter_array_size(_array)  (sizeof(_array) / sizeof((_array)[0]))
-
-extern int rtw_drv_entry(void);
-extern int rtw_ndev_init(struct net_device *dev);
-extern int rtw_xmit_entry(struct sk_buff *pkt, struct net_device *pnetdev);
-
-extern const struct net_device_ops rtw_netdev_ops;
 
 struct NetDevice *g_hdf_netdev = NULL;
 struct net_device *g_linux_netdev = NULL;
@@ -238,9 +229,6 @@ int32_t hdf_rtl8822cs_netdev_xmit(struct NetDevice *netDev, NetBuf *netBuff)
     return retVal;
 }
 
-extern int netdev_open(struct net_device *pnetdev);
-extern int netdev_close(struct net_device *pnetdev);
-
 int32_t hdf_rtl8822cs_netdev_stop(struct NetDevice *netDev)
 {
     int32_t retVal = 0;
@@ -377,7 +365,7 @@ int32_t InitNetdev(struct NetDevice *netDevice)
 
     hdf_rtl8822cs_netdev_init(netDevice);
 
-    for (i = 0; i < adapter_array_size(vap_netdev_name); i++) {
+    for (i = 0; i < (sizeof(vap_netdev_name) / sizeof(vap_netdev_name[0])); i++) {
         netdev = NetDeviceGetInstByName((const int8_t *)vap_netdev_name[i]);
         if (netdev == NULL) {
             HDF_LOGE("%s:get dev by name failed! %s", __func__, vap_netdev_name[i]);
@@ -438,13 +426,14 @@ static int32_t hdf_p2p_netdev_open(struct NetDevice *netDevice)
 
     HDF_LOGE("%s: ndo_open %s...", __func__, netDevice->name);
 
+    extern const struct net_device_ops rtw_netdev_ops;
     retVal = (int32_t)rtw_netdev_ops.ndo_open(netdev);
     if (retVal < 0) {
         HDF_LOGE("%s: hdf net device open failed! ret = %d", __func__, retVal);
     }
 
     netDevice->ieee80211Ptr = netdev->ieee80211_ptr;
-    if (NULL == netDevice->ieee80211Ptr) {
+    if (netDevice->ieee80211Ptr == NULL) {
         HDF_LOGE("%s: NULL == netDevice->ieee80211Ptr", __func__);
     }
 
@@ -751,12 +740,12 @@ unsigned char mac_addr_is_zero(const unsigned char *mac_addr)
         return true;
     }
 
-    return (0 == memcmp(zero_mac_addr, mac_addr, 6));
+    return (memcmp(zero_mac_addr, mac_addr, 6) == 0);
 }
 
 uint32_t rtl_macaddr_check(const unsigned char *mac_addr)
 {
-    if ((true == mac_addr_is_zero(mac_addr)) || ((mac_addr[0] & 0x1) == 0x1)) {
+    if ((mac_addr_is_zero(mac_addr) == 1) || ((mac_addr[0] & 0x1) == 0x1)) {
         return HDF_FAILURE;
     }
 
