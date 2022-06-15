@@ -50,6 +50,9 @@ typedef struct {
     uint16_t us_status;
 } wal_dev_addr_stru;
 
+void set_efuse_mac_exist(unsigned char exist);
+unsigned char get_efuse_mac_exist(void);
+
 struct net_device* GetLinuxInfByNetDevice(const struct NetDevice *netDevice);
 
 int32_t InitNetdev(struct NetDevice *netDevice);

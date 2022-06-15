@@ -52,10 +52,22 @@ extern "C" {
 
 struct NetDevice *g_hdf_netdev = NULL;
 struct net_device *g_linux_netdev = NULL;
+unsigned char g_efuseMacExist = 0;
+unsigned char g_macSet = 1;
 
 void set_krn_netdev(struct net_device *netdev)
 {
     g_linux_netdev = (struct net_device *)netdev;
+}
+
+void set_efuse_mac_exist(unsigned char exist)
+{
+    g_efuseMacExist = exist;
+}
+
+unsigned char get_efuse_mac_exist(void)
+{
+    return g_efuseMacExist;
 }
 
 ProcessingResult hdf_rtl8822cs_netdev_specialethertypeprocess(const struct NetDevice *netDev, NetBuf *buff)
@@ -65,6 +77,7 @@ ProcessingResult hdf_rtl8822cs_netdev_specialethertypeprocess(const struct NetDe
     int ret = HDF_SUCCESS;
     uint16_t protocol;
     uint16_t etherType;
+    const int shift = 8;
     const int pidx0 = 12, pidx1 = 13;
 
     if (netDev == NULL || buff == NULL) {
@@ -73,7 +86,7 @@ ProcessingResult hdf_rtl8822cs_netdev_specialethertypeprocess(const struct NetDe
 
     header = (struct EtherHeader *)NetBufGetAddress(buff, E_DATA_BUF);
     etherType = ntohs(header->etherType);
-    protocol = (buff->data[pidx0] << 8) | buff->data[pidx1];
+    protocol = (buff->data[pidx0] << shift) | buff->data[pidx1];
 
     if (protocol != ETHER_TYPE_PAE) {
         return PROCESSING_CONTINUE;
@@ -426,8 +439,7 @@ static int32_t hdf_p2p_netdev_open(struct NetDevice *netDevice)
 
     HDF_LOGE("%s: ndo_open %s...", __func__, netDevice->name);
 
-    extern const struct net_device_ops rtw_netdev_ops;
-    retVal = (int32_t)rtw_netdev_ops.ndo_open(netdev);
+    retVal = (int32_t)netdev_open(netdev);
     if (retVal < 0) {
         HDF_LOGE("%s: hdf net device open failed! ret = %d", __func__, retVal);
     }
@@ -729,9 +741,6 @@ uint32_t wal_get_dev_addr(unsigned char *pc_addr, unsigned char addr_len, unsign
     return HDF_SUCCESS;
 }
 
-unsigned char g_efuseMacExist = false;
-unsigned char g_wait_mac_set = 1;
-
 unsigned char mac_addr_is_zero(const unsigned char *mac_addr)
 {
     unsigned char zero_mac_addr[6] = {0};
@@ -758,8 +767,9 @@ uint32_t rtl_set_dev_addr_from_efuse(const char *pc_addr, unsigned char mac_len)
         HDF_LOGE("rtl_set_dev_addr:: pc_addr is NULL!");
         return HDF_FAILURE;
     }
+
     if (rtl_macaddr_check((unsigned char *)pc_addr) != HDF_SUCCESS) {
-        g_wait_mac_set = 2;
+        g_macSet = 2;
         HDF_LOGE("rtl_set_dev_addr:: mac from efuse is zero!");
         return HDF_FAILURE;
     }
@@ -769,8 +779,9 @@ uint32_t rtl_set_dev_addr_from_efuse(const char *pc_addr, unsigned char mac_len)
         return HDF_FAILURE;
     }
 
-    g_efuseMacExist = true;
-    g_wait_mac_set = 0;
+    set_efuse_mac_exist(1);
+    g_macSet = 0;
+
     return HDF_SUCCESS;
 }
 

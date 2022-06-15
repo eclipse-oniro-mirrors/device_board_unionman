@@ -72,8 +72,6 @@ static struct MacStorage g_macStorage = { 0 };
 #define MAX_ACTION_DATA_LEN (1024)
 #define MAC_CONTRY_CODE_LEN (3)
 
-extern unsigned char g_efuseMacExist;
-
 struct wiphy* get_linux_wiphy_ndev(struct net_device *ndev)
 {
     if (ndev == NULL || ndev->ieee80211_ptr == NULL) {
@@ -524,31 +522,31 @@ int32_t WalDelKey(struct NetDevice *netDev, uint8_t keyIndex, bool pairwise, con
 
 int32_t WalSetDefaultKey(struct NetDevice *netDev, uint8_t keyIndex, bool unicast, bool multicas)
 {
-     int32_t retVal = 0;
-     struct net_device *netdev = NULL;
-     struct wiphy *wiphy = NULL;
+    int32_t retVal = 0;
+    struct net_device *netdev = NULL;
+    struct wiphy *wiphy = NULL;
 
-     netdev = GetLinuxInfByNetDevice(netDev);
-     if (!netdev) {
-         HDF_LOGE("%s: net_device is NULL", __func__);
-         return HDF_FAILURE;
-     }
+    netdev = GetLinuxInfByNetDevice(netDev);
+    if (!netdev) {
+        HDF_LOGE("%s: net_device is NULL", __func__);
+        return HDF_FAILURE;
+    }
 
-     wiphy = oal_wiphy_get();
-     if (!wiphy) {
-         HDF_LOGE("%s: wiphy is NULL", __func__);
-         return HDF_FAILURE;
-     }
+    wiphy = oal_wiphy_get();
+    if (!wiphy) {
+        HDF_LOGE("%s: wiphy is NULL", __func__);
+        return HDF_FAILURE;
+    }
 
-     HDF_LOGE("%s: start..., keyIndex=%u,unicast=%d, multicas=%d", __func__, \
-        keyIndex, unicast, multicas);
+    HDF_LOGE("%s: start..., keyIndex=%u,unicast=%d, multicas=%d", __func__, \
+         keyIndex, unicast, multicas);
 
-     retVal = (int32_t)cfg80211_rtw_set_default_key(wiphy, netdev, keyIndex, unicast, multicas);
-     if (retVal < 0) {
-         HDF_LOGE("%s: set default key failed!", __func__);
-     }
+    retVal = (int32_t)cfg80211_rtw_set_default_key(wiphy, netdev, keyIndex, unicast, multicas);
+    if (retVal < 0) {
+        HDF_LOGE("%s: set default key failed!", __func__);
+    }
 
-     return retVal;
+    return retVal;
 }
 
 int32_t WalSetMacAddr(NetDevice *netDev, uint8_t *mac, uint8_t len)
@@ -616,11 +614,13 @@ int32_t WalGetDeviceMacAddr(NetDevice *netDev, int32_t type, uint8_t *mac, uint8
         HDF_LOGE("{WalGetDeviceMacAddr::input param error!}");
         return HDF_FAILURE;
     }
-    if (!g_efuseMacExist) {
+
+    if (!get_efuse_mac_exist()) {
         /* if there is no data in efuse */
         HDF_LOGE("wal_get_efuse_mac_addr:: no data in efuse!");
         return HDF_ERR_NOT_SUPPORT;
     }
+
     if (wal_get_dev_addr(mac, len, type) != HDF_SUCCESS) {
         HDF_LOGE("{set_mac_addr_by_type::GetDeviceMacAddr failed!}");
         return HDF_FAILURE;
@@ -690,23 +690,23 @@ int32_t WalGetValidFreqsWithBand(NetDevice *netDev, int32_t band, int32_t *freqs
 
 int32_t WalSetTxPower(NetDevice *netDev, int32_t power)
 {
-     int retVal = 0;
-     struct wiphy *wiphy = NULL;
-     struct wireless_dev *wdev = GET_NET_DEV_CFG80211_WIRELESS(netDev);
+    int retVal = 0;
+    struct wiphy *wiphy = NULL;
+    struct wireless_dev *wdev = GET_NET_DEV_CFG80211_WIRELESS(netDev);
 
-     wiphy = get_linux_wiphy_hdfdev(netDev);
-     if (!wiphy) {
-         HDF_LOGE("%s: wiphy is NULL", __func__);
-         return HDF_FAILURE;
-     }
+    wiphy = get_linux_wiphy_hdfdev(netDev);
+    if (!wiphy) {
+        HDF_LOGE("%s: wiphy is NULL", __func__);
+        return HDF_FAILURE;
+    }
 
-     HDF_LOGE("%s: start...", __func__);
-     retVal = (int32_t)cfg80211_rtw_set_txpower(wiphy, wdev, NL80211_TX_POWER_FIXED, power);
-     if (retVal < 0) {
-         HDF_LOGE("%s: set_tx_power failed!", __func__);
-     }
+    HDF_LOGE("%s: start...", __func__);
+    retVal = (int32_t)cfg80211_rtw_set_txpower(wiphy, wdev, NL80211_TX_POWER_FIXED, power);
+    if (retVal < 0) {
+        HDF_LOGE("%s: set_tx_power failed!", __func__);
+    }
 
-     return HDF_SUCCESS;
+    return HDF_SUCCESS;
 }
 
 int32_t WalGetAssociatedStasCount(NetDevice *netDev, uint32_t *num)

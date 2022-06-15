@@ -22,7 +22,6 @@
 #include "net_device.h"
 #include "net_adapter.h"
 #include "hdf_wlan_utils.h"
-#include <drv_types.h>
 
 #define HDF_LOG_TAG RTL8822CS
 
