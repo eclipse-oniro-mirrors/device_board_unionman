@@ -53,7 +53,6 @@ extern "C" {
 struct NetDevice *g_hdf_netdev = NULL;
 struct net_device *g_linux_netdev = NULL;
 unsigned char g_efuseMacExist = 0;
-unsigned char g_macSet = 1;
 
 void set_krn_netdev(struct net_device *netdev)
 {
@@ -743,13 +742,13 @@ uint32_t wal_get_dev_addr(unsigned char *pc_addr, unsigned char addr_len, unsign
 
 unsigned char mac_addr_is_zero(const unsigned char *mac_addr)
 {
-    unsigned char zero_mac_addr[6] = {0};
+    unsigned char zero_mac_addr[MAC_ADDR_SIZE] = {0};
 
     if (mac_addr == NULL) {
         return true;
     }
 
-    return (memcmp(zero_mac_addr, mac_addr, 6) == 0);
+    return (memcmp(zero_mac_addr, mac_addr, MAC_ADDR_SIZE) == 0);
 }
 
 uint32_t rtl_macaddr_check(const unsigned char *mac_addr)
@@ -769,7 +768,6 @@ uint32_t rtl_set_dev_addr_from_efuse(const char *pc_addr, unsigned char mac_len)
     }
 
     if (rtl_macaddr_check((unsigned char *)pc_addr) != HDF_SUCCESS) {
-        g_macSet = 2;
         HDF_LOGE("rtl_set_dev_addr:: mac from efuse is zero!");
         return HDF_FAILURE;
     }
@@ -780,7 +778,6 @@ uint32_t rtl_set_dev_addr_from_efuse(const char *pc_addr, unsigned char mac_len)
     }
 
     set_efuse_mac_exist(1);
-    g_macSet = 0;
 
     return HDF_SUCCESS;
 }

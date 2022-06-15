@@ -141,7 +141,7 @@ static int32_t WifiScanSetSsid(const struct WlanScanRequest *params, struct cfg8
         }
 
         request->ssids[count].ssid_len = params->ssids[loop].ssidLen;
-        if (memcpy_s(request->ssids[count].ssid, 32, params->ssids[loop].ssid, \
+        if (memcpy_s(request->ssids[count].ssid, sizeof(request->ssids[count].ssid), params->ssids[loop].ssid, \
             params->ssids[loop].ssidLen) != EOK) {
             continue;
         }
@@ -167,7 +167,7 @@ static int32_t WifiScanSetUserIe(const struct WlanScanRequest *params, struct cf
                 OsalMemFree(ie);
                 request->ie = NULL;
             }
-             return HDF_FAILURE;
+            return HDF_FAILURE;
         }
         (void)memcpy_s(ie, params->extraIEsLen, params->extraIEs, params->extraIEsLen);
         request->ie = ie;
@@ -177,7 +177,7 @@ static int32_t WifiScanSetUserIe(const struct WlanScanRequest *params, struct cf
     return HDF_SUCCESS;
 }
 
-static struct ieee80211_channel *GetChannelByFreq(const struct wiphy *wiphy, uint16_t center_freq)
+struct ieee80211_channel *GetChannelByFreq(const struct wiphy *wiphy, uint16_t center_freq)
 {
     enum Ieee80211Band band;
     struct ieee80211_supported_band *currentBand = NULL;
@@ -194,61 +194,6 @@ static struct ieee80211_channel *GetChannelByFreq(const struct wiphy *wiphy, uin
         }
     }
     return NULL;
-}
-
-static int32_t WifiScanSetChannel(const struct wiphy *wiphy, const struct WlanScanRequest *params, \
-    struct cfg80211_scan_request *request)
-{
-    int32_t loop;
-    int32_t count = 0;
-    enum Ieee80211Band band = IEEE80211_BAND_2GHZ;
-    struct ieee80211_channel *chan = NULL;
-
-    int32_t channelTotal = ieee80211_get_num_supported_channels((struct wiphy *)wiphy);
-
-    if ((params->freqs == NULL) || (params->freqsCount == 0)) {
-        for (band = IEEE80211_BAND_2GHZ; band <= IEEE80211_BAND_5GHZ; band++) {
-            if (wiphy->bands[band] == NULL) {
-                HDF_LOGE("%s: wiphy->bands[band] = NULL!\n", __func__);
-                continue;
-            }
-
-            for (loop = 0; loop < (int32_t)wiphy->bands[band]->n_channels; loop++) {
-                if(count >= channelTotal) {
-                    break;
-                } 
-
-                chan = &wiphy->bands[band]->channels[loop];
-                if ((chan->flags & WIFI_CHAN_DISABLED) != 0) {
-                    continue;
-                }
-
-                request->channels[count++] = chan;
-            }
-        }
-    } else {
-        for (loop = 0; loop < params->freqsCount; loop++) {
-            chan = GetChannelByFreq(wiphy, (uint16_t)(params->freqs[loop]));
-            if (chan == NULL) {
-                HDF_LOGE("%s: freq not found!freq=%d!\n", __func__, params->freqs[loop]);
-                continue;
-            }
-
-            if (count >= channelTotal) {
-                break;
-            }
-            
-            request->channels[count++] = chan;
-        }
-    }
-
-    if (count == 0) {
-        HDF_LOGE("%s: invalid freq info!\n", __func__);
-        return HDF_FAILURE;
-    }
-    request->n_channels = count;
-
-    return HDF_SUCCESS;
 }
 
 static int32_t WifiScanSetRequest(struct NetDevice *netdev, const struct WlanScanRequest *params, \
@@ -539,7 +484,7 @@ int32_t WalSetDefaultKey(struct NetDevice *netDev, uint8_t keyIndex, bool unicas
     }
 
     HDF_LOGE("%s: start..., keyIndex=%u,unicast=%d, multicas=%d", __func__, \
-         keyIndex, unicast, multicas);
+        keyIndex, unicast, multicas);
 
     retVal = (int32_t)cfg80211_rtw_set_default_key(wiphy, netdev, keyIndex, unicast, multicas);
     if (retVal < 0) {
@@ -558,7 +503,7 @@ int32_t WalSetMacAddr(NetDevice *netDev, uint8_t *mac, uint8_t len)
 
     ret = rtl_macaddr_check(mac);
     if (ret != HDF_SUCCESS) {
-        HDF_LOGE( "mac addr is unavailable!");
+        HDF_LOGE("mac addr is unavailable!");
         return ret;
     }
 
@@ -890,8 +835,8 @@ int32_t WalSendAction(struct NetDevice *netDev, WifiActionData *actionData)
 
 int32_t WalGetIftype(struct NetDevice *netDev, uint8_t *iftype)
 {
-     iftype = (uint8_t *)(&(GET_NET_DEV_CFG80211_WIRELESS(netDev)->iftype));
-     return HDF_SUCCESS;
+    iftype = (uint8_t *)(&(GET_NET_DEV_CFG80211_WIRELESS(netDev)->iftype));
+    return HDF_SUCCESS;
 }
 
 static int32_t WalRemainOnChannel(struct NetDevice *netDev, WifiOnChannel *onChannel)
