@@ -23,9 +23,9 @@ device/board/unionman
 ## 使用说明
 
 Unionpi-Tiger参考:
-- [a311d](https://gitee.com/openharmony/device_board_unionman/blob/master/a311d/README_zh.md)
+- [Unionpi-Tiger](https://gitee.com/openharmony-sig/device_board_unionman/blob/master/a311d/README_zh.md)
 
 ## 相关仓
 
-* [vendor/unionman](https://gitee.com/openharmony/vendor_unionman)
-* [device/soc/amlogic](https://gitee.com/openharmony/device_soc_amlogic)
+* [vendor/unionman](https://gitee.com/openharmony-sig/vendor_unionman)
+* [device/soc/amlogic](https://gitee.com/openharmony-sig/device_soc_amlogic)
