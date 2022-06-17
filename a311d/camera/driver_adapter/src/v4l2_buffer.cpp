@@ -21,12 +21,12 @@ namespace OHOS::Camera {
 using Ge2dCanvasInfo = struct _Ge2dCanvasInfo {
     uint32_t width;
     uint32_t height;
-    enum GE2DPixelFormat format;
+    uint32_t format;
     int dmaFd;
 };
-static enum GE2DPixelFormat pixelFormatV4l2ToGe2d(uint32_t v4l2PixelFmt)
+static uint32_t pixelFormatV4l2ToGe2d(uint32_t v4l2PixelFmt)
 {
-    enum GE2DPixelFormat ge2dPixelFmt;
+    uint32_t ge2dPixelFmt;
 
     switch (v4l2PixelFmt) {
         case V4L2_PIX_FMT_RGBA32:
@@ -75,10 +75,10 @@ static int doBlit(aml_ge2d_t *ge2d, Ge2dCanvasInfo & srcInfo, Ge2dCanvasInfo & d
     int ret;
     aml_ge2d_info_t *pge2dinfo = &ge2d->ge2dinfo;
     uint32_t srcCanvasW, srcCanvasH;
-    enum GE2DPixelFormat srcFmt;
+    uint32_t srcFmt;
     int srcDmaFd;
     uint32_t dstCanvasW, dstCanvasH;
-    enum GE2DPixelFormat dstFmt;
+    uint32_t dstFmt;
     int dstDmaFd;
 
     srcCanvasW = srcInfo.width;
@@ -405,8 +405,8 @@ RetCode HosV4L2Buffers::BlitForMMAP(int fd, uint32_t fromIndex, std::shared_ptr<
     int32_t srcDma = -1;
     uint32_t srcWidth = 0;
     uint32_t srcHeight = 0;
-    enum GE2DPixelFormat srcFmt;
-    enum GE2DPixelFormat dstFmt;
+    uint32_t srcFmt;
+    uint32_t dstFmt;
     uint64_t tickBegin = getTickMs();
     Ge2dCanvasInfo srcInfo;
     Ge2dCanvasInfo dstInfo;
