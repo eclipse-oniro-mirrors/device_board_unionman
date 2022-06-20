@@ -86,13 +86,13 @@ int32_t A311DCodecDeviceInit(struct AudioCard *audioCard, const struct CodecDevi
     return HDF_SUCCESS;
 }
 
-int32_t A311DCodecDeviceReadReg(unsigned long virtualAddress, uint32_t reg, uint32_t *value)
+int32_t A311DCodecDeviceReadReg(const struct CodecDevice *codec, uint32_t reg, uint32_t *value)
 {
     AUDIO_DRIVER_LOG_DEBUG("");
     return HDF_SUCCESS;
 }
 
-int32_t A311DCodecDeviceWriteReg(unsigned long virtualAddress, uint32_t reg, uint32_t value)
+int32_t A311DCodecDeviceWriteReg(const struct CodecDevice *codec, uint32_t reg, uint32_t value)
 {
     AUDIO_DRIVER_LOG_DEBUG("");
     return HDF_SUCCESS;
