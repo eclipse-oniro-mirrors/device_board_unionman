@@ -22,7 +22,7 @@ if (!defined(defines)) {
 }
 
 product_config_path = "//vendor/${product_company}/${product_name}"
-board_camera_path = "//device/board/${product_company}/${device_name}/camera"
+board_camera_path = "//device/board/${product_company}/${device_name}/hardware/camera"
 is_support_v4l2 = true
 if (is_support_v4l2) {
   is_support_mpi = false

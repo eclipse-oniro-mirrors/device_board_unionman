@@ -93,7 +93,7 @@ if (enable_ramdisk) {
   }
 }
 
-group("system") {
+group("init_configs") {
   deps = [
     ":init.A311D.cfg",
     ":init.A311D.usb.cfg",

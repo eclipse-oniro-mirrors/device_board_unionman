@@ -16,10 +16,10 @@ import("//build/ohos.gni")
 print("a311d_group in")
 group("a311d_group") {
   deps = [
-    "bluetooth:bluetooth",
+    "cfg:init_configs",
+    "common:common",
+    "hardware:hardware",
     "kernel:kernel",
-    "distributedhardware:distributedhardware",
-    "system:system",
     "updater:updater_files",
     "//device/soc/amlogic/hardware:hardware_group",
   ]

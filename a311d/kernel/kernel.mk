@@ -85,7 +85,7 @@ $(KERNEL_IMAGE_FILE):
 	@$(KERNEL_MAKE) -C $(KERNEL_SRC_TMP_PATH) ARCH=$(KERNEL_ARCH) TEXT_OFFSET=0x01080000 $(KERNEL_CROSS_COMPILE) $(DEFCONFIG_FILE)
 	@$(KERNEL_MAKE) -C $(KERNEL_SRC_TMP_PATH) ARCH=$(KERNEL_ARCH) TEXT_OFFSET=0x01080000 $(KERNEL_CROSS_COMPILE) modules_prepare
 	$(KERNEL_MAKE) -C $(KERNEL_SRC_TMP_PATH) ARCH=$(KERNEL_ARCH) TEXT_OFFSET=0x01080000 $(KERNEL_CROSS_COMPILE) -j128 modules Image Image.gz dtbs
-	@$(DEVICE_PATH)/tools/linux/dtbTool -o $(IMAGES_PATH)/dtb.img $(KERNEL_OBJ_TMP_PATH)/arch/arm64/boot/dts/amlogic/ > /dev/null
+	@$(DEVICE_PATH)/common/tools/linux/dtbTool -o $(IMAGES_PATH)/dtb.img $(KERNEL_OBJ_TMP_PATH)/arch/arm64/boot/dts/amlogic/ > /dev/null
 	@gzip $(IMAGES_PATH)/dtb.img
 	@mv $(IMAGES_PATH)/dtb.img.gz $(IMAGES_PATH)/dtb.img
 	@chmod 777 $(KERNEL_OBJ_TMP_PATH)/make-boot.sh
