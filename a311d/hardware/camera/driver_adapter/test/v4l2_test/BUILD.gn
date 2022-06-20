@@ -52,7 +52,7 @@ ohos_executable("v4l2_main") {
   ]
 
   external_deps = [
-    "device_driver_framework:libhdf_utils",
+    "hdf_core:libhdf_utils",
     "hiviewdfx_hilog_native:libhilog",
     "utils_base:utils",
   ]
