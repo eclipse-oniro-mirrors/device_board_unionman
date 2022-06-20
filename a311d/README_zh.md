@@ -44,7 +44,7 @@ A311D采用四个Cortex-A73，主频最高为2.2GHz的大核和两个Cortex-A53�
 
 · 支持多系统：OpenHarmony、Ubuntu 18.04、 Linux、Android
 
-## 四、开发板配件安装：
+## 四、开发板配件安装
 
 配件摄像头（MIPI-CSI）、屏幕模组（MIPI-DSI）及喇叭安装如下图：
 
