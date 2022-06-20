@@ -6,7 +6,6 @@
  * See the LICENSE file in the root of this repository for complete details.
  */
 
-
 #ifndef G12A_TOHDMITX_H
 #define G12A_TOHDMITX_H
 

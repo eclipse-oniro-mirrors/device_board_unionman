@@ -26,7 +26,7 @@ int32_t A311DDeviceInit(struct AudioCard *audioCard, const struct DaiDevice *dai
 {
     int ret;
     struct DaiData *data;
-    
+
     AUDIO_DRIVER_LOG_DEBUG("");
     if (dai == NULL || dai->device == NULL || dai->devDaiName == NULL) {
         AUDIO_DRIVER_LOG_ERR("input para is NULL.");
@@ -43,7 +43,7 @@ int32_t A311DDeviceInit(struct AudioCard *audioCard, const struct DaiDevice *dai
     }
 
     AUDIO_DRIVER_LOG_DEBUG("numControls:%d", data->numControls);
-    
+
     ret = AudioAddControls(audioCard, data->controls, data->numControls);
     if (ret != HDF_SUCCESS) {
         AUDIO_DRIVER_LOG_ERR("add controls failed.", data->numControls);
@@ -59,7 +59,7 @@ int32_t A311DDeviceInit(struct AudioCard *audioCard, const struct DaiDevice *dai
         AUDIO_DRIVER_LOG_ERR("axg_snd_card_init() failed.");
         return HDF_FAILURE;
     }
-    
+
     g_fifoDev[AUDIO_CAPTURE_STREAM] = meson_axg_default_fifo_get(1);
     g_fifoDev[AUDIO_RENDER_STREAM] = meson_axg_default_fifo_get(0);
 
@@ -77,7 +77,7 @@ int32_t A311DDeviceInit(struct AudioCard *audioCard, const struct DaiDevice *dai
     data->daiInitFlag = true;
 
     AUDIO_DRIVER_LOG_INFO("success");
-    
+
     return HDF_SUCCESS;
 }
 
@@ -103,9 +103,9 @@ int32_t A311DDeviceWriteReg(unsigned long virtualAddress, uint32_t reg, uint32_t
 int32_t A311DDaiTrigger(const struct AudioCard *card, int cmd, const struct DaiDevice *device)
 {
     int32_t ret = HDF_FAILURE;
-    
+
     AUDIO_DRIVER_LOG_DEBUG("cmd -> %d", cmd);
-    
+
     switch (cmd) {
         case AUDIO_DRV_PCM_IOCTL_RENDER_START:
         case AUDIO_DRV_PCM_IOCTL_RENDER_RESUME:
@@ -133,7 +133,7 @@ int32_t A311DDaiTrigger(const struct AudioCard *card, int cmd, const struct DaiD
     }
 
     AUDIO_DRIVER_LOG_DEBUG(" cmd -> %d, ret -> %d", cmd, ret);
-    
+
     return ret;
 }
 
@@ -143,7 +143,7 @@ int32_t A311DDaiStartup(const struct AudioCard *card, const struct DaiDevice *de
 
     (void)card;
     (void)device;
-    
+
     return HDF_SUCCESS;
 }
 
@@ -151,16 +151,16 @@ static int32_t FormatToBitWidth(enum AudioFormat format, uint32_t *bitWidth)
 {
     switch (format) {
         case AUDIO_FORMAT_PCM_32_BIT:
-            *bitWidth = 32;
+            *bitWidth = BIT_WIDTH32;
             break;
         case AUDIO_FORMAT_PCM_24_BIT:
-            *bitWidth = 24;
+            *bitWidth = BIT_WIDTH24;
             break;
         case AUDIO_FORMAT_PCM_16_BIT:
-            *bitWidth = 16;
+            *bitWidth = BIT_WIDTH16;
             break;
         case AUDIO_FORMAT_PCM_8_BIT:
-            *bitWidth = 8;
+            *bitWidth = BIT_WIDTH8;
             break;
         default:
             return -1;
@@ -176,7 +176,7 @@ int32_t A311DDaiHwParams(const struct AudioCard *card, const struct AudioPcmHwPa
     enum axg_tdm_iface_stream tdmStreamType;
     struct axg_pcm_hw_params hwParam = {0};
     struct axg_fifo *fifo;
-    
+
     if (card == NULL || card->rtd == NULL || card->rtd->cpuDai == NULL ||
             param == NULL || param->cardServiceName == NULL) {
         AUDIO_DRIVER_LOG_ERR("input para is nullptr.");
@@ -184,15 +184,15 @@ int32_t A311DDaiHwParams(const struct AudioCard *card, const struct AudioPcmHwPa
     }
 
     AUDIO_DRIVER_LOG_DEBUG("streamType: %d", param->streamType);
-    
+
     if (FormatToBitWidth(param->format, &bitWidth)) {
         AUDIO_DRIVER_LOG_ERR("FormatToBitWidth() failed.");
         return HDF_FAILURE;
     }
-    
+
     struct DaiData *data = DaiDataFromCard(card);
 
-    tdmStreamType = (param->streamType == AUDIO_RENDER_STREAM) ? 
+    tdmStreamType = (param->streamType == AUDIO_RENDER_STREAM) ?
                             AXG_TDM_IFACE_STREAM_PLAYBACK : AXG_TDM_IFACE_STREAM_CAPTURE;
     fifo = g_fifoDev[param->streamType];
 
@@ -208,8 +208,8 @@ int32_t A311DDaiHwParams(const struct AudioCard *card, const struct AudioPcmHwPa
         return HDF_FAILURE;
     }
 
-    if (meson_axg_fifo_dai_hw_params(fifo, hwParam.bit_width, 
-                hwParam.physical_width)) {
+    if (meson_axg_fifo_dai_hw_params(fifo, hwParam.bit_width,
+                                     hwParam.physical_width)) {
         AUDIO_DRIVER_LOG_ERR("meson_axg_fifo_dai_hw_params() failed.");
         return HDF_FAILURE;
     }
@@ -217,13 +217,13 @@ int32_t A311DDaiHwParams(const struct AudioCard *card, const struct AudioPcmHwPa
     if (meson_axg_tdm_iface_hw_params(g_ifaceDev, tdmStreamType, &hwParam)) {
         AUDIO_DRIVER_LOG_ERR("meson_axg_tdm_iface_hw_params() failed.");
         return HDF_FAILURE;
-    }
+    }
 
     data->pcmInfo.channels = param->channels;
     data->pcmInfo.bitWidth = bitWidth;
     data->pcmInfo.rate = param->rate;
     data->pcmInfo.streamType = param->streamType;
-    
+
     AUDIO_DRIVER_LOG_DEBUG("success");
     return HDF_SUCCESS;
 }

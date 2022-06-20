@@ -1,18 +1,17 @@
-// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-//
-// Copyright (c) 2018 BayLibre, SAS.
-// Author: Jerome Brunet <jbrunet@baylibre.com>
-
 /*
- * This driver implements the frontend playback DAI of AXG and G12A based SoCs
+ * Copyright (c) 2022 Unionman Co., Ltd.
+ *
+ * HDF is dual licensed: you can use it either under the terms of
+ * the GPL, or the BSD license, at your option.
+ * See the LICENSE file in the root of this repository for complete details.
  */
 
 #include <linux/clk.h>
 #include <linux/regmap.h>
 #include <linux/module.h>
 #include <linux/of_platform.h>
-#include <sound/soc.h>
-#include <sound/soc-dai.h>
+#include "sound/soc.h"
+#include "sound/soc-dai.h"
 
 #include "axg_fifo.h"
 
@@ -35,13 +34,13 @@ static const struct axg_fifo_match_data sm1_frddr_match_data = {
 };
 
 static const struct axg_fifo_match_data axg_toddr_match_data = {
-    .field_threshold	= REG_FIELD(FIFO_CTRL1, 16, 23),
+    .field_threshold    = REG_FIELD(FIFO_CTRL1, 16, 23),
     .is_g12a        = 0,
     .is_frddr       = 0
 };
 
 static const struct axg_fifo_match_data g12a_toddr_match_data = {
-    .field_threshold	= REG_FIELD(FIFO_CTRL1, 16, 23),
+    .field_threshold    = REG_FIELD(FIFO_CTRL1, 16, 23),
     .is_g12a        = 1,
     .is_frddr       = 0
 };

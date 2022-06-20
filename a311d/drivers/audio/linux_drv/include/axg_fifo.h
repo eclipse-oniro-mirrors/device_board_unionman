@@ -6,8 +6,8 @@
  * See the LICENSE file in the root of this repository for complete details.
  */
 
-#ifndef _MESON_AXG_FIFO_H
-#define _MESON_AXG_FIFO_H
+#ifndef MESON_AXG_FIFO_H
+#define MESON_AXG_FIFO_H
 
 #include <linux/regmap.h>
 
@@ -98,24 +98,24 @@ int meson_axg_fifo_probe(struct platform_device *pdev);
 struct axg_fifo *meson_axg_fifo_get(const char *name_prefix);
 
 int meson_axg_fifo_update_bits(struct axg_fifo *fifo,
-        unsigned int reg, unsigned int mask, unsigned int val);
+                               unsigned int reg, unsigned int mask, unsigned int val);
 
 int meson_axg_fifo_pcm_open(struct axg_fifo *fifo);
-		      
+
 int meson_axg_fifo_pcm_close(struct axg_fifo *fifo);
 
 int meson_axg_fifo_dai_hw_params(struct axg_fifo *fifo,
-                unsigned int bit_width, unsigned int phys_width);
-		       
-int meson_axg_fifo_pcm_hw_params(struct axg_fifo *fifo, 
-        unsigned int period, unsigned int cir_buf_size);
+                                 unsigned int bit_width, unsigned int phys_width);
+
+int meson_axg_fifo_pcm_hw_params(struct axg_fifo *fifo,
+                                 unsigned int period, unsigned int cir_buf_size);
 
 int meson_axg_fifo_pcm_hw_free(struct axg_fifo *fifo);
 
 int meson_axg_fifo_pcm_prepare(struct axg_fifo *fifo);
 
 uint32_t meson_axg_fifo_pcm_pointer(struct axg_fifo *fifo);
-				       
+
 int meson_axg_fifo_pcm_enable(struct axg_fifo *fifo, bool enable);
 
 #ifdef __cplusplus
@@ -124,4 +124,4 @@ int meson_axg_fifo_pcm_enable(struct axg_fifo *fifo, bool enable);
 #endif
 #endif /* __cplusplus */
 
-#endif /* _MESON_AXG_FIFO_H */
+#endif /* MESON_AXG_FIFO_H */

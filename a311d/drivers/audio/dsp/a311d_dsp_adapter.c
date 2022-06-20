@@ -6,10 +6,10 @@
  * See the LICENSE file in the root of this repository for complete details.
  */
 
-#include "audio_dsp_base.h"
 #include "audio_core.h"
-#include "audio_dsp_if.h"
 #include "audio_driver_log.h"
+#include "audio_dsp_base.h"
+#include "audio_dsp_if.h"
 #include "osal_io.h"
 
 #include "a311d_dsp_ops.h"
@@ -78,14 +78,13 @@ static int32_t DspDriverInit(struct HdfDeviceObject *device)
     }
 
     ret = AudioRegisterDsp(device, &g_dspData, &g_dspDaiData);
-    if (ret !=  HDF_SUCCESS) {
+    if (ret != HDF_SUCCESS) {
         return ret;
     }
 
     AUDIO_DRIVER_LOG_DEBUG("success");
     return HDF_SUCCESS;
 }
-
 
 static void DspDriverRelease(struct HdfDeviceObject *device)
 {

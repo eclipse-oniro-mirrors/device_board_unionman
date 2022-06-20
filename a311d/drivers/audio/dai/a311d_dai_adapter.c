@@ -96,12 +96,12 @@ static int32_t DaiDriverInit(struct HdfDeviceObject *device)
         return HDF_ERR_INVALID_OBJECT;
     }
 
-    if (DaiGetConfigInfo(device, &g_daiData) !=  HDF_SUCCESS) {
+    if (DaiGetConfigInfo(device, &g_daiData) != HDF_SUCCESS) {
         AUDIO_DRIVER_LOG_ERR("get dai data fail.");
         return HDF_FAILURE;
     }
 
-    if (DaiGetServiceName(device) !=  HDF_SUCCESS) {
+    if (DaiGetServiceName(device) != HDF_SUCCESS) {
         AUDIO_DRIVER_LOG_ERR("get service name fail.");
         return HDF_FAILURE;
     }
@@ -109,7 +109,7 @@ static int32_t DaiDriverInit(struct HdfDeviceObject *device)
     OsalMutexInit(&g_daiData.mutex);
 
     ret = AudioSocRegisterDai(device, &g_daiData);
-    if (ret !=  HDF_SUCCESS) {
+    if (ret != HDF_SUCCESS) {
         AUDIO_DRIVER_LOG_ERR("register dai fail.");
         return ret;
     }

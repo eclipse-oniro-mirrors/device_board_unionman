@@ -38,13 +38,13 @@ struct axg_tdm_formatter_hw {
 };
 
 struct axg_tdm_formatter_ops {
-    int (*sink_out_sel)(struct regmap *map, unsigned int index);    // index range: [0, 2]
-    int (*src_in_sel)(struct regmap *map, unsigned int index);      // index range: [0, 15]
+    int (*sink_out_sel)(struct regmap *map, unsigned int index); // index range: [0, 2]
+    int (*src_in_sel)(struct regmap *map, unsigned int index);   // index range: [0, 15]
     void (*enable)(struct regmap *map);
     void (*disable)(struct regmap *map);
     int (*prepare)(struct regmap *map,
-                const struct axg_tdm_formatter_hw *quirks,
-                struct axg_tdm_stream *ts);
+                   const struct axg_tdm_formatter_hw *quirks,
+                   struct axg_tdm_stream *ts);
 };
 
 struct axg_tdm_formatter_driver {
@@ -54,21 +54,21 @@ struct axg_tdm_formatter_driver {
 };
 
 int axg_tdm_formatter_set_channel_masks(struct regmap *map,
-                    struct axg_tdm_stream *ts,
-                    unsigned int offset);
+                                        struct axg_tdm_stream *ts,
+                                        unsigned int offset);
 
 int axg_tdm_formatter_power_up(struct axg_tdm_formatter *formatter,
-                    struct axg_tdm_stream *ts);
+                               struct axg_tdm_stream *ts);
 
 void axg_tdm_formatter_power_down(struct axg_tdm_formatter *formatter);
 
 // For DTMIN. index range: [0, 15]
 int axg_tdm_formatter_src_in_sel(struct axg_tdm_formatter *formatter,
-                        unsigned int index);   
+                                 unsigned int index);
 
 // For DTMOUT. index range: [0, 2]
 int axg_tdm_formatter_sink_out_sel(struct axg_tdm_formatter *formatter,
-                        unsigned int index);   
+                                   unsigned int index);
 
 struct axg_tdm_formatter *axg_tdm_formatter_get(const char *name_prefix);
 

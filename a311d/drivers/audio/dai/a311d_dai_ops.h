@@ -25,7 +25,6 @@ int32_t A311DDaiStartup(const struct AudioCard *card, const struct DaiDevice *de
 int32_t A311DDaiHwParams(const struct AudioCard *card, const struct AudioPcmHwParams *param);
 int32_t A311DDaiTrigger(const struct AudioCard *card, int cmd, const struct DaiDevice *device);
 
-
 #ifdef __cplusplus
 #if __cplusplus
 }

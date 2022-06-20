@@ -20,6 +20,8 @@
 
 #define HDF_LOG_TAG a311d_codec_ops
 
+#define VOLUME_DEFAULT          (T9015_VOLUME_MAX * 4 / 5)
+
 static int32_t A311DGetCtrlOps(const struct AudioKcontrol *kcontrol, struct AudioCtrlElemValue *elemValue)
 {
     struct AudioMixerControl *mixerCtrl = NULL;
@@ -30,32 +32,32 @@ static int32_t A311DGetCtrlOps(const struct AudioKcontrol *kcontrol, struct Audi
     }
 
     AUDIO_DRIVER_LOG_INFO("kcontrol->name=%s", kcontrol->name);
-    
+
     mixerCtrl = (struct AudioMixerControl *)((volatile uintptr_t)kcontrol->privateValue);
     if (mixerCtrl == NULL) {
         AUDIO_DRIVER_LOG_ERR("mixerCtrl is NULL.");
         return HDF_FAILURE;
     }
-    
-    // FIXME: DO SOMETHING HERE.
-    
+
+    // DO SOMETHING HERE.
+
     return HDF_SUCCESS;
 }
 
 static int32_t A311DSetCtrlOps(const struct AudioKcontrol *kcontrol, const struct AudioCtrlElemValue *elemValue)
 {
     struct AudioMixerControl *mixerCtrl = NULL;
-    
+
     if (kcontrol == NULL || (kcontrol->privateValue <= 0) || elemValue == NULL) {
         AUDIO_DRIVER_LOG_ERR("Audio input param is NULL.");
         return HDF_ERR_INVALID_OBJECT;
     }
 
     AUDIO_DRIVER_LOG_INFO("kcontrol->name=%s", kcontrol->name);
-    
+
     mixerCtrl = (struct AudioMixerControl *)((volatile uintptr_t)kcontrol->privateValue);
-    
-    // FIXME: DO SOMETHING HERE.
+
+    // DO SOMETHING HERE.
 
     return HDF_SUCCESS;
 }
@@ -63,7 +65,7 @@ static int32_t A311DSetCtrlOps(const struct AudioKcontrol *kcontrol, const struc
 int32_t A311DCodecDeviceInit(struct AudioCard *audioCard, const struct CodecDevice *device)
 {
     if (audioCard == NULL || device == NULL || device->devData == NULL ||
-        device->devData->sapmComponents == NULL || device->devData->controls == NULL) {
+            device->devData->sapmComponents == NULL || device->devData->controls == NULL) {
         AUDIO_DRIVER_LOG_ERR("input para is NULL.");
         return HDF_ERR_INVALID_OBJECT;
     }
@@ -78,8 +80,7 @@ int32_t A311DCodecDeviceInit(struct AudioCard *audioCard, const struct CodecDevi
         return HDF_FAILURE;
     }
 
-    //meson_t9015_mute_set(false);
-    meson_t9015_volume_set(255, 255);
+    meson_t9015_volume_set(VOLUME_DEFAULT, VOLUME_DEFAULT);
 
     AUDIO_DRIVER_LOG_DEBUG("success. numControls=%d", device->devData->numControls);
     return HDF_SUCCESS;
@@ -107,16 +108,16 @@ static int32_t FormatToBitWidth(enum AudioFormat format, uint32_t *bitWidth)
 {
     switch (format) {
         case AUDIO_FORMAT_PCM_32_BIT:
-            *bitWidth = 32;
+            *bitWidth = BIT_WIDTH32;
             break;
         case AUDIO_FORMAT_PCM_24_BIT:
-            *bitWidth = 24;
+            *bitWidth = BIT_WIDTH24;
             break;
         case AUDIO_FORMAT_PCM_16_BIT:
-            *bitWidth = 16;
+            *bitWidth = BIT_WIDTH16;
             break;
         case AUDIO_FORMAT_PCM_8_BIT:
-            *bitWidth = 8;
+            *bitWidth = BIT_WIDTH8;
             break;
         default:
             return -1;
@@ -137,7 +138,7 @@ int32_t A311DCodecDaiHwParams(const struct AudioCard *card, const struct AudioPc
     }
 
     AUDIO_DRIVER_LOG_DEBUG("streamType: %d", param->streamType);
-    
+
     if (FormatToBitWidth(param->format, &bitWidth)) {
         AUDIO_DRIVER_LOG_ERR("FormatToBitWidth() failed.");
         return HDF_FAILURE;
@@ -150,7 +151,7 @@ int32_t A311DCodecDaiHwParams(const struct AudioCard *card, const struct AudioPc
     }
 
     AUDIO_DRIVER_LOG_DEBUG("streamType: %d, ret: %d", param->streamType, ret);
-    
+
     return ret;
 }
 
@@ -194,6 +195,6 @@ int32_t A311DCodecDaiTrigger(const struct AudioCard *card, int cmd, const struct
     }
 
     AUDIO_DRIVER_LOG_DEBUG(" cmd -> %d, ret -> %d", cmd, ret);
-    
+
     return ret;
 }

@@ -6,7 +6,6 @@
  * See the LICENSE file in the root of this repository for complete details.
  */
 
-
 #ifndef MESON_T9015_H
 #define MESON_T9015_H
 
@@ -15,6 +14,8 @@
 extern "C" {
 #endif
 #endif /* __cplusplus */
+
+#define T9015_VOLUME_MAX        (255)
 
 int meson_t9015_dai_set_fmt(unsigned int fmt);
 

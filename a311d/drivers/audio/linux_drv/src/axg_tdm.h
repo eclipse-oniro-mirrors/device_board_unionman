@@ -11,28 +11,28 @@
 
 #include <linux/clk.h>
 #include <linux/regmap.h>
-#include <sound/pcm.h>
-#include <sound/soc.h>
-#include <sound/soc-dai.h>
+#include "sound/pcm.h"
+#include "sound/soc.h"
+#include "sound/soc-dai.h"
 
 #ifdef __cplusplus
 #if __cplusplus
-                 extern "C" {
+extern "C" {
 #endif
 #endif /* __cplusplus */
 
-#define AXG_TDM_NUM_LANES	4
-#define AXG_TDM_CHANNEL_MAX	128
-#define AXG_TDM_RATES		(SNDRV_PCM_RATE_5512 |		\
-				 SNDRV_PCM_RATE_8000_192000)
-#define AXG_TDM_FORMATS		(SNDRV_PCM_FMTBIT_S8 |		\
-				 SNDRV_PCM_FMTBIT_S16_LE |	\
-				 SNDRV_PCM_FMTBIT_S20_LE |	\
-				 SNDRV_PCM_FMTBIT_S24_LE |	\
-				 SNDRV_PCM_FMTBIT_S32_LE)
+#define AXG_TDM_NUM_LANES 4
+#define AXG_TDM_CHANNEL_MAX 128
+#define AXG_TDM_RATES (SNDRV_PCM_RATE_5512 | \
+                       SNDRV_PCM_RATE_8000_192000)
+#define AXG_TDM_FORMATS (SNDRV_PCM_FMTBIT_S8 |     \
+                         SNDRV_PCM_FMTBIT_S16_LE | \
+                         SNDRV_PCM_FMTBIT_S20_LE | \
+                         SNDRV_PCM_FMTBIT_S24_LE | \
+                         SNDRV_PCM_FMTBIT_S32_LE)
 
 struct axg_tdm_iface {
-    const char *name_prefix;    /* such as TDM_A, TDM_B */
+    const char *name_prefix; /* such as TDM_A, TDM_B */
     struct device *dev;
     struct clk *sclk;
     struct clk *lrclk;
@@ -51,23 +51,23 @@ struct axg_tdm_iface {
     int rate;
 
     void *playback_formatter;
-    void *playback_ts;  /* Playback TDM stream */
+    void *playback_ts; /* Playback TDM stream */
 
     void *capture_formatter;
-    void *capture_ts;   /* Capture TDM stream */
-    
+    void *capture_ts; /* Capture TDM stream */
+
     struct list_head list;
 };
 
 static inline bool axg_tdm_lrclk_invert(unsigned int fmt)
 {
-	return ((fmt & SND_SOC_DAIFMT_FORMAT_MASK) == SND_SOC_DAIFMT_I2S) ^
-		!!(fmt & (SND_SOC_DAIFMT_IB_IF | SND_SOC_DAIFMT_NB_IF));
+    return ((fmt & SND_SOC_DAIFMT_FORMAT_MASK) == SND_SOC_DAIFMT_I2S) ^
+           !!(fmt & (SND_SOC_DAIFMT_IB_IF | SND_SOC_DAIFMT_NB_IF));
 }
 
 static inline bool axg_tdm_sclk_invert(unsigned int fmt)
 {
-	return fmt & (SND_SOC_DAIFMT_IB_IF | SND_SOC_DAIFMT_IB_NF);
+    return fmt & (SND_SOC_DAIFMT_IB_IF | SND_SOC_DAIFMT_IB_NF);
 }
 
 #ifdef __cplusplus
