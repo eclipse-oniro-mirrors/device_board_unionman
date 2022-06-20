@@ -20,9 +20,9 @@ KERNEL_BUILD_ROOT=$2
 HDF_PATCH_FILE=$3
 
 ln_list=(
-    $OHOS_SOURCE_ROOT/drivers/adapter/khdf/linux    drivers/hdf/khdf
-    $OHOS_SOURCE_ROOT/drivers/framework             drivers/hdf/framework
-    $OHOS_SOURCE_ROOT/drivers/framework/include     include/hdf
+    $OHOS_SOURCE_ROOT/drivers/hdf_core/adapter/khdf/linux    drivers/hdf/khdf
+    $OHOS_SOURCE_ROOT/drivers/hdf_core/framework             drivers/hdf/framework
+    $OHOS_SOURCE_ROOT/drivers/hdf_core/framework/include     include/hdf
 )
 
 cp_list=(
