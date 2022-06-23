@@ -81,22 +81,15 @@ int32_t A311DDeviceInit(struct AudioCard *audioCard, const struct DaiDevice *dai
     return HDF_SUCCESS;
 }
 
-int32_t A311DDeviceReadReg(unsigned long virtualAddress, uint32_t reg, uint32_t *value)
+int32_t A311DDeviceReadReg(const struct DaiDevice *dai, uint32_t reg, uint32_t *value)
 {
-    (void)virtualAddress;
-
-    if (value == NULL) {
-        AUDIO_DRIVER_LOG_ERR("param value is null.");
-        return HDF_FAILURE;
-    }
-
+    AUDIO_DRIVER_LOG_DEBUG("");
     return HDF_SUCCESS;
 }
 
-int32_t A311DDeviceWriteReg(unsigned long virtualAddress, uint32_t reg, uint32_t value)
+int32_t A311DDeviceWriteReg(const struct DaiDevice *dai, uint32_t reg, uint32_t value)
 {
-    (void)virtualAddress;
-
+    AUDIO_DRIVER_LOG_DEBUG("");
     return HDF_SUCCESS;
 }
 

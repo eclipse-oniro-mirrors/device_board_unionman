@@ -9,7 +9,6 @@
 #include "spi_if.h"
 #include "audio_dsp_if.h"
 #include "audio_driver_log.h"
-#include "audio_accessory_base.h"
 
 #include "a311d_dsp_ops.h"
 

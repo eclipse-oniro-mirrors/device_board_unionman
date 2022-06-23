@@ -18,8 +18,8 @@ extern "C" {
 #endif /* __cplusplus */
 
 int32_t A311DCodecDeviceInit(struct AudioCard *audioCard, const struct CodecDevice *codec);
-int32_t A311DCodecDeviceReadReg(unsigned long virtualAddress, uint32_t reg, uint32_t *value);
-int32_t A311DCodecDeviceWriteReg(unsigned long virtualAddress, uint32_t reg, uint32_t value);
+int32_t A311DCodecDeviceReadReg(const struct CodecDevice *codec, uint32_t reg, uint32_t *value);
+int32_t A311DCodecDeviceWriteReg(const struct CodecDevice *codec, uint32_t reg, uint32_t value);
 
 int32_t A311DCodecDaiDeviceInit(struct AudioCard *card, const struct DaiDevice *device);
 int32_t A311DCodecDaiHwParams(const struct AudioCard *card, const struct AudioPcmHwParams *param);
