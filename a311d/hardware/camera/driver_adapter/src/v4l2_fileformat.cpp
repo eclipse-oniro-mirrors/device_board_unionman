@@ -210,9 +210,6 @@ RetCode HosFileFormat::V4L2SetFmt(int fd, DeviceFormat& format)
     } else if ((fmt.fmt.pix.width >= 1280) || (fmt.fmt.pix.height >= 720)) {
         fmt.fmt.pix.width = 1280;
         fmt.fmt.pix.height = 720;
-    } else if ((fmt.fmt.pix.width >= 640) || (fmt.fmt.pix.height >= 480)) {
-        fmt.fmt.pix.width = 640;
-        fmt.fmt.pix.height = 480;
     } else {
         fmt.fmt.pix.width = 1920;
         fmt.fmt.pix.height = 1080;
