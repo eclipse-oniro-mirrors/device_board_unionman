@@ -17,7 +17,7 @@ root_src_dir=$(pwd)
 
 pushd ${root_src_dir}
 cp ${root_src_dir}/device/board/unionman/a311d/loader/images/* ${root_src_dir}/out/a311d/packages/phone/images -rvf
-${root_src_dir}/device/board/unionman/a311d/tools/linux/aml_image_v2_packer -r ${root_src_dir}/out/a311d/packages/phone/images/openharmony.conf ${root_src_dir}/out/a311d/packages/phone/images/ ${root_src_dir}/out/a311d/packages/phone/images/OpenHarmony.img
+${root_src_dir}/device/board/unionman/a311d/common/tools/linux/aml_image_v2_packer -r ${root_src_dir}/out/a311d/packages/phone/images/openharmony.conf ${root_src_dir}/out/a311d/packages/phone/images/ ${root_src_dir}/out/a311d/packages/phone/images/OpenHarmony.img
 rm -rf ${root_src_dir}/out/a311d/packages/phone/images/openharmony.conf
 rm -rf ${root_src_dir}/out/a311d/packages/phone/images/platform.conf
 rm -rf ${root_src_dir}/out/a311d/packages/phone/images/aml_sdc_burn.ini
