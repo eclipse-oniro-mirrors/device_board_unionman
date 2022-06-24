@@ -1,0 +1,101 @@
+# Copyright (c) 2022 Unionman Technology Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+import("//build/ohos/ndk/ndk.gni")
+
+config("bt_warnings") {
+  cflags = [
+    "-Wall",
+    "-Werror",
+    "-Wno-switch",
+    "-Wno-unused-function",
+    "-Wno-incompatible-pointer-types",
+    "-Wno-address-of-packed-member",
+  ]
+}
+
+ohos_prebuilt_etc("rtl8822cs_config") {
+  source = "firmware/rtl8822cs_config"
+  install_images = [ vendor_base_dir ]
+  relative_install_dir = "firmware"
+  part_name = "amlogic_products"
+  install_enable = true
+}
+
+ohos_prebuilt_etc("rtl8822cs_fw") {
+  source = "firmware/rtl8822cs_fw"
+  install_images = [ vendor_base_dir ]
+  relative_install_dir = "firmware"
+  part_name = "amlogic_products"
+  install_enable = true
+}
+
+ohos_prebuilt_etc("rtkbt.conf") {
+  source = "firmware/rtkbt.conf"
+  install_images = [ vendor_base_dir ]
+  relative_install_dir = "bluetooth"
+  part_name = "amlogic_products"
+  install_enable = true
+}
+
+ohos_shared_library("libbt_vendor") {
+  output_name = "libbt_vendor"
+  sources = [
+    "src/bt_list.c",
+    "src/bt_skbuff.c",
+    "src/bt_vendor_rtk.c",
+    "src/hardware.c",
+    "src/hardware_uart.c",
+    "src/hardware_usb.c",
+    "src/hci_h5.c",
+    "src/rtk_btservice.c",
+    "src/rtk_btsnoop_net.c",
+    "src/rtk_heartbeat.c",
+    "src/rtk_parse.c",
+    "src/rtk_poll.c",
+    "src/rtk_socket.c",
+    "src/upio.c",
+    "src/userial_vendor.c",
+  ]
+
+  include_dirs = [
+    "include",
+    "//base/hiviewdfx/hilog/interfaces/native/innerkits/include",
+    "//foundation/communication/bluetooth/services/bluetooth/hardware/include",
+    "//drivers/peripheral/bluetooth/hdi/ohos/hardware/bt/v1_0/server/implement",
+  ]
+
+  cflags = []
+
+  configs = [ ":bt_warnings" ]
+
+  deps = [ "//utils/native/base:utils" ]
+
+  external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+
+  install_enable = true
+  install_images = [ "system" ]
+
+  part_name = "amlogic_products"
+  subsystem_name = "amlogic_products"
+}
+
+group("bluetooth") {
+  public_deps = [
+    ":rtl8822cs_config",
+    ":rtl8822cs_fw",
+    ":rtkbt.conf",
+    ":libbt_vendor",
+  ]
+}
