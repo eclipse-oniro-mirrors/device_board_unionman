@@ -23,6 +23,7 @@ ln_list=(
     $OHOS_SOURCE_ROOT/drivers/hdf_core/adapter/khdf/linux    drivers/hdf/khdf
     $OHOS_SOURCE_ROOT/drivers/hdf_core/framework             drivers/hdf/framework
     $OHOS_SOURCE_ROOT/drivers/hdf_core/framework/include     include/hdf
+    $OHOS_SOURCE_ROOT/vendor/unionman/a311d/drivers          vendor/drivers
 )
 
 cp_list=(

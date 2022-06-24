@@ -67,6 +67,7 @@ KERNEL_MAKE := \
 KERNEL_PATCH_FILE := $(DEVICE_PATH)/../../../../kernel/linux/patches/linux-5.10/a311d_pacth/linux-5.10.patch
 HDF_PATCH_FILE := $(DEVICE_PATH)/../../../../kernel/linux/patches/linux-5.10/a311d_pacth/hdf.patch
 KERNEL_CONFIG_FILE := $(DEVICE_PATH)/../../../../kernel/linux/config/linux-5.10/arch/arm64/configs/a311d_standard_defconfig
+KERNEL_LOGO_FILE := $(DEVICE_PATH)/kernel/logo.ppm
 
 ifeq ($(KERNEL_ARCH), arm)
 KERNEL_IMAGE_FILE := $(KERNEL_SRC_TMP_PATH)/arch/arm/boot/uImage
@@ -81,6 +82,7 @@ $(KERNEL_IMAGE_FILE):
 	@rm -rf $(KERNEL_SRC_TMP_PATH);mkdir -p $(KERNEL_SRC_TMP_PATH);cp -arfL $(KERNEL_SRC_PATH)/* $(KERNEL_SRC_TMP_PATH)/
 	@cd $(KERNEL_SRC_TMP_PATH) && patch -p1 < $(KERNEL_PATCH_FILE)
 	@$(DEVICE_PATH)/kernel/patch_hdf.sh $(OHOS_ROOT_PATH) $(KERNEL_SRC_TMP_PATH) $(HDF_PATCH_FILE)
+	@cp -rf $(KERNEL_LOGO_FILE) $(KERNEL_SRC_TMP_PATH)/drivers/video/logo/logo_linux_clut224.ppm
 	@cp -rf $(KERNEL_CONFIG_FILE) $(KERNEL_SRC_TMP_PATH)/arch/arm64/configs/defconfig
 	@$(KERNEL_MAKE) -C $(KERNEL_SRC_TMP_PATH) ARCH=$(KERNEL_ARCH) TEXT_OFFSET=0x01080000 $(KERNEL_CROSS_COMPILE) $(DEFCONFIG_FILE)
 	@$(KERNEL_MAKE) -C $(KERNEL_SRC_TMP_PATH) ARCH=$(KERNEL_ARCH) TEXT_OFFSET=0x01080000 $(KERNEL_CROSS_COMPILE) modules_prepare
