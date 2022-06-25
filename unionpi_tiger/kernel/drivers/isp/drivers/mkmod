@@ -1,4 +1,4 @@
-OHOS_HOME=${PWD}/../../../../../..
+OHOS_HOME=${PWD}/../../../../..
 
 KERNEL_DIR=$OHOS_HOME/out/kernel/src_tmp/linux-5.10/
 CROSS_COMPILE=$OHOS_HOME/prebuilts/gcc/linux-x86/aarch64/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
@@ -11,15 +11,15 @@ cd ./drivers/v4l2_dev
 make KDIR=$KERNEL_DIR ARCH=arm64 CROSS_COMPILE=$CROSS_COMPILE CC=$CLANG_CC all PLATFORM_VERSION=G12B
 cp iv009_isp.ko ../
 
-cd .././drivers/subdev/iq
+cd .././subdev/iq
 make KDIR=$KERNEL_DIR ARCH=arm64 CROSS_COMPILE=$CROSS_COMPILE CC=$CLANG_CC all PLATFORM_VERSION=G12B
 cp iv009_isp_iq.ko ../../
 
-cd ../.././drivers/subdev/lens
+cd ../.././subdev/lens
 make KDIR=$KERNEL_DIR ARCH=arm64 CROSS_COMPILE=$CROSS_COMPILE CC=$CLANG_CC all PLATFORM_VERSION=G12B
 cp iv009_isp_lens.ko ../../
 
-cd ../.././drivers/subdev/sensor
+cd ../.././subdev/sensor
 make KDIR=$KERNEL_DIR ARCH=arm64 CROSS_COMPILE=$CROSS_COMPILE CC=$CLANG_CC all PLATFORM_VERSION=G12B
 cp iv009_isp_sensor.ko ../../
 

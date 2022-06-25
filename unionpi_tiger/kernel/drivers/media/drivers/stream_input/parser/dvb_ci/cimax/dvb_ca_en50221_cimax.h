@@ -1,16 +1,24 @@
 /*
- * dvb_ca_cimax.h: generic DVB functions for EN50221 CA CIMAX interfaces
+ * dvb_ca.h: generic DVB functions for EN50221 CAM CIMAX interfaces
+ *
+ * Parts of this file were based on sources as follows:
+ *
+ * based on code:
+ *
+ * Copyright (C) 1999-2002 Ralph  Metzler
+ *                       & Marcus Metzler for convergence integrated media GmbH
  *
  * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
+
 
 #ifndef _DVB_CA_EN50221_CIMAX_H_
 #define _DVB_CA_EN50221_CIMAX_H_

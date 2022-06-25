@@ -16,7 +16,6 @@
 * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 *
 */
-
 #if !defined(__OV13858_SENSOR_H__)
 #define __OV13858_SENSOR_H__
 
