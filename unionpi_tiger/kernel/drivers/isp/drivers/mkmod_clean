@@ -1,0 +1,20 @@
+OHOS_HOME=${PWD}/./../../../../..
+
+KERNEL_DIR=$OHOS_HOME/out/kernel/src_tmp/linux-5.10/
+CROSS_COMPILE=$OHOS_HOME/prebuilts/gcc/linux-x86/aarch64/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
+CLANG_CC=$OHOS_HOME/prebuilts/clang/ohos/linux-x86_64/llvm/bin/clang
+
+rm -f *.ko
+
+cd ./drivers/v4l2_dev
+make KDIR=$KERNEL_DIR ARCH=arm64 CROSS_COMPILE=$CROSS_COMPILE CC=$CLANG_CC PLATFORM_VERSION=G12B clean
+
+cd .././drivers/subdev/iq
+make KDIR=$KERNEL_DIR ARCH=arm64 CROSS_COMPILE=$CROSS_COMPILE CC=$CLANG_CC PLATFORM_VERSION=G12B clean
+
+cd ../.././drivers/subdev/lens
+make KDIR=$KERNEL_DIR ARCH=arm64 CROSS_COMPILE=$CROSS_COMPILE CC=$CLANG_CC PLATFORM_VERSION=G12B clean
+
+cd ../.././drivers/subdev/sensor
+make KDIR=$KERNEL_DIR ARCH=arm64 CROSS_COMPILE=$CROSS_COMPILE CC=$CLANG_CC PLATFORM_VERSION=G12B clean
+
