@@ -77,15 +77,15 @@ Note:If the text contains special characters, please escape them according to th
 			<filefilter name="defaultPolicyFilter" desc="Filters for compatibility，license header policies">
 				<filteritem type="filename" name="README_zh.md" desc="指导说明文件，不能加其他注释"/>
 				<filteritem type="filename" name="LICENSE" desc="版权文件，不能加其他注释"/>
-				<filteritem type="filepath" name="a311d/bluetooth/firmware/*" desc="蓝牙固件及配置文件"/>
-				<filteritem type="filepath" name="a311d/distributedhardware/*" desc="distributedhardware json config file"/>
-				<filteritem type="filepath" name="a311d/kernel/*" desc="kernel build script and config file"/>
-				<filteritem type="filepath" name="a311d/prebuilts/images/*" desc="prebuilts binary and burn config file"/>
-				<filteritem type="filepath" name="a311d/system/*" desc="system cfg and script file"/>
-				<filteritem type="filepath" name="a311d/tools/linux/*" desc="linux binary tools"/>
-				<filteritem type="filepath" name="a311d/tools/windows/*" desc="windows exe tools"/>
-				<filteritem type="filepath" name="a311d/updater/.*" desc="updater config file"/>
-				<filteritem type="filepath" name="a311d/wifi/*" desc="wifi build config file"/>
+				<filteritem type="filepath" name="unionpi_tiger/hardware/bt/firmware/*" desc="蓝牙固件及配置文件"/>
+				<filteritem type="filepath" name="unionpi_tiger/distributedhardware/*" desc="distributedhardware json config file"/>
+				<filteritem type="filepath" name="unionpi_tiger/kernel/drivers/*" desc="kernel open source drivers file"/>
+				<filteritem type="filepath" name="unionpi_tiger/prebuilts/images/*" desc="prebuilts binary and burn config file"/>
+				<filteritem type="filepath" name="unionpi_tiger/cfg/*" desc="init cfg and script file"/>
+				<filteritem type="filepath" name="unionpi_tiger/common/tools/linux/*" desc="linux binary tools"/>
+				<filteritem type="filepath" name="unionpi_tiger/common/tools/windows/*" desc="windows exe tools"/>
+				<filteritem type="filepath" name="unionpi_tiger/updater/.*" desc="updater config file"/>
+				<filteritem type="filepath" name="unionpi_tiger/wifi/*" desc="wifi build config file"/>
 			</filefilter>
 			<filefilter name="copyrightPolicyFilter" desc="Filters for copyright header policies" >
 				<filteritem type="filename" name="figures/*" desc="Product figures"/>
