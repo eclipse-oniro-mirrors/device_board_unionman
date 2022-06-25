@@ -1,0 +1,6 @@
+# Copyright (C) 2021 Unionman Technologies Co., Ltd. All rights reserved.
+
+import("//build/ohos.gni")
+
+group("common") {
+}
