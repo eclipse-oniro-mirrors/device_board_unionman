@@ -1,0 +1,6 @@
+#!/bin/bash
+
+rm -rf modules.order
+find . -type f -name '*.o' -exec rm -f {} \; 
+find . -type f -name 'built-in.a' -exec rm -f {} \; 
+find . -type f -name '*.cmd' -exec rm -f {} \; 
