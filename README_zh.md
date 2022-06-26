@@ -1,6 +1,6 @@
 # device_board_unionman
 
-## 介绍
+## 简介
 
 #### Unionman简介
 
@@ -8,7 +8,7 @@
 
 #### 开发板简介
 
-- [Unionpi-Tiger](https://gitee.com/openharmony-sig/device_board_unionman/blob/master/a311d/README_zh.md)
+- [Unionpi-Tiger](https://gitee.com/openharmony-sig/device_board_unionman/blob/master/unionpi_tiger/README_zh.md)
 
 Unionpi Tiger(A311D)是一款应用于图像处理，音视频处理和深度学习等的智能硬件。其芯片拥有强大的CPU、GPU和神经网络加速子系统。支持4K视频编解码器引擎和一流的HDR图像处理，集成了所有标准音频/视频输入/输出接口，主系统CPU采用大小核设计，主频高达2.2GHz，集成了四个Cortex-A73核心和两Cortex-A53核心 ，集成独立的5.0T NPU处理器。
 
