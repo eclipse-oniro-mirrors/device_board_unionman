@@ -23,7 +23,7 @@ device/board/unionman
 ## 使用说明
 
 Unionpi-Tiger参考:
-- [Unionpi-Tiger](https://gitee.com/openharmony-sig/device_board_unionman/blob/master/a311d/README_zh.md)
+- [Unionpi-Tiger](https://gitee.com/openharmony-sig/device_board_unionman/blob/master/unionpi_tiger/README_zh.md)
 
 ## 相关仓
 
