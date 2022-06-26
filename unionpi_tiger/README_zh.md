@@ -1,13 +1,14 @@
 # 【九联Unionpi-Tiger开发套件】
 
-**一、简介**
+## 一、简介
+
 九联科技Unionpi Tiger(A311D)是一款应用于图像处理，音视频处理和深度学习等的智能硬件。其芯片拥有强大的CPU、GPU和神经网络加速子系统。支持4K视频编解码器引擎和一流的HDR图像处理，集成了所有标准音频/视频输入/输出接口。主系统CPU采用大小核设计，主频高达2.2GHz，集成了四个Cortex-A73核心和两Cortex-A53核心 ，集成独立的5.0T NPU处理器。
 
 ![Unionpi-Tiger产品图](../figures/Unionpi-Tiger.jpg)
 
-图1：九联Unionpi-Tiger开发板外观图
+图1 九联Unionpi-Tiger开发板外观图
 
-**二、开发板详情**
+## 二、开发板详情
 
 A311D采用四个Cortex-A73，主频最高为2.2GHz的大核和两个Cortex-A53，主频最高为1.8GHz的小核组成；采用22nm先进工艺，具有低功耗高性能的特点，可广泛应用于嵌入式人工智能领域。
 
@@ -31,33 +32,33 @@ A311D采用四个Cortex-A73，主频最高为2.2GHz的大核和两个Cortex-A53�
 
 ![Unionpi-Tiger接口示意图](../figures/Interface.png)
 
-**三、开发板功能**
+## 三、开发板功能
 
-· 核心板: 采用DDR3 SODIMM接口，尺寸为67.6mm x 52.3mm x 5mm，可满足小型终端产品空间需求
+- 核心板: 采用DDR3 SODIMM接口，尺寸为67.6mm x 52.3mm x 5mm，可满足小型终端产品空间需求
 
-· 千兆网口：可通过千兆以太网网口(RJ45)访问和传输内外网数据，提高网络传输效率
+- 千兆网口：可通过千兆以太网网口(RJ45)访问和传输内外网数据，提高网络传输效率
 
-· 内置神经网处理器 NPU:  AI 运算支持 8bit/16bit 运算，运算性能高达5.0TOPS,支持主流神经网络模型（Caffe/MXNet/TensorFlow/TF-lite/ONNX/Darknet等）
+- 内置神经网处理器 NPU:  AI 运算支持 8bit/16bit 运算，运算性能高达5.0TOPS,支持主流神经网络模型（Caffe/MXNet/TensorFlow/TF-lite/ONNX/Darknet等）
 
-·视频处理器VPU：支持4K VP9，H265，H264视频解码，高达60fps，支持多路1080P 多格式解码（H265，H264，MPEG-1/2/4，VP9，WMV）， 一路1080P@60fps H264,H265编码，  一路JPEG编码
+- 视频处理器VPU：支持4K VP9，H265，H264视频解码，高达60fps，支持多路1080P 多格式解码（H265，H264，MPEG-1/2/4，VP9，WMV）， 一路1080P@60fps H264,H265编码，  一路JPEG编码
 
-· 支持多系统：OpenHarmony、Ubuntu 18.04、 Linux、Android
+- 支持多系统：OpenHarmony、OpenEuler、Ubuntu 20.04、 Linux、Android
 
-**四、开发板配件安装**
+## 四、开发板配件安装
 
 配件摄像头（MIPI-CSI）、屏幕模组（MIPI-DSI）及喇叭安装如下图：
 
 ![Unionpi-Tiger配件安装](../figures/Connection.png)
 
-**五、开发板应用场景**
+## 五、开发板应用场景
 
 九联Unionpi Tiger(A311D)有着强大的芯片处理能力及大量丰富的硬件接口，使得它能应用于多种领域。适用于智能家居、AI人脸识别、工业控制、智慧车载、多媒体处理、AI边缘计算、物联网、舵机应用等各种领域。
 
 ![Unionpi-Tiger应用场景](../figures/ApplicationScenarios.png)
 
-**六、搭建开发环境**
+## 六、搭建开发环境
 
-**1、安装依赖工具**
+#### 1、安装依赖工具
 
 安装命令如下：
 
@@ -72,7 +73,7 @@ python3-pip ruby
 **说明：** 
 以上安装命令适用于Ubuntu18.04，其他版本请根据安装包名称采用对应的安装命令。
 
-**2、获取标准系统源码**
+#### 2、获取标准系统源码
 
 **前提条件**
 
@@ -125,9 +126,9 @@ bash build/prebuilts_download.sh
 
 下载的prebuilts二进制默认存放在与OpenHarmony同目录下的OpenHarmony_2.0_canary_prebuilts下。
 
-**七、编译与调试**
+## 七、编译与调试
 
-**1、编译及打包**
+#### 1、编译及打包
 
 在Linux环境进行如下操作:
 
@@ -140,9 +141,12 @@ bash build/prebuilts_download.sh
 2） 检查编译结果。编译完成后，log中显示如下：
 
 [OHOS INFO] unionpi_tiger build success
+
 [OHOS INFO] cost time: 0:14:30
+
 =====build  successful=====
-2022-06-25 21:38:14
+
+2022-06-25 14:30:14
 
 编译所生成的文件都归档在out/unionpi_tiger/目录下，结果镜像输出在
 out/unionpi_tiger/packages/phone/images/ 目录下。
@@ -157,7 +161,7 @@ out/unionpi_tiger/packages/phone/images/ 目录下。
 
 > Amlogic USB烧录工具不支持单镜像烧录，需要对镜像进行打包，如果单独烧写镜像可以在Uboot下采用U盘升级的方式
 
-**2、烧录步骤**
+#### 2、烧录步骤
 
 1） 开发板与PC连接USB OTG口
 
@@ -173,7 +177,7 @@ out/unionpi_tiger/packages/phone/images/ 目录下。
 
 ![烧录配置](../figures/BurnOption.png)
 
-导入烧录包（为上文linux环境下编译打包出来的固件镜像），点击“开始”，接着就可以等待镜像烧录。烧录完成之后，如果软件界面会相应提示成功或失败，失败同时会提示失败原因。本次烧录成功如图所示。（烧录时间根据镜像大小而定，烧录大概7-10分钟左右，耐心等待）
+导入烧录包（为上文linux环境下编译打包出来的固件镜像），点击“开始”，接着就可以等待镜像烧录。烧录完成之后，如果软件界面会相应提示成功或失败，失败同时会提示失败原因。本次烧录成功如图所示。（烧录时间根据镜像大小而定，烧录大概10-12分钟左右，耐心等待, 如果调整镜像大小或采用sparse-image，可以缩短烧录时间）
 
 ![Unionpi-Tiger烧录成功](../figures/BurnSuccess.png)
 
