@@ -59,43 +59,55 @@ Note:If the text contains special characters, please escape them according to th
 		<licensefile>build/LICENSE|third_party/LICENSE</licensefile>
         <policylist>
             <policy name="projectPolicy" desc="">
-				<policyitem type="copyright" name="Huawei Technologies Co., Ltd." path=".*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="华为技术有限公司版权声明"/>
-				<policyitem type="copyright" name="Huawei Device Co., Ltd." path=".*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="华为终端有限公司版权声明"/>
+				<policyitem type="copyright" name="Unionman Co., Ltd." path=".*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="Unionman copyright"/>
 				<policyitem type="copyright" name="Unionman Technology Co., Ltd." path=".*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="Unionman copyright"/>
-				<policyitem type="copyright" name="Realtek Corporation." path=".*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="Realtek copyright"/>
-				<policyitem type="license" name="EndUserLicenseAgreement" path="third_party/LICENSE" desc="二进制文件遵循的licence"/>
-				<policyitem type="license" name="EndUserLicenseAgreement" path="third_party/busybox/LICENSE" desc="二进制文件遵循的licence"/>
+				<policyitem type="copyright" name="Unionman Technologies Co., Ltd. All rights reserved." path=".*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="Unionman copyright"/>
+				<policyitem type="copyright" name="Realtek Corporation" path=".*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="Realtek copyright"/>
+				<policyitem type="copyright" name="Broadcom Corporation" path=".*"  desc="copyright Header Invalid"/>
+				<policyitem type="copyright" name="Google Inc." path="unionpi_tiger/hardware/bt/src/rtk_btsnoop_net.c"  desc="copyright Header Invalid"/>
+				<policyitem type="copyright" name="Google Inc." path="unionpi_tiger/hardware/bt/include/hci_h5_int.h"  desc="copyright Header Invalid"/>
+				<policyitem type="license" name="EndUserLicenseAgreement" path="unionpi_tiger/loader/images/LICENSE" desc="二进制文件遵循的licence"/>
+				<policyitem type="license" name="EndUserLicenseAgreement" path="unionpi_tiger/kernel/logo/LICENSE" desc="二进制文件遵循的licence"/>
+				<policyitem type="license" name="GPLStyleLicense" path="unionpi_tiger/kernel/.*" desc=""/>
+				<policyitem type="license" name="GPL-2.0-or-later" path="unionpi_tiger/kernel/.*" desc=""/>
+				<policyitem type="license" name="GPL-2.0+" path="unionpi_tiger/kernel/.*" desc=""/>
+				<policyitem type="license" name="GPLStyleLicense" path="unionpi_tiger/hardware/bt/include/.*" desc=""/>
             </policy>
         </policylist>
 		<filefilterlist>
 			<filefilter name="defaultFilter" desc="Files not to check">
-				<filteritem type="filename" name="BUILD.gn" desc="编译脚本本仓涉及多种许可"/>
-				<filteritem type="filename" name="Makefile" desc="配置文件，不能加其他注释"/>
-				<filteritem type="filename" name="updater_ramdisk_resource_config.ini" desc="配置文件，不能加其他注释"/>
+				<filteritem type="filepath" name="BUILD.gn" desc="编译脚本本仓涉及多种许可"/>
+				<filteritem type="filepath" name="Makefile" desc="配置文件，不能加其他注释"/>
+				<filteritem type="filepath" name="updater_ramdisk_resource_config.ini" desc="配置文件，不能加其他注释"/>
 				<filteritem type="filepath" name="updater/.*" desc="配置文件，不能加其他注释"/>
+				<filteritem type="filepath" name="unionpi_tiger/hardware/bt/firmware/.*" desc="蓝牙固件及配置文件"/>
+				<filteritem type="filepath" name="unionpi_tiger/distributedhardware/.*" desc="distributedhardware json config file"/>
+				<filteritem type="filepath" name="unionpi_tiger/kernel/drivers/.*" desc="kernel open source drivers file"/>
+				<filteritem type="filepath" name="unionpi_tiger/kernel/hdf/audio/linux_drv/.*" desc="kernel open source drivers file"/>
+				<filteritem type="filepath" name="unionpi_tiger/prebuilts/images/.*" desc="prebuilts binary and burn config file"/>
+				<filteritem type="filepath" name="unionpi_tiger/cfg/.*" desc="init cfg and script file"/>
+				<filteritem type="filepath" name="unionpi_tiger/common/tools/linux/.*" desc="linux binary tools"/>
+				<filteritem type="filepath" name="unionpi_tiger/common/tools/windows/.*" desc="windows exe tools"/>
+				<filteritem type="filepath" name="unionpi_tiger/updater/.*" desc="updater config file"/>
+				<filteritem type="filepath" name="unionpi_tiger/wifi/.*" desc="wifi build config file"/>
 			</filefilter>
 			<filefilter name="defaultPolicyFilter" desc="Filters for compatibility，license header policies">
-				<filteritem type="filename" name="README_zh.md" desc="指导说明文件，不能加其他注释"/>
-				<filteritem type="filename" name="LICENSE" desc="版权文件，不能加其他注释"/>
-				<filteritem type="filepath" name="unionpi_tiger/hardware/bt/firmware/*" desc="蓝牙固件及配置文件"/>
-				<filteritem type="filepath" name="unionpi_tiger/distributedhardware/*" desc="distributedhardware json config file"/>
-				<filteritem type="filepath" name="unionpi_tiger/kernel/drivers/*" desc="kernel open source drivers file"/>
-				<filteritem type="filepath" name="unionpi_tiger/prebuilts/images/*" desc="prebuilts binary and burn config file"/>
-				<filteritem type="filepath" name="unionpi_tiger/cfg/*" desc="init cfg and script file"/>
-				<filteritem type="filepath" name="unionpi_tiger/common/tools/linux/*" desc="linux binary tools"/>
-				<filteritem type="filepath" name="unionpi_tiger/common/tools/windows/*" desc="windows exe tools"/>
-				<filteritem type="filepath" name="unionpi_tiger/updater/.*" desc="updater config file"/>
-				<filteritem type="filepath" name="unionpi_tiger/wifi/*" desc="wifi build config file"/>
+				<filteritem type="filepath" name="unionpi_tiger/kernel/logo/logo.ppm" desc=""/>
+				<filteritem type="filepath" name="unionpi_tiger/hardware/BUILD.gn" desc=""/>
+				<filteritem type="filepath" name="unionpi_tiger/hardware/camera/driver_adapter/BUILD.gn" desc=""/>
+				<filteritem type="filepath" name="unionpi_tiger/common/BUILD.gn" desc=""/>
+				<filteritem type="filepath" name="unionpi_tiger/hardware/camera/driver_adapter/test/v4l2_test/BUILD.gn" desc=""/>
 			</filefilter>
 			<filefilter name="copyrightPolicyFilter" desc="Filters for copyright header policies" >
-				<filteritem type="filename" name="figures/*" desc="Product figures"/>
+				<filteritem type="filepath" name="unionpi_tiger/kernel/logo/logo.ppm" desc=""/>
+				<filteritem type="filepath" name="unionpi_tiger/hardware/camera/driver_adapter/BUILD.gn" desc=""/>
+				<filteritem type="filepath" name="unionpi_tiger/hardware/camera/driver_adapter/test/v4l2_test/BUILD.gn" desc=""/>
 			</filefilter>
-			<filefilter name="licenseFileNamePolicyFilter" desc="Filters for LICENSE file policies" >
-			</filefilter>
-			<filefilter name="readmeFileNamePolicyFilter" desc="Filters for README file policies" >
-			</filefilter>
-			<filefilter name="readmeOpenSourcefileNamePolicyFilter" desc="Filters for README.OpenSource file policies" >
-			</filefilter>
+			<filefilter name="binaryFileTypePolicyFilter" desc="Filters for binary file policies">
+                <filteritem type="filename" name="*.png|*.jpg" desc="desc files"/>
+				<filteritem type="filepath" name="unionpi_tiger/loader/images/u-boot.bin" desc="desc files"/>
+				<filteritem type="filepath" name="unionpi_tiger/bootanimation/bootanimation-800x480.raw" desc="desc files"/>
+            </filefilter>
 		</filefilterlist>
 
     </oatconfig>
