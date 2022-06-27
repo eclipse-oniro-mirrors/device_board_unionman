@@ -183,6 +183,6 @@ out/unionpi_tiger/packages/phone/images/ 目录下。
 
 烧写工具下载及使用
 
-> 1、工具下载参考：[USB烧录工具及USB转串口工具](https://gitee.com/algoideas/amlogic-tools/Windows)
+> 1、工具下载参考：[USB烧录工具及USB转串口工具](https://gitee.com/algoideas/amlogic-tools/tree/master/Windows)
 > 
 > 2、USB OTG口同时为HDC调试接口，需注意右侧3个USB2.0接口和USB OTG口不能同时启用。
