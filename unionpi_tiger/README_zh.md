@@ -1,6 +1,6 @@
 # 【九联Unionpi-Tiger开发套件】
 
-## 一、简介
+## 介绍
 
 九联科技Unionpi Tiger是一款应用于图像处理，音视频处理和深度学习等场景的智能硬件，其主芯片采用Amlogic A311D芯片方案。
 A311D支持GPU和神经网络加速子系统，支持4K视频编解码器引擎和一流的HDR图像处理，并集成了所有标准音频/视频输入/输出接口。主系统的CPU采用大小核设计，主频高达2.2GHz，集成了四个Cortex-A73核心和两Cortex-A53核心 ，集成独立的5.0T NPU处理器。
@@ -9,15 +9,15 @@ A311D支持GPU和神经网络加速子系统，支持4K视频编解码器引擎�
 
 图1 九联Unionpi-Tiger开发板外观图
 
-## 二、开发板详情
+## 开发板详情
 
 A311D采用四个Cortex-A73，主频最高为2.2GHz的大核和两个Cortex-A53，主频最高为1.8GHz的小核组成；采用22nm先进工艺，具有低功耗高性能的特点，可广泛应用于嵌入式人工智能领域。
 
 其规格参数如下：
 
 | 规格类型 | 具体参数                                                                                                            |
-|:---- |:---------------------------------------------------------------------------------------------------------------:|
-| 主芯片  | A311D                                                                                                           |
+| ---- | --------------------------------------------------------------------------------------------------------------- |
+| 主芯片  | Amlogic A311D                                                                                                   |
 | CPU  | 4 x Cortex-A73+2 x Cortex-A53                                                                                   |
 | GPU  | ARM Mali-G52 4核GPU                                                                                              |
 | NPU  | 内置神经网处理器 NPU，AI 运算性能强：支持 8bit/16bit 运算，运算性能高达 5.0TOPS                                                           |
@@ -33,7 +33,7 @@ A311D采用四个Cortex-A73，主频最高为2.2GHz的大核和两个Cortex-A53�
 
 ![Unionpi-Tiger接口示意图](../figures/Interface.png)
 
-## 三、开发板功能
+## 开发板功能
 
 - 核心板: 采用DDR3 SODIMM接口，尺寸为67.6mm x 52.3mm x 5mm，可满足小型终端产品空间需求
 
@@ -45,19 +45,19 @@ A311D采用四个Cortex-A73，主频最高为2.2GHz的大核和两个Cortex-A53�
 
 - 支持多系统：OpenHarmony、OpenEuler、Ubuntu 20.04、 Linux、Android
 
-## 四、开发板配件安装
+## 开发板配件安装
 
 配件摄像头（MIPI-CSI）、屏幕模组（MIPI-DSI）及喇叭安装如下图：
 
 ![Unionpi-Tiger配件安装](../figures/Connection.png)
 
-## 五、开发板应用场景
+## 开发板应用场景
 
 九联Unionpi Tiger(A311D)有着强大的芯片处理能力及大量丰富的硬件接口，使得它能应用于多种领域。适用于智能家居、AI人脸识别、工业控制、智慧车载、多媒体处理、AI边缘计算、物联网、舵机应用等各种领域。
 
 ![Unionpi-Tiger应用场景](../figures/ApplicationScenarios.png)
 
-## 六、搭建开发环境
+## 搭建开发环境
 
 #### 1、安装依赖工具
 
@@ -127,7 +127,7 @@ bash build/prebuilts_download.sh
 
 下载的prebuilts二进制默认存放在与OpenHarmony同目录下的OpenHarmony_2.0_canary_prebuilts下。
 
-## 七、编译与调试
+## 编译与调试
 
 #### 1、编译及打包
 
@@ -141,13 +141,12 @@ bash build/prebuilts_download.sh
 
 2） 检查编译结果。编译完成后，log中显示如下：
 
+```
 [OHOS INFO] unionpi_tiger build success
-
 [OHOS INFO] cost time: 0:14:30
-
-=====build  successful=====
-
+=====build successful=====
 2022-06-25 14:30:14
+```
 
 编译所生成的文件都归档在out/unionpi_tiger/目录下，结果镜像输出在
 out/unionpi_tiger/packages/phone/images/ 目录下。
@@ -188,7 +187,7 @@ out/unionpi_tiger/packages/phone/images/ 目录下。
 > 
 > 2、USB OTG口同时为HDC调试接口，需注意右侧3个USB2.0接口和USB OTG口不能同时启用。
 
-## 八、其他
+## 其他
 
 #### 1、切换USB Host模式
 
@@ -201,10 +200,10 @@ echo 0 > /sys/devices/platform/soc/ffe09000.usb/usb_mode
 echo host > /sys/class/usb_role/ffe09000.usb-role-switch/role
 ```
 
-#### 2、救砖模式
+#### 2、恢复模式
 
-开发板不能正常启动时，即Boot启动异常（可通过debug串口查看），且Update键进入烧录模式，USB烧录软件不能识别设备。
+开发板如果不能正常启动时，即Boot启动异常（可通过debug串口查看），且Update键进入烧录模式，USB烧录软件不能识别设备。
 
-如下图所示，用金属短接核心板触点1和2，可以进入救砖模式，USB烧录软件可以正常识别设备后，按照正常烧录步骤烧写即可。
+如下图所示，用金属短接核心板触点1和2，可以进入恢复模式，USB烧录软件可以正常识别设备后，按照正常烧录步骤烧写即可。
 
 ![Unionpi-Tiger救砖模式](../figures/Recovery.jpg)
