@@ -2,7 +2,8 @@
 
 ## 一、简介
 
-九联科技Unionpi Tiger(A311D)是一款应用于图像处理，音视频处理和深度学习等的智能硬件。其芯片拥有强大的CPU、GPU和神经网络加速子系统。支持4K视频编解码器引擎和一流的HDR图像处理，集成了所有标准音频/视频输入/输出接口。主系统CPU采用大小核设计，主频高达2.2GHz，集成了四个Cortex-A73核心和两Cortex-A53核心 ，集成独立的5.0T NPU处理器。
+九联科技Unionpi Tiger是一款应用于图像处理，音视频处理和深度学习等场景的智能硬件，其主芯片采用Amlogic A311D芯片方案。
+A311D支持GPU和神经网络加速子系统，支持4K视频编解码器引擎和一流的HDR图像处理，并集成了所有标准音频/视频输入/输出接口。主系统的CPU采用大小核设计，主频高达2.2GHz，集成了四个Cortex-A73核心和两Cortex-A53核心 ，集成独立的5.0T NPU处理器。
 
 ![Unionpi-Tiger产品图](../figures/Unionpi-Tiger.jpg)
 
@@ -186,3 +187,24 @@ out/unionpi_tiger/packages/phone/images/ 目录下。
 > 1、工具下载参考：[USB烧录工具及USB转串口工具](https://gitee.com/algoideas/amlogic-tools/tree/master/Windows)
 > 
 > 2、USB OTG口同时为HDC调试接口，需注意右侧3个USB2.0接口和USB OTG口不能同时启用。
+
+## 八、其他
+
+#### 1、切换USB Host模式
+
+USB OTG口默认HDC调试，其他3个USB2.0口不能使用，如果需要使用USB2.0,需要进行切换（或通过修改dts默认启用USB2.0），切换命令如下：
+
+```
+# 同时切换USB HUB (启用ttyACM0 ttyACM1)
+echo 1 > /sys/devices/platform/leds/leds/usb_switch/brightness
+echo 0 > /sys/devices/platform/soc/ffe09000.usb/usb_mode
+echo host > /sys/class/usb_role/ffe09000.usb-role-switch/role
+```
+
+#### 2、救砖模式
+
+开发板不能正常启动时，即Boot启动异常（可通过debug串口查看），且Update键进入烧录模式，USB烧录软件不能识别设备。
+
+如下图所示，用金属短接核心板触点1和2，可以进入救砖模式，USB烧录软件可以正常识别设备后，按照正常烧录步骤烧写即可。
+
+![Unionpi-Tiger救砖模式](../figures/Recovery.jpg)
