@@ -67,7 +67,7 @@ KERNEL_MAKE := \
 KERNEL_PATCH_FILE := $(DEVICE_PATH)/../../../../kernel/linux/patches/linux-5.10/unionpi_tiger_pacth/linux-5.10.patch
 HDF_PATCH_FILE := $(DEVICE_PATH)/../../../../kernel/linux/patches/linux-5.10/unionpi_tiger_pacth/hdf.patch
 KERNEL_CONFIG_FILE := $(DEVICE_PATH)/../../../../kernel/linux/config/linux-5.10/arch/arm64/configs/unionpi_tiger_standard_defconfig
-KERNEL_LOGO_FILE := $(DEVICE_PATH)/kernel/logo/logo.ppm
+KERNEL_LOGO_FILE := $(DEVICE_PATH)/resource/logo/logo.ppm
 
 ifeq ($(KERNEL_ARCH), arm)
 KERNEL_IMAGE_FILE := $(KERNEL_SRC_TMP_PATH)/arch/arm/boot/uImage
