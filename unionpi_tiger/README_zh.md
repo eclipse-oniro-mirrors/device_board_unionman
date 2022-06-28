@@ -55,8 +55,6 @@ A311D采用四个Cortex-A73，主频最高为2.2GHz的大核和两个Cortex-A53�
 
 九联Unionpi Tiger(A311D)有着强大的芯片处理能力及大量丰富的硬件接口，使得它能应用于多种领域。适用于智能家居、AI人脸识别、工业控制、智慧车载、多媒体处理、AI边缘计算、物联网、舵机应用等各种领域。
 
-![Unionpi-Tiger应用场景](../figures/ApplicationScenarios.png)
-
 ## 搭建开发环境
 
 #### 1、安装依赖工具
