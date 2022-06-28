@@ -402,7 +402,7 @@ void AMLCodecNode::EncodeForVideo(std::shared_ptr<IBuffer>& buffer)
     free(output_buffer);
 }
 
-void AMLCodecNode::DeliverBuffer(std::shared_ptr<IBuffer>& buffer)
+void AMLCodecNode::DeliverBuffer(std::shared_ptr<IBuffer> &buffer)
 {
     if (buffer == nullptr) {
         CAMERA_LOGE("AMLCodecNode::DeliverBuffer frameSpec is null");
@@ -410,22 +410,24 @@ void AMLCodecNode::DeliverBuffer(std::shared_ptr<IBuffer>& buffer)
     }
 
     int32_t id = buffer->GetStreamId();
-    CAMERA_LOGD("AMLCodecNode::DeliverBuffer StreamId %{public}d, type: %{public}d", \
-        id, buffer->GetEncodeType());
-    if (buffer->GetEncodeType() == ENCODE_TYPE_JPEG) {
-        EncodeForJpeg(buffer);
-    } else if (buffer->GetEncodeType() == ENCODE_TYPE_H264
-            || buffer->GetEncodeType() == ENCODE_TYPE_H265) {
-        EncodeForVideo(buffer);
-    } else {
-        previewWidth_ = buffer->GetWidth();
-        previewHeight_ = buffer->GetHeight();
-        
-        EncodeForPreview(buffer);
+    CAMERA_LOGD("AMLCodecNode::DeliverBuffer ENTER StreamId %{public}d, type: %{public}d",
+                id, buffer->GetEncodeType());
+    if (buffer->GetBufferStatus() == CAMERA_BUFFER_STATUS_OK) {
+        if (buffer->GetEncodeType() == ENCODE_TYPE_JPEG) {
+            EncodeForJpeg(buffer);
+        } else if (buffer->GetEncodeType() == ENCODE_TYPE_H264 ||
+                   buffer->GetEncodeType() == ENCODE_TYPE_H265) {
+            EncodeForVideo(buffer);
+        } else {
+            previewWidth_ = buffer->GetWidth();
+            previewHeight_ = buffer->GetHeight();
+
+            EncodeForPreview(buffer);
+        }
     }
 
     outPutPorts_ = GetOutPorts();
-    for (auto& it : outPutPorts_) {
+    for (auto &it : outPutPorts_) {
         if (it->format_.streamId_ == id) {
             it->DeliverBuffer(buffer);
             CAMERA_LOGI("AMLCodecNode deliver buffer streamid = %{public}d", it->format_.streamId_);
