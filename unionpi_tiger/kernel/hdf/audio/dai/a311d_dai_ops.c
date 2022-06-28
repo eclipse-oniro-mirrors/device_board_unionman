@@ -140,20 +140,24 @@ int32_t A311DDaiStartup(const struct AudioCard *card, const struct DaiDevice *de
     return HDF_SUCCESS;
 }
 
-static int32_t FormatToBitWidth(enum AudioFormat format, uint32_t *bitWidth)
+static int32_t FormatToBitWidth(enum AudioFormat format, uint32_t *bitWidth, uint32_t *phyBitWidth)
 {
     switch (format) {
         case AUDIO_FORMAT_PCM_32_BIT:
             *bitWidth = BIT_WIDTH32;
+            *phyBitWidth = BIT_WIDTH32;
             break;
         case AUDIO_FORMAT_PCM_24_BIT:
             *bitWidth = BIT_WIDTH24;
+            *phyBitWidth = BIT_WIDTH32;
             break;
         case AUDIO_FORMAT_PCM_16_BIT:
             *bitWidth = BIT_WIDTH16;
+            *phyBitWidth = BIT_WIDTH16;
             break;
         case AUDIO_FORMAT_PCM_8_BIT:
             *bitWidth = BIT_WIDTH8;
+            *phyBitWidth = BIT_WIDTH8;
             break;
         default:
             return -1;
@@ -165,20 +169,20 @@ static int32_t FormatToBitWidth(enum AudioFormat format, uint32_t *bitWidth)
 int32_t A311DDaiHwParams(const struct AudioCard *card, const struct AudioPcmHwParams *param)
 {
     int32_t ret;
-    uint32_t bitWidth;
+    uint32_t bitWidth, phyBitWidth;
     enum axg_tdm_iface_stream tdmStreamType;
     struct axg_pcm_hw_params hwParam = {0};
     struct axg_fifo *fifo;
 
     if (card == NULL || card->rtd == NULL || card->rtd->cpuDai == NULL ||
-            param == NULL || param->cardServiceName == NULL) {
+        param == NULL || param->cardServiceName == NULL) {
         AUDIO_DRIVER_LOG_ERR("input para is nullptr.");
         return HDF_FAILURE;
     }
 
     AUDIO_DRIVER_LOG_DEBUG("streamType: %d", param->streamType);
 
-    if (FormatToBitWidth(param->format, &bitWidth)) {
+    if (FormatToBitWidth(param->format, &bitWidth, &phyBitWidth)) {
         AUDIO_DRIVER_LOG_ERR("FormatToBitWidth() failed.");
         return HDF_FAILURE;
     }
@@ -191,7 +195,7 @@ int32_t A311DDaiHwParams(const struct AudioCard *card, const struct AudioPcmHwPa
 
     hwParam.bit_width = bitWidth;
     hwParam.channels = param->channels;
-    hwParam.physical_width = bitWidth;
+    hwParam.physical_width = phyBitWidth;
     hwParam.rate = param->rate;
 
     ret = meson_axg_fifo_pcm_close(fifo);

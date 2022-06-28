@@ -31,15 +31,12 @@ static int32_t A311DGetCtrlOps(const struct AudioKcontrol *kcontrol, struct Audi
         return HDF_ERR_INVALID_OBJECT;
     }
 
-    AUDIO_DRIVER_LOG_INFO("kcontrol->name=%s", kcontrol->name);
-
     mixerCtrl = (struct AudioMixerControl *)((volatile uintptr_t)kcontrol->privateValue);
-    if (mixerCtrl == NULL) {
-        AUDIO_DRIVER_LOG_ERR("mixerCtrl is NULL.");
-        return HDF_FAILURE;
-    }
 
-    // DO SOMETHING HERE.
+    elemValue->value[0] = mixerCtrl->value & 0xffff;
+    elemValue->value[1] = mixerCtrl->value >> 16U;
+
+    AUDIO_DRIVER_LOG_INFO("GET kcontrol: \"%s\"=[%u,%u]", kcontrol->name, elemValue->value[0], elemValue->value[1]);
 
     return HDF_SUCCESS;
 }
@@ -47,17 +44,39 @@ static int32_t A311DGetCtrlOps(const struct AudioKcontrol *kcontrol, struct Audi
 static int32_t A311DSetCtrlOps(const struct AudioKcontrol *kcontrol, const struct AudioCtrlElemValue *elemValue)
 {
     struct AudioMixerControl *mixerCtrl = NULL;
+    uint32_t lvalue, rvalue;
 
     if (kcontrol == NULL || (kcontrol->privateValue <= 0) || elemValue == NULL) {
         AUDIO_DRIVER_LOG_ERR("Audio input param is NULL.");
         return HDF_ERR_INVALID_OBJECT;
     }
 
-    AUDIO_DRIVER_LOG_INFO("kcontrol->name=%s", kcontrol->name);
+    AUDIO_DRIVER_LOG_INFO("SET kcontrol: \"%s\"=[%u,%u]", kcontrol->name, elemValue->value[0], elemValue->value[1]);
 
     mixerCtrl = (struct AudioMixerControl *)((volatile uintptr_t)kcontrol->privateValue);
 
-    // DO SOMETHING HERE.
+    lvalue = elemValue->value[0];
+    rvalue = elemValue->value[1];
+
+    if (lvalue < mixerCtrl->min || lvalue > mixerCtrl->max ||
+        rvalue < mixerCtrl->min || rvalue > mixerCtrl->max) {
+        AUDIO_DRIVER_LOG_ERR("ERROR: Value is out of range [%u,%u]", mixerCtrl->min, mixerCtrl->max);
+        return HDF_ERR_INVALID_PARAM;
+    }
+
+    mixerCtrl->value = (rvalue << 16U) | lvalue;
+
+    if (!strcmp(kcontrol->name, "Main Playback Volume")) {
+        meson_t9015_volume_set(lvalue, rvalue);
+    } else if (!strcmp(kcontrol->name, "Main Capture Volume")) {
+    } else if (!strcmp(kcontrol->name, "Playback Mute")) {
+        meson_t9015_mute_set(lvalue);
+    } else if (!strcmp(kcontrol->name, "Capture Mute")) {
+    } else if (!strcmp(kcontrol->name, "Mic Left Gain")) {
+    } else if (!strcmp(kcontrol->name, "Mic Right Gain")) {
+    } else if (!strcmp(kcontrol->name, "Render Channel Mode")) {
+    } else if (!strcmp(kcontrol->name, "Captrue Channel Mode")) {
+    }
 
     return HDF_SUCCESS;
 }
@@ -65,7 +84,7 @@ static int32_t A311DSetCtrlOps(const struct AudioKcontrol *kcontrol, const struc
 int32_t A311DCodecDeviceInit(struct AudioCard *audioCard, const struct CodecDevice *device)
 {
     if (audioCard == NULL || device == NULL || device->devData == NULL ||
-            device->devData->sapmComponents == NULL || device->devData->controls == NULL) {
+        device->devData->sapmComponents == NULL || device->devData->controls == NULL) {
         AUDIO_DRIVER_LOG_ERR("input para is NULL.");
         return HDF_ERR_INVALID_OBJECT;
     }
@@ -132,7 +151,7 @@ int32_t A311DCodecDaiHwParams(const struct AudioCard *card, const struct AudioPc
     uint32_t bitWidth;
 
     if (card == NULL || card->rtd == NULL || card->rtd->cpuDai == NULL ||
-            param == NULL || param->cardServiceName == NULL) {
+        param == NULL || param->cardServiceName == NULL) {
         AUDIO_DRIVER_LOG_ERR("input para is nullptr.");
         return HDF_FAILURE;
     }
