@@ -1,4 +1,4 @@
-# loader
+# bootloader
 
 预编译好的镜像及编译打包配置文件
 
