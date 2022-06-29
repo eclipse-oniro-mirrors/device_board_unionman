@@ -66,8 +66,8 @@ Note:If the text contains special characters, please escape them according to th
 				<policyitem type="copyright" name="Broadcom Corporation" path=".*"  desc="copyright Header Invalid"/>
 				<policyitem type="copyright" name="Google Inc." path="unionpi_tiger/hardware/bt/src/rtk_btsnoop_net.c"  desc="copyright Header Invalid"/>
 				<policyitem type="copyright" name="Google Inc." path="unionpi_tiger/hardware/bt/include/hci_h5_int.h"  desc="copyright Header Invalid"/>
-				<policyitem type="license" name="EndUserLicenseAgreement" path="unionpi_tiger/loader/images/LICENSE" desc="二进制文件遵循的licence"/>
-				<policyitem type="license" name="EndUserLicenseAgreement" path="unionpi_tiger/kernel/logo/LICENSE" desc="二进制文件遵循的licence"/>
+				<policyitem type="license" name="EndUserLicenseAgreement" path="unionpi_tiger/bootloader/images/LICENSE" desc="二进制文件遵循的licence"/>
+				<policyitem type="license" name="EndUserLicenseAgreement" path="unionpi_tiger/resource/logo/LICENSE" desc="二进制文件遵循的licence"/>
 				<policyitem type="license" name="GPLStyleLicense" path="unionpi_tiger/kernel/.*" desc=""/>
 				<policyitem type="license" name="GPL-2.0-or-later" path="unionpi_tiger/kernel/.*" desc=""/>
 				<policyitem type="license" name="GPL-2.0+" path="unionpi_tiger/kernel/.*" desc=""/>
@@ -85,28 +85,28 @@ Note:If the text contains special characters, please escape them according to th
 				<filteritem type="filepath" name="unionpi_tiger/kernel/drivers/.*" desc="kernel open source drivers file"/>
 				<filteritem type="filepath" name="unionpi_tiger/kernel/hdf/audio/linux_drv/.*" desc="kernel open source drivers file"/>
 				<filteritem type="filepath" name="unionpi_tiger/prebuilts/images/.*" desc="prebuilts binary and burn config file"/>
-				<filteritem type="filepath" name="unionpi_tiger/cfg/.*" desc="init cfg and script file"/>
+				<filteritem type="filepath" name="unionpi_tiger/config/.*" desc="init cfg and script file"/>
 				<filteritem type="filepath" name="unionpi_tiger/common/tools/linux/.*" desc="linux binary tools"/>
 				<filteritem type="filepath" name="unionpi_tiger/common/tools/windows/.*" desc="windows exe tools"/>
 				<filteritem type="filepath" name="unionpi_tiger/updater/.*" desc="updater config file"/>
 				<filteritem type="filepath" name="unionpi_tiger/wifi/.*" desc="wifi build config file"/>
 			</filefilter>
 			<filefilter name="defaultPolicyFilter" desc="Filters for compatibility，license header policies">
-				<filteritem type="filepath" name="unionpi_tiger/kernel/logo/logo.ppm" desc=""/>
+				<filteritem type="filepath" name="unionpi_tiger/resource/logo/logo.ppm" desc=""/>
 				<filteritem type="filepath" name="unionpi_tiger/hardware/BUILD.gn" desc=""/>
 				<filteritem type="filepath" name="unionpi_tiger/hardware/camera/driver_adapter/BUILD.gn" desc=""/>
 				<filteritem type="filepath" name="unionpi_tiger/common/BUILD.gn" desc=""/>
 				<filteritem type="filepath" name="unionpi_tiger/hardware/camera/driver_adapter/test/v4l2_test/BUILD.gn" desc=""/>
 			</filefilter>
 			<filefilter name="copyrightPolicyFilter" desc="Filters for copyright header policies" >
-				<filteritem type="filepath" name="unionpi_tiger/kernel/logo/logo.ppm" desc=""/>
+				<filteritem type="filepath" name="unionpi_tiger/resource/logo/logo.ppm" desc=""/>
 				<filteritem type="filepath" name="unionpi_tiger/hardware/camera/driver_adapter/BUILD.gn" desc=""/>
 				<filteritem type="filepath" name="unionpi_tiger/hardware/camera/driver_adapter/test/v4l2_test/BUILD.gn" desc=""/>
 			</filefilter>
 			<filefilter name="binaryFileTypePolicyFilter" desc="Filters for binary file policies">
                 <filteritem type="filename" name="*.png|*.jpg" desc="desc files"/>
-				<filteritem type="filepath" name="unionpi_tiger/loader/images/u-boot.bin" desc="desc files"/>
-				<filteritem type="filepath" name="unionpi_tiger/bootanimation/bootanimation-800x480.raw" desc="desc files"/>
+				<filteritem type="filepath" name="unionpi_tiger/bootloader/images/u-boot.bin" desc="desc files"/>
+				<filteritem type="filepath" name="unionpi_tiger/resource/bootanimation/bootanimation-800x480.raw" desc="desc files"/>
             </filefilter>
 		</filefilterlist>
 
