@@ -15,7 +15,6 @@
  *  limitations under the License.
  *
  ******************************************************************************/
-
 #ifndef HARDWARE_CBACK_H
 #define HARDWARE_CBACK_H
 
@@ -24,5 +23,3 @@
 void hw_config_cback(HC_BT_HDR *p_evt_buf);
 
 #endif
-
-
