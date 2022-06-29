@@ -25,6 +25,12 @@
 #include <stdlib.h>
 
 namespace OHOS::Camera {
+enum CameraBufferStatus {
+    CAMERA_BUFFER_STATUS_OK = 0,
+    CAMERA_BUFFER_STATUS_DROP,
+    CAMERA_BUFFER_STATUS_INVALID,
+};
+
 class IBuffer {
 public:
     IBuffer() {}
@@ -101,6 +107,11 @@ public:
     {
         return 0;
     }
+
+    void SetBufferStatus(const CameraBufferStatus flag)
+    {
+    }
+
 private:
     int32_t index_ = -1;
     uint32_t size_ = 0;
