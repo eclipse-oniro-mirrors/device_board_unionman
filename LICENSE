@@ -2,10 +2,10 @@ device_board_unionman
 Copyright (c) 2022 Unionman Technology Co., Ltd. All rights reserved.
 
 The unionpi_tiger/kernel/drivers/rtl88x2cs and unionpi_tiger/kernel/hdf/audio directory is dual licensed: you can use it either under the terms of
-the GPL V2, or the BSD3 license, at your option.
-The unionpi_tiger/kernel/hdf/wifi unionpi_tiger/kernel/drivers/isp subdirectory is licensed under the GPL V2 License.
+the GPL V2, or the BSD license, at your option.
 The unionpi_tiger/kernel/drivers/media is is dual licensed: you can use it either under the terms of
 the GPL V2, or the 3-Clause BSD License, at your option.
+The unionpi_tiger/kernel/hdf/wifi unionpi_tiger/kernel/drivers/isp subdirectory is licensed under the GPL V2 License.
 The unionpi_tiger/hardware/camera and unionpi_tiger/hardware/bt and others subdirectories are licensed under Apache License, Version 2.0.
 
 a) The 3-Clause BSD License, (https://opensource.org/licenses/BSD-3-Clause)
