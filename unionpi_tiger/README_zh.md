@@ -5,7 +5,7 @@
 九联科技Unionpi Tiger是一款应用于图像处理，音视频处理和深度学习等场景的智能硬件，其主芯片采用Amlogic A311D芯片方案。
 A311D支持GPU和神经网络加速子系统，支持4K视频编解码器引擎和一流的HDR图像处理，并集成了所有标准音频/视频输入/输出接口。主系统的CPU采用大小核设计，主频高达2.2GHz，集成了四个Cortex-A73核心和两Cortex-A53核心 ，集成独立的5.0T NPU处理器。
 
-![Unionpi-Tiger产品图](../figures/Unionpi-Tiger.jpg)
+![Unionpi-Tiger产品图](../figures/view-of-unionpi-tiger.jpg)
 
 图1 九联Unionpi-Tiger开发板外观图
 
@@ -31,7 +31,7 @@ A311D采用四个Cortex-A73，主频最高为2.2GHz的大核和两个Cortex-A53�
 | 电源   | DC 12V/3A                                                                                                       |
 | 工作温度 | 0℃ - 60℃                                                                                                        |
 
-![Unionpi-Tiger接口示意图](../figures/Interface.png)
+![Unionpi-Tiger接口示意图](../figures/interfaces.png)
 
 ## 开发板功能
 
@@ -49,7 +49,7 @@ A311D采用四个Cortex-A73，主频最高为2.2GHz的大核和两个Cortex-A53�
 
 配件摄像头（MIPI-CSI）、屏幕模组（MIPI-DSI）及喇叭安装如下图：
 
-![Unionpi-Tiger配件安装](../figures/Connection.png)
+![Unionpi-Tiger配件安装](../figures/connections.png)
 
 ## 开发板应用场景
 
@@ -167,17 +167,17 @@ out/unionpi_tiger/packages/phone/images/ 目录下。
 
 在接入电源上电状态前，长按Update键不放开可以进入烧录模式。如果开发板，已经处于开机上电的情况下，长按Update键，再单击Reset键进入烧录模式。USB烧录工具显示设备连接状态如下图所示：
 
-![Unionpi-Tiger烧录模式](../figures/DeviceState.png)
+![Unionpi-Tiger烧录模式](../figures/state-of-device.png)
 
 3）烧录配置及镜像选择
 
 从菜单“文件”－“导入烧录包”选择加载要烧录的镜像文件，也可以通过“最近打开的文件”选择最近使用过的烧录镜像文件，其中默认对导入的烧录包进行校验检查（可去除校验，以加快烧录进度）
 
-![烧录配置](../figures/BurnOption.png)
+![烧录配置](../figures/options-of-burning.png)
 
 导入烧录包（为上文linux环境下编译打包出来的固件镜像），点击“开始”，接着就可以等待镜像烧录。烧录完成之后，如果软件界面会相应提示成功或失败，失败同时会提示失败原因。本次烧录成功如图所示。（烧录时间根据镜像大小而定，烧录大概10-12分钟左右，耐心等待, 如果调整镜像大小或采用sparse-image，可以缩短烧录时间）
 
-![Unionpi-Tiger烧录成功](../figures/BurnSuccess.png)
+![Unionpi-Tiger烧录成功](../figures/success-of-burning.png)
 
 烧写工具下载及使用
 
@@ -204,4 +204,4 @@ echo host > /sys/class/usb_role/ffe09000.usb-role-switch/role
 
 如下图所示，用金属短接核心板触点1和2，可以进入恢复模式，USB烧录软件可以正常识别设备后，按照正常烧录步骤烧写即可。
 
-![Unionpi-Tiger救砖模式](../figures/Recovery.jpg)
+![Unionpi-Tiger救砖模式](../figures/recovery.jpg)
