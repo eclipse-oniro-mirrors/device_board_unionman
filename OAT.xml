@@ -102,6 +102,7 @@ Note:If the text contains special characters, please escape them according to th
 				<filteritem type="filepath" name="unionpi_tiger/resource/logo/logo.ppm" desc=""/>
 				<filteritem type="filepath" name="unionpi_tiger/hardware/camera/driver_adapter/BUILD.gn" desc=""/>
 				<filteritem type="filepath" name="unionpi_tiger/hardware/camera/driver_adapter/test/v4l2_test/BUILD.gn" desc=""/>
+				<filteritem type="filepath" name="unionpi_tiger/hardware/audio_alsa/BUILD.gn" desc=""/>
 			</filefilter>
 			<filefilter name="binaryFileTypePolicyFilter" desc="Filters for binary file policies">
                 <filteritem type="filename" name="*.png|*.jpg" desc="desc files"/>
