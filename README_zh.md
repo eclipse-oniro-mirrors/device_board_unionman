@@ -17,7 +17,7 @@ A311D支持GPU和神经网络加速子系统，支持4K视频编解码器引擎�
 
 #### 开发板架构
 
-![Amlogic A311D架构](./figures/A311D.png)
+![扩展板架构](./figures/dev-board.png)
 
 ## 目录
 
