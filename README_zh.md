@@ -16,8 +16,10 @@ Unionpi Tiger是一款应用于图像处理，音视频处理和深度学习等�
 A311D支持GPU和神经网络加速子系统，支持4K视频编解码器引擎和一流的HDR图像处理，并集成了所有标准音频/视频输入/输出接口。主系统的CPU采用大小核设计，主频高达2.2GHz，集成了四个Cortex-A73核心和两Cortex-A53核心 ，集成独立的5.0T NPU处理器。
 
 #### 开发板架构
+开发板分为底板与核心板
 
-![扩展板架构](./figures/dev-board.png)
+![扩展板架构](./figures/dev-board.png "底板")
+![核心板架构](./figures/core-board.png "核心板")
 
 ## 目录
 
