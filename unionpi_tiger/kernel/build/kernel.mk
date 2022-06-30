@@ -92,8 +92,6 @@ $(KERNEL_IMAGE_FILE):
 	@mv $(IMAGES_PATH)/dtb.img.gz $(IMAGES_PATH)/dtb.img
 	@chmod 777 $(KERNEL_OBJ_TMP_PATH)/make-boot.sh
 	@mkdir -p $(IMAGES_PATH)../modules
-	@cp -rf $(KERNEL_OBJ_TMP_PATH)/drivers/gpu/drm/scheduler/gpu-sched.ko -rf $(IMAGES_PATH)../modules
-	@cp -rf $(KERNEL_OBJ_TMP_PATH)/drivers/gpu/drm/panfrost/panfrost.ko -rf $(IMAGES_PATH)../modules
 ifeq ($(RAMDISK_ENABLE), false)
 	@$(DEVICE_PATH)/tools/linux/mkbootimg --kernel $(KERNEL_OBJ_TMP_PATH)/arch/arm64/boot/Image.gz --base 0x0 --kernel_offset 0x1080000 --cmdline "" --ramdisk  $(DEVICE_PATH)/tools/linux/rootfs.cpio.gz --second $(IMAGES_PATH)/dtb.img --output $(IMAGES_PATH)/boot.img > /dev/null
 endif
