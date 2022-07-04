@@ -23,7 +23,7 @@ action("build_kernel") {
 
   product_path = "vendor/$product_company/$product_name"
   ramdisk_enable = "false"
-  outputs = [ "$root_build_dir/../kernel/src_tmp/linux-5.10/boot" ]
+  outputs = [ "$root_build_dir/../kernel/src_tmp/linux-5.10/unionpi_tiger" ]
   args = [
     rebase_path(kernel_build_script_dir, root_build_dir),
     rebase_path("$root_out_dir/.."),
