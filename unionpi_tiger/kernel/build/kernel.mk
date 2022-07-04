@@ -90,8 +90,7 @@ $(KERNEL_IMAGE_FILE):
 	@$(DEVICE_PATH)/common/tools/linux/dtbTool -o $(IMAGES_PATH)/dtb.img $(KERNEL_OBJ_TMP_PATH)/arch/arm64/boot/dts/amlogic/ > /dev/null
 	@gzip $(IMAGES_PATH)/dtb.img
 	@mv $(IMAGES_PATH)/dtb.img.gz $(IMAGES_PATH)/dtb.img
-	@chmod 777 $(KERNEL_OBJ_TMP_PATH)/make-boot.sh
-	@mkdir -p $(IMAGES_PATH)../modules
+	@chmod 777 $(KERNEL_OBJ_TMP_PATH)/vendor/amlogic/make-boot.sh
 ifeq ($(RAMDISK_ENABLE), false)
 	@$(DEVICE_PATH)/tools/linux/mkbootimg --kernel $(KERNEL_OBJ_TMP_PATH)/arch/arm64/boot/Image.gz --base 0x0 --kernel_offset 0x1080000 --cmdline "" --ramdisk  $(DEVICE_PATH)/tools/linux/rootfs.cpio.gz --second $(IMAGES_PATH)/dtb.img --output $(IMAGES_PATH)/boot.img > /dev/null
 endif
