@@ -3,4 +3,5 @@
 import("//build/ohos.gni")
 
 group("common") {
+  print("unionpi_tiger_group:common build")
 }
