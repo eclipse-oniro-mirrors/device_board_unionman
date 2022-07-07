@@ -26,7 +26,10 @@ A311D支持GPU和神经网络加速子系统，支持4K视频编解码器引擎�
 ```
 device/board/unionman
 ├── unionpi_tiger           # Unionpi-Tiger开发板目录
-└── figures                 # 开发板或产品相关图片目录
+├── figures                 # 开发板或产品相关图片目录
+├── LICENSE
+├── OTA.xml
+└── README_zh.md
 ```
 
 ## 使用说明
