@@ -17,7 +17,6 @@
 
 CONFIG_MODULE_SIG=n
 
-
 #redefine ARCH
 ifeq ($(ARCH),) 
     _ARCH=arm64
@@ -25,7 +24,6 @@ ifeq ($(ARCH),)
 else
     _ARCH=${ARCH}
 endif
-
 
 #redefine CROSS_COMPILE
 ifeq ($(CROSS_COMPILE),)
@@ -41,8 +39,6 @@ else
     _KDIR=${KDIR}
 endif
 
-
-
 obj-m += iv009_isp.o
 
 ifeq ($(FW_SRC_OBJ),)
@@ -53,7 +49,6 @@ ifeq ($(FW_SRC_OBJ),)
 		export FW_SRC_OBJ := $(FW_SRC_OBJ) src/fw_lib/libacamera_isp.a
 	endif
 endif
-
 
 iv009_isp-objs += $(FW_SRC_OBJ) 
 
