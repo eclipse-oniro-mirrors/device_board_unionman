@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Unionman Co., Ltd.
+ * Copyright (C) 2022 Unionman Technology Co., Ltd.
  *
  * HDF is dual licensed: you can use it either under the terms of
  * the GPL, or the BSD license, at your option.
