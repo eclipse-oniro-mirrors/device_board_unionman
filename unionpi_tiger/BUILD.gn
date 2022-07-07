@@ -13,7 +13,7 @@
 
 import("//build/ohos.gni")
 
-print("unionpi_tiger_group in")
+print("unionpi_tiger_group build")
 group("unionpi_tiger_group") {
   deps = [
     "config:init_configs",
@@ -23,5 +23,6 @@ group("unionpi_tiger_group") {
     "kernel:kernel",
     "resource:resource",
     "//device/soc/amlogic/a311d/hardware:hardware_group",
+    "//vendor/unionman/unionpi_tiger/sample:sample_group",
   ]
 }
