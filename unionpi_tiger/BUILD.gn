@@ -16,12 +16,12 @@ import("//build/ohos.gni")
 print("unionpi_tiger_group build")
 group("unionpi_tiger_group") {
   deps = [
-    "config:init_configs",
     "common:common",
+    "config:init_configs",
     "hardware:hardware",
-    "updater:updater_files",
     "kernel:kernel",
     "resource:resource",
+    "updater:updater_files",
     "//device/soc/amlogic/a311d/hardware:hardware_group",
   ]
 }
