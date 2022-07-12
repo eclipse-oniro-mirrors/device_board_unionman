@@ -23,5 +23,6 @@ group("unionpi_tiger_group") {
     "resource:resource",
     "updater:updater_files",
     "//device/soc/amlogic/a311d/hardware:hardware_group",
+    "//vendor/unionman/unionpi_tiger/sample:sample_group",
   ]
 }
