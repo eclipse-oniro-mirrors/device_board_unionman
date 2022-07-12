@@ -26,7 +26,6 @@ else
     _ARCH=${ARCH}
 endif
 
-
 #redefine CROSS_COMPILE
 ifeq ($(CROSS_COMPILE),)    
     $(error "Please export CROSS_COMPILE variable before build")
@@ -41,8 +40,6 @@ else
     _KDIR=${KDIR}
 endif
 
-
-
 obj-m += iv009_isp_iq.o
 
 ifeq ($(FW_SRC_OBJ),)
@@ -54,7 +51,6 @@ ifeq ($(FW_SRC_OBJ),)
 	endif
 ##$(info ### FW_SRC_OBJ is: $(FW_SRC_OBJ))	
 endif
-
 
 iv009_isp_iq-objs += $(FW_SRC_OBJ) 
 

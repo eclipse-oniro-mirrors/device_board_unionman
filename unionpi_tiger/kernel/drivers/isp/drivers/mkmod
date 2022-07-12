@@ -6,7 +6,6 @@ CLANG_CC=$OHOS_HOME/prebuilts/clang/ohos/linux-x86_64/llvm/bin/clang
 
 echo CROSS_COMPILE=$CROSS_COMPILE
 
-
 cd ./drivers/v4l2_dev
 make KDIR=$KERNEL_DIR ARCH=arm64 CROSS_COMPILE=$CROSS_COMPILE CC=$CLANG_CC all PLATFORM_VERSION=G12B
 cp iv009_isp.ko ../
@@ -22,5 +21,3 @@ cp iv009_isp_lens.ko ../../
 cd ../.././subdev/sensor
 make KDIR=$KERNEL_DIR ARCH=arm64 CROSS_COMPILE=$CROSS_COMPILE CC=$CLANG_CC all PLATFORM_VERSION=G12B
 cp iv009_isp_sensor.ko ../../
-
-

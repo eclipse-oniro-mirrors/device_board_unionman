@@ -17,7 +17,6 @@
 
 CONFIG_MODULE_SIG=n
 
-
 #redefine ARCH
 ifeq ($(ARCH),)    
     _ARCH=arm64
@@ -25,7 +24,6 @@ ifeq ($(ARCH),)
 else
     _ARCH=${ARCH}
 endif
-
 
 #redefine CROSS_COMPILE
 ifeq ($(CROSS_COMPILE),)    
@@ -41,8 +39,6 @@ else
     _KDIR=${KDIR}
 endif
 
-
-
 obj-m += iv009_isp_lens.o
 
 ifeq ($(FW_SRC_OBJ),)
@@ -54,7 +50,6 @@ ifeq ($(FW_SRC_OBJ),)
 	endif
 ##$(info ### FW_SRC_OBJ is: $(FW_SRC_OBJ))	
 endif
-
 
 iv009_isp_lens-objs += $(FW_SRC_OBJ) 
 
