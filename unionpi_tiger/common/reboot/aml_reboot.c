@@ -17,7 +17,6 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
-#include <sys/reboot.h>
 #include <sys/syscall.h>
 
 #define REBOOT_MAGIC1 0xfee1dead
