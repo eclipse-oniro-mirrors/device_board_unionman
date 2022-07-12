@@ -1,7 +1,7 @@
-# Copyright (C) 2021 Unionman Technologies Co., Ltd. All rights reserved.
+# Copyright (C) 2021 Unionman Technology Co., Ltd. All rights reserved.
 
 import("//build/ohos.gni")
 
 group("common") {
-  print("unionpi_tiger_group:common build")
+  deps = [ "reboot:aml_reboot" ]
 }
