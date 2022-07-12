@@ -16,9 +16,7 @@ import("//build/ohos/ndk/ndk.gni")
 
 ohos_executable("aml_reboot") {
   output_name = "aml_reboot"
-  sources = [
-    "aml_reboot.c",
-  ]
+  sources = [ "aml_reboot.c" ]
 
   deps = [ "//utils/native/base:utils" ]
   install_enable = true
@@ -27,4 +25,3 @@ ohos_executable("aml_reboot") {
   part_name = "amlogic_products"
   subsystem_name = "amlogic_products"
 }
-
