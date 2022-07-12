@@ -31,6 +31,7 @@ A311D采用四个Cortex-A73，主频最高为2.2GHz的大核和两个Cortex-A53�
 | 电源   | DC 12V/3A                                                                                                       |
 | 工作温度 | 0℃ - 60℃                                                                                                        |
 
+图2 开发板接口示意图
 ![Unionpi-Tiger接口示意图](../figures/interfaces.png)
 
 ## 开发板功能
@@ -49,6 +50,7 @@ A311D采用四个Cortex-A73，主频最高为2.2GHz的大核和两个Cortex-A53�
 
 配件摄像头（MIPI-CSI）、屏幕模组（MIPI-DSI）及喇叭安装如下图：
 
+图3 开发板配件连接
 ![Unionpi-Tiger配件安装](../figures/connections.png)
 
 ## 开发板应用场景
