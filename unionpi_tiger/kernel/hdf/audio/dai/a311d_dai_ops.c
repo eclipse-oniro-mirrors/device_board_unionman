@@ -37,7 +37,7 @@ int32_t A311DDeviceInit(struct AudioCard *audioCard, const struct DaiDevice *dai
         return HDF_FAILURE;
     }
     data = dai->devData;
-    if (DaiSetConfigInfo(data) != HDF_SUCCESS) {
+    if (DaiSetConfigInfoOfControls(data) != HDF_SUCCESS) {
         AUDIO_DRIVER_LOG_ERR("set config info fail.");
         return HDF_FAILURE;
     }

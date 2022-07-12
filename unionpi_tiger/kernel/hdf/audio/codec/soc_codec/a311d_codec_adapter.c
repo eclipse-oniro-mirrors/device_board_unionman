@@ -67,7 +67,7 @@ static int32_t CodecDriverInit(struct HdfDeviceObject *device)
         return HDF_FAILURE;
     }
 
-    if (CodecSetConfigInfo(&g_codecData, &g_codecDaiData) != HDF_SUCCESS) {
+    if (CodecSetConfigInfoOfControls(&g_codecData, &g_codecDaiData) != HDF_SUCCESS) {
         return HDF_FAILURE;
     }
 
