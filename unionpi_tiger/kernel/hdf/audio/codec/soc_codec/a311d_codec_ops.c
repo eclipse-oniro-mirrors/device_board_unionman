@@ -89,7 +89,7 @@ int32_t A311DCodecDeviceInit(struct AudioCard *audioCard, const struct CodecDevi
         return HDF_ERR_INVALID_OBJECT;
     }
 
-    if (CodecSetCtlFunc(device->devData, A311DGetCtrlOps, A311DSetCtrlOps) != HDF_SUCCESS) {
+    if (CodecSetCtlFunc(device->devData, AUDIO_CONTROL_MIXER, A311DGetCtrlOps, A311DSetCtrlOps) != HDF_SUCCESS) {
         AUDIO_DRIVER_LOG_ERR("AudioCodecSetCtlFunc failed.");
         return HDF_FAILURE;
     }
