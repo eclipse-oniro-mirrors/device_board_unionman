@@ -3,7 +3,5 @@
 import("//build/ohos.gni")
 
 group("hardware") {
-  deps = [
-    "bt:bluetooth",
-  ]
+  deps = [ "bt:bluetooth" ]
 }
