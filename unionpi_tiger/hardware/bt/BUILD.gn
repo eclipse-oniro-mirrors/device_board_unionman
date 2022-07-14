@@ -93,9 +93,9 @@ ohos_shared_library("libbt_vendor") {
 
 group("bluetooth") {
   public_deps = [
+    ":libbt_vendor",
+    ":rtkbt.conf",
     ":rtl8822cs_config",
     ":rtl8822cs_fw",
-    ":rtkbt.conf",
-    ":libbt_vendor",
   ]
 }
