@@ -11,7 +11,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 import("//build/ohos.gni")
 
 import("//drivers/hdf_core/adapter/uhdf2/uhdf.gni")
@@ -46,12 +45,11 @@ config("audio_interface_config_alsa") {
   ldflags = [ "-Wl" ]
 }
 
-
 ohos_shared_library("hdi_audio_interface_lib_capture.alsa") {
   sources = [
-    "src/audio_interface_lib_capture_alsa.c",
-    "//device/unionman/unionpi_tiger/third_party/tinyalsa/pcm.c",
     "//device/unionman/unionpi_tiger/third_party/tinyalsa/mixer.c",
+    "//device/unionman/unionpi_tiger/third_party/tinyalsa/pcm.c",
+    "src/audio_interface_lib_capture_alsa.c",
   ]
 
   include_dirs = [
@@ -79,9 +77,9 @@ ohos_shared_library("hdi_audio_interface_lib_capture.alsa") {
     "$hdf_uhdf_path/manager:hdf_devmgr.rc",
     "//utils/native/base:utils",
   ]
-  
+
   install_images = [ "vendor" ]
-  
+
   external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
 
   public_configs = [ ":audio_interface_config_alsa" ]
@@ -92,9 +90,9 @@ ohos_shared_library("hdi_audio_interface_lib_capture.alsa") {
 
 ohos_shared_library("hdi_audio_interface_lib_render.alsa") {
   sources = [
-    "src/audio_interface_lib_render_alsa.c",
-    "//device/unionman/unionpi_tiger/third_party/tinyalsa/pcm.c",
     "//device/unionman/unionpi_tiger/third_party/tinyalsa/mixer.c",
+    "//device/unionman/unionpi_tiger/third_party/tinyalsa/pcm.c",
+    "src/audio_interface_lib_render_alsa.c",
   ]
 
   include_dirs = [
@@ -124,7 +122,7 @@ ohos_shared_library("hdi_audio_interface_lib_render.alsa") {
   ]
 
   install_images = [ "vendor" ]
-  
+
   external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
 
   public_configs = [ ":audio_interface_config_alsa" ]
