@@ -189,7 +189,38 @@ out/unionpi_tiger/packages/phone/images/ 目录下。
 
 ## 其他
 
-#### 1、切换USB Host模式
+#### 1、命令行烧录
+
+开发板支持命令行烧录功能，且命令行烧录支持单分区进行更新，工具链接：[update.zip](https://gitee.com/algoideas/amlogic-tools/blob/master/Windows/update.zip)。其中，命令行的详细使用方法可直接输入update.exe进行了解。命令行烧录的使用方法和步骤如下：
+
+##### 1.1、 进入升级模式
+
+**a)**、自动进入方式 (目前仅适用master分支的版本)
+系统正常启动后，并确保可以正常使用hdc工具的情况下，执行以下命令后自动重启进入升级模式：
+
+```
+hdc_std shell aml_reboot update
+```
+
+**b)**、手动进入方式 (参考编译与调试章节说明)
+开机前，按Update键，可进入升级模式
+
+##### 1.2、镜像烧录
+
+烧录完整分区镜像命令如下(可根据需要仅对单独分区进行升级)：
+
+```
+update.exe partition bootloader u-boot.bin
+update.exe partition _aml_dtb dtb.img
+update.exe partition boot boot.img
+update.exe partition updater updater.img
+update.exe partition data userdata.img
+update.exe partition vendor vendor.img
+update.exe partition system system.img
+update.exe bulkcmd reboot
+```
+
+#### 2、切换USB Host模式
 
 USB OTG口默认HDC调试，其他3个USB2.0口不能使用，如果需要使用USB2.0,需要进行切换（或通过修改dts默认启用USB2.0），切换命令如下：
 
@@ -200,7 +231,7 @@ echo 0 > /sys/devices/platform/soc/ffe09000.usb/usb_mode
 echo host > /sys/class/usb_role/ffe09000.usb-role-switch/role
 ```
 
-#### 2、恢复模式
+#### 3、恢复模式
 
 开发板如果不能正常启动时，即Boot启动异常（可通过debug串口查看），且Update键进入烧录模式，USB烧录软件不能识别设备。
 
