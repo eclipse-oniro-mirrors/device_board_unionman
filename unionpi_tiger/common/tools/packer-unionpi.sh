@@ -17,6 +17,12 @@ root_src_dir=$(pwd)
 
 pushd ${root_src_dir}
 cp ${root_src_dir}/device/board/unionman/unionpi_tiger/bootloader/images/* ${root_src_dir}/out/unionpi_tiger/packages/phone/images -rvf
+${root_src_dir}/device/board/unionman/unionpi_tiger/common/tools/linux/img2simg ${root_src_dir}/out/unionpi_tiger/packages/phone/images/system.img ${root_src_dir}/out/unionpi_tiger/packages/phone/images/system.img2simg
+mv ${root_src_dir}/out/unionpi_tiger/packages/phone/images/system.img2simg ${root_src_dir}/out/unionpi_tiger/packages/phone/images/system.img
+${root_src_dir}/device/board/unionman/unionpi_tiger/common/tools/linux/img2simg ${root_src_dir}/out/unionpi_tiger/packages/phone/images/vendor.img ${root_src_dir}/out/unionpi_tiger/packages/phone/images/vendor.img2simg
+mv ${root_src_dir}/out/unionpi_tiger/packages/phone/images/vendor.img2simg ${root_src_dir}/out/unionpi_tiger/packages/phone/images/vendor.img
+${root_src_dir}/device/board/unionman/unionpi_tiger/common/tools/linux/img2simg ${root_src_dir}/out/unionpi_tiger/packages/phone/images/userdata.img ${root_src_dir}/out/unionpi_tiger/packages/phone/images/userdata.img2simg
+mv ${root_src_dir}/out/unionpi_tiger/packages/phone/images/userdata.img2simg ${root_src_dir}/out/unionpi_tiger/packages/phone/images/userdata.img
 ${root_src_dir}/device/board/unionman/unionpi_tiger/common/tools/linux/aml_image_v2_packer -r ${root_src_dir}/out/unionpi_tiger/packages/phone/images/openharmony.conf ${root_src_dir}/out/unionpi_tiger/packages/phone/images/ ${root_src_dir}/out/unionpi_tiger/packages/phone/images/OpenHarmony.img
 rm -rf ${root_src_dir}/out/unionpi_tiger/packages/phone/images/openharmony.conf
 rm -rf ${root_src_dir}/out/unionpi_tiger/packages/phone/images/platform.conf
