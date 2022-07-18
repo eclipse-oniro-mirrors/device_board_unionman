@@ -25,3 +25,4 @@ export RAMDISK_ENABLE=$6
 mkdir -p ${2}
 mkdir -p ${3}
 make -f ${4}/kernel/build/kernel.mk
+../kernel/src_tmp/linux-5.10/vendor/amlogic/make-boot.sh ..
