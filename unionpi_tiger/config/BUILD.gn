@@ -74,6 +74,14 @@ ohos_prebuilt_etc("fstab.A311D") {
   install_enable = true
 }
 
+ohos_prebuilt_etc("selinux_config") {
+  source = "selinux/config"
+  part_name = "unionman_products"
+  module_install_dir = "etc/selinux"
+  install_images = [ "system" ]
+  install_enable = true
+}
+
 if (enable_ramdisk) {
   ohos_copy("fstab.required") {
     sources = [ "fstab.A311D" ]
@@ -102,6 +110,7 @@ group("init_configs") {
     ":init.A311D.sh",
     ":init.A311D.usb.cfg",
     ":sdcard_mount.sh",
+    ":selinux_config",
     ":udisk_mount.sh",
   ]
 
