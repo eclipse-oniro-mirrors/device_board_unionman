@@ -1,0 +1,9 @@
+
+*.a
+*.o
+*.o.*
+*.order
+*.order.cmd
+*.builtin
+*.a.*
+tags
