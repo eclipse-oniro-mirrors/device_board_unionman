@@ -13,18 +13,15 @@
 
 import("//build/ohos.gni")
 
-BOOTANIMATION_DIR = "//device/board/unionman/unionpi_tiger/resource/bootanimation"
+BOOTANIMATION_DIR =
+    "//device/board/unionman/unionpi_tiger/resource/bootanimation"
 
 ohos_prebuilt_etc("bootanimation-800x480") {
   source = "$BOOTANIMATION_DIR/bootanimation-800x480.raw"
-  part_name = "amlogic_products"
+  part_name = "unionman_products"
   install_enable = true
 }
 
 group("resource") {
-  deps = [
-    ":bootanimation-800x480",
-  ]
+  deps = [ ":bootanimation-800x480" ]
 }
-
-

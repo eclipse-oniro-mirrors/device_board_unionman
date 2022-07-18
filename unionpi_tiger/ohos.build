@@ -1,7 +1,7 @@
 {
-    "subsystem": "amlogic_products",
+    "subsystem": "unionman_products",
     "parts": {
-        "amlogic_products": {
+        "unionman_products": {
             "module_list": [
                 "//device/board/unionman/${device_name}:unionpi_tiger_group"
             ]

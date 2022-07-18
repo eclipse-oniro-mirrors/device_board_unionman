@@ -29,7 +29,7 @@ ohos_prebuilt_etc("rtl8822cs_config") {
   source = "firmware/rtl8822cs_config"
   install_images = [ vendor_base_dir ]
   relative_install_dir = "firmware"
-  part_name = "amlogic_products"
+  part_name = "unionman_products"
   install_enable = true
 }
 
@@ -37,7 +37,7 @@ ohos_prebuilt_etc("rtl8822cs_fw") {
   source = "firmware/rtl8822cs_fw"
   install_images = [ vendor_base_dir ]
   relative_install_dir = "firmware"
-  part_name = "amlogic_products"
+  part_name = "unionman_products"
   install_enable = true
 }
 
@@ -45,7 +45,7 @@ ohos_prebuilt_etc("rtkbt.conf") {
   source = "firmware/rtkbt.conf"
   install_images = [ vendor_base_dir ]
   relative_install_dir = "bluetooth"
-  part_name = "amlogic_products"
+  part_name = "unionman_products"
   install_enable = true
 }
 
@@ -87,8 +87,8 @@ ohos_shared_library("libbt_vendor") {
   install_enable = true
   install_images = [ "system" ]
 
-  part_name = "amlogic_products"
-  subsystem_name = "amlogic_products"
+  part_name = "unionman_products"
+  subsystem_name = "unionman_products"
 }
 
 group("bluetooth") {

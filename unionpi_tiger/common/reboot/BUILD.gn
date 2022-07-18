@@ -22,6 +22,6 @@ ohos_executable("aml_reboot") {
   install_enable = true
   install_images = [ "system" ]
 
-  part_name = "amlogic_products"
-  subsystem_name = "amlogic_products"
+  part_name = "unionman_products"
+  subsystem_name = "unionman_products"
 }
