@@ -18,28 +18,28 @@ ohos_prebuilt_etc("init.without_two_stages.cfg") {
   module_install_dir = "etc"
   install_images = [ "system" ]
   install_enable = true
-  part_name = "amlogic_products"
+  part_name = "unionman_products"
 }
 
 ohos_prebuilt_etc("init.A311D.cfg") {
   source = "init.A311D.cfg"
   install_images = [ chipset_base_dir ]
   install_enable = true
-  part_name = "amlogic_products"
+  part_name = "unionman_products"
 }
 
 ohos_prebuilt_etc("init.A311D.usb.cfg") {
   source = "init.A311D.usb.cfg"
   install_images = [ chipset_base_dir ]
   install_enable = true
-  part_name = "amlogic_products"
+  part_name = "unionman_products"
 }
 
 ohos_prebuilt_executable("init.A311D.sh") {
   source = "init.A311D.sh"
   module_install_dir = "bin"
   install_images = [ "vendor" ]
-  part_name = "amlogic_products"
+  part_name = "unionman_products"
   install_enable = true
 }
 
@@ -47,7 +47,7 @@ ohos_prebuilt_etc("50.usb.rules") {
   source = "udev/50-usb.rules"
   module_install_dir = "etc/udev/rules.d"
   install_images = [ "system" ]
-  part_name = "amlogic_products"
+  part_name = "unionman_products"
   install_enable = true
 }
 
@@ -55,7 +55,7 @@ ohos_prebuilt_etc("udisk_mount.sh") {
   source = "udisk_mount.sh"
   module_install_dir = "bin"
   install_images = [ "system" ]
-  part_name = "amlogic_products"
+  part_name = "unionman_products"
   install_enable = true
 }
 
@@ -63,13 +63,13 @@ ohos_prebuilt_etc("sdcard_mount.sh") {
   source = "sdcard_mount.sh"
   module_install_dir = "bin"
   install_images = [ "system" ]
-  part_name = "amlogic_products"
+  part_name = "unionman_products"
   install_enable = true
 }
 
 ohos_prebuilt_etc("fstab.A311D") {
   source = "fstab.A311D"
-  part_name = "amlogic_products"
+  part_name = "unionman_products"
   install_images = [ vendor_base_dir ]
   install_enable = true
 }
@@ -87,7 +87,7 @@ if (enable_ramdisk) {
 } else {
   ohos_prebuilt_etc("fstab.required") {
     source = "fstab.required"
-    part_name = "amlogic_products"
+    part_name = "unionman_products"
     install_images = [ "system" ]
     install_enable = true
   }
@@ -95,19 +95,17 @@ if (enable_ramdisk) {
 
 group("init_configs") {
   deps = [
-    ":init.A311D.cfg",
-    ":init.A311D.usb.cfg",
-    ":init.A311D.sh",
     ":50.usb.rules",
-    ":udisk_mount.sh",
-    ":sdcard_mount.sh",
     ":fstab.A311D",
     ":fstab.required",
+    ":init.A311D.cfg",
+    ":init.A311D.sh",
+    ":init.A311D.usb.cfg",
+    ":sdcard_mount.sh",
+    ":udisk_mount.sh",
   ]
 
   if (enable_ramdisk) {
-    deps += [
-      ":ramdisk_resource_config.ini"
-    ]
+    deps += [ ":ramdisk_resource_config.ini" ]
   }
 }
