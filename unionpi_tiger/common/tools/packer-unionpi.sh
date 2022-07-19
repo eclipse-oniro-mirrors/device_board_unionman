@@ -23,6 +23,7 @@ ${root_src_dir}/device/board/unionman/unionpi_tiger/common/tools/linux/img2simg 
 mv ${root_src_dir}/out/unionpi_tiger/packages/phone/images/vendor.img2simg ${root_src_dir}/out/unionpi_tiger/packages/phone/images/vendor.img
 ${root_src_dir}/device/board/unionman/unionpi_tiger/common/tools/linux/img2simg ${root_src_dir}/out/unionpi_tiger/packages/phone/images/userdata.img ${root_src_dir}/out/unionpi_tiger/packages/phone/images/userdata.img2simg
 mv ${root_src_dir}/out/unionpi_tiger/packages/phone/images/userdata.img2simg ${root_src_dir}/out/unionpi_tiger/packages/phone/images/userdata.img
+${root_src_dir}/device/board/unionman/unionpi_tiger/common/tools/linux/mkbootimg --kernel ${root_src_dir}/out/kernel/src_tmp/linux-5.10/unionpi_tiger/Image.gz --base 0x0 --kernel_offset 0x1080000 --cmdline "" --ramdisk  ${root_src_dir}/out/unionpi_tiger/packages/phone/images/ramdisk.img --second ${root_src_dir}/out/unionpi_tiger/packages/phone/images/dtb.img --output ${root_src_dir}/out/unionpi_tiger/packages/phone/images/boot.img > /dev/null
 ${root_src_dir}/device/board/unionman/unionpi_tiger/common/tools/linux/aml_image_v2_packer -r ${root_src_dir}/out/unionpi_tiger/packages/phone/images/openharmony.conf ${root_src_dir}/out/unionpi_tiger/packages/phone/images/ ${root_src_dir}/out/unionpi_tiger/packages/phone/images/OpenHarmony.img
 rm -rf ${root_src_dir}/out/unionpi_tiger/packages/phone/images/openharmony.conf
 rm -rf ${root_src_dir}/out/unionpi_tiger/packages/phone/images/platform.conf
