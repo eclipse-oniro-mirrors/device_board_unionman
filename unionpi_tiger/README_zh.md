@@ -151,7 +151,7 @@ bash build/prebuilts_download.sh
 编译所生成的文件都归档在out/unionpi_tiger/目录下，结果镜像输出在
 out/unionpi_tiger/packages/phone/images/ 目录下。
 
-3） 编译源码完成，如果需要完整USB烧录，请先进行镜像打包，打包命令如下：
+3） 编译源码完成，如果需要生成boot.img镜像或需要完整USB烧录镜像包，请先进行镜像打包，打包命令如下：
 
 ```shell
 ./device/board/unionman/unionpi_tiger/common/tools/packer-unionpi.sh
@@ -159,7 +159,9 @@ out/unionpi_tiger/packages/phone/images/ 目录下。
 
 打包完成后的镜像名称为OpenHarmony.img, 也生成在out/unionpi_tiger/packages/phone/images/ 目录下。
 
-> Amlogic USB烧录工具不支持单镜像烧录，需要对镜像进行打包，如果单独烧写镜像可以在Uboot下采用U盘升级的方式
+> 1.该步骤每次编译完成后执行一次即可；
+> 
+> 2.Amlogic USB烧录工具不支持单镜像烧录，需要对镜像进行打包，如果单独烧写镜像可以在Uboot下采用U盘升级的方式
 
 #### 2、烧录步骤
 
@@ -210,13 +212,15 @@ hdc_std shell aml_reboot update
 烧录完整分区镜像命令如下(可根据需要仅对单独分区进行升级)：
 
 ```
-update.exe partition bootloader u-boot.bin
 update.exe partition _aml_dtb dtb.img
 update.exe partition boot boot.img
 update.exe partition updater updater.img
 update.exe partition data userdata.img
 update.exe partition vendor vendor.img
 update.exe partition system system.img
+update.exe partition bootloader u-boot.bin
+update.exe bulkcmd "env default -a"
+update.exe bulkcmd "env save"
 update.exe bulkcmd reboot
 ```
 
