@@ -82,23 +82,9 @@ ohos_prebuilt_etc("selinux_config") {
   install_enable = true
 }
 
-if (enable_ramdisk) {
-  ohos_copy("fstab.required") {
-    sources = [ "fstab.A311D" ]
-    outputs = [ "$root_build_dir/fstab.required" ]
-  }
-
-  ohos_copy("ramdisk_resource_config.ini") {
-    sources = [ "ramdisk_resource_config.ini" ]
-    outputs = [ "$product_output_dir/phone/ramdisk_resource_config.ini" ]
-  }
-} else {
-  ohos_prebuilt_etc("fstab.required") {
-    source = "fstab.required"
-    part_name = "unionman_products"
-    install_images = [ "system" ]
-    install_enable = true
-  }
+ohos_copy("fstab.required") {
+  sources = [ "fstab.A311D" ]
+  outputs = [ "$root_build_dir/fstab.required" ]
 }
 
 group("init_configs") {
@@ -113,8 +99,4 @@ group("init_configs") {
     ":selinux_config",
     ":udisk_mount.sh",
   ]
-
-  if (enable_ramdisk) {
-    deps += [ ":ramdisk_resource_config.ini" ]
-  }
 }

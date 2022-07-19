@@ -25,4 +25,8 @@ export RAMDISK_ENABLE=$6
 mkdir -p ${2}
 mkdir -p ${3}
 make -f ${4}/kernel/build/kernel.mk
-../kernel/src_tmp/linux-5.10/vendor/amlogic/make-boot.sh ..
+
+if [ -f ${2}/kernel/src_tmp/linux-5.10/arch/arm64/boot/Image.gz ]; then
+	mkdir -p ${2}/kernel/src_tmp/linux-5.10/unionpi_tiger
+	cp -rf ${2}/kernel/src_tmp/linux-5.10/arch/arm64/boot/Image.gz ${2}/kernel/src_tmp/linux-5.10/unionpi_tiger/
+fi

@@ -16,18 +16,21 @@ import("//build/ohos.gni")
 ohos_prebuilt_etc("updater_init.cfg") {
   source = "init.cfg"
   install_images = [ "updater" ]
+  install_enable = true
   part_name = "unionman_products"
 }
 
 ohos_prebuilt_etc("updater_usb_init.cfg") {
   source = "init.usb.cfg"
   install_images = [ "updater" ]
+  install_enable = true
   part_name = "unionman_products"
 }
 
 ohos_prebuilt_etc("updater_init_usb_configfs.cfg") {
   source = "init.usb.configfs.cfg"
   install_images = [ "updater" ]
+  install_enable = true
   part_name = "unionman_products"
 }
 
@@ -35,12 +38,14 @@ ohos_prebuilt_etc("signing_cert.crt") {
   source = "signing_cert.crt"
   module_install_dir = "certificate"
   install_images = [ "updater" ]
+  install_enable = true
   part_name = "unionman_products"
 }
 
 ohos_prebuilt_etc("fstab.updater") {
   source = "fstab.updater"
   install_images = [ "updater" ]
+  install_enable = true
   part_name = "unionman_products"
 }
 
