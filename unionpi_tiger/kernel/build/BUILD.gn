@@ -11,8 +11,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import("//build/ohos.gni")
 import("//build/config/clang/clang.gni")
+import("//build/ohos.gni")
 
 kernel_build_script_dir = "//kernel/linux/linux-5.10"
 kernel_source_dir = "//kernel/linux/linux-5.10"
