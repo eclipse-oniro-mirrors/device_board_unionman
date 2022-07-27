@@ -18,7 +18,7 @@ ohos_executable("aml_reboot") {
   output_name = "aml_reboot"
   sources = [ "aml_reboot.c" ]
 
-  deps = [ "//utils/native/base:utils" ]
+  external_deps = [ "c_utils:utils" ]
   install_enable = true
   install_images = [ "system" ]
 

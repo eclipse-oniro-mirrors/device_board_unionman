@@ -52,15 +52,13 @@ ohos_executable("v4l2_main") {
   ]
 
   external_deps = [
+    "c_utils:utils",
     "hdf_core:libhdf_utils",
     "hiviewdfx_hilog_native:libhilog",
-    "utils_base:utils",
   ]
-  
-  deps = [
-    "//device/soc/amlogic/a311d/hardware/ge2d:libge2d",
-  ]
-  
+
+  deps = [ "//device/soc/amlogic/a311d/hardware/ge2d:libge2d" ]
+
   defines += [ "V4L2_MAIN_TEST" ]
 
   install_enable = true
