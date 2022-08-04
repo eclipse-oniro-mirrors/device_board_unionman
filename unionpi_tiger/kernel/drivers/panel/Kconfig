@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Amlogic driver configuration
+#
+config AMLOGIC_DRM_PANEL
+	bool "Amlogic DRM panel drivers"
+	default n
+	help
+		this option is provided for control amlogic Panel
+		drivers, if you want to use amlogic driver
+		please open it
+
+config DRM_PANEL_CHIPONE_ICN6211
+	tristate "Chipone ICN6211 panel driver"
+	depends on OF
+	depends on DRM_MIPI_DSI
+	depends on AMLOGIC_DRM_PANEL
+	help
+	  Say Y here if you want to enable support for the Chipone
+	  ICN6211 controller for 800x480 LCD panels with MIPI-DSI-RGB
+	  system interfaces, with 2 lane.

@@ -1,0 +1,5 @@
+config AMLOGIC_BATTERY
+	bool "Amlogic Battery support"
+	default y
+	help
+		select y to support amlogic battery
