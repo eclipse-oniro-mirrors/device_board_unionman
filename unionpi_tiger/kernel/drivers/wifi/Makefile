@@ -1,0 +1,1 @@
+obj-y += wifi_dt.o dhd_static_buf.o
