@@ -88,6 +88,7 @@ Note:If the text contains special characters, please escape them according to th
 				<filteritem type="filepath" name="unionpi_tiger/config/.*" desc="init cfg and script file"/>
 				<filteritem type="filepath" name="unionpi_tiger/common/tools/linux/.*" desc="linux binary tools"/>
 				<filteritem type="filepath" name="unionpi_tiger/common/tools/windows/.*" desc="windows exe tools"/>
+				<filteritem type="filepath" name="unionpi_tiger/common/images/.*" desc="all images config"/>
 				<filteritem type="filepath" name="unionpi_tiger/updater/.*" desc="updater config file"/>
 				<filteritem type="filepath" name="unionpi_tiger/wifi/.*" desc="wifi build config file"/>
 			</filefilter>
