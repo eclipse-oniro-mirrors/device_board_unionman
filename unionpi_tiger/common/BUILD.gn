@@ -3,5 +3,8 @@
 import("//build/ohos.gni")
 
 group("common") {
-  deps = [ "reboot:aml_reboot" ]
+  deps = [
+    "images:all_image_conf",
+    "reboot:aml_reboot",
+  ]
 }
