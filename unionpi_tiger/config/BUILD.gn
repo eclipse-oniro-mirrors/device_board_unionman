@@ -22,21 +22,29 @@ ohos_prebuilt_etc("init.without_two_stages.cfg") {
 }
 
 ohos_prebuilt_etc("init.A311D.cfg") {
-  source = "init.A311D.cfg"
+  if (target_cpu == "arm") {
+    source = "init/arm/init.A311D.cfg"
+  } else {
+    source = "init/arm64/init.A311D.cfg"
+  }
   install_images = [ chipset_base_dir ]
   install_enable = true
   part_name = "unionman_products"
 }
 
 ohos_prebuilt_etc("init.A311D.usb.cfg") {
-  source = "init.A311D.usb.cfg"
+  source = "init/init.A311D.usb.cfg"
   install_images = [ chipset_base_dir ]
   install_enable = true
   part_name = "unionman_products"
 }
 
 ohos_prebuilt_executable("init.A311D.sh") {
-  source = "init.A311D.sh"
+  if (target_cpu == "arm") {
+    source = "init/arm/init.A311D.sh"
+  } else {
+    source = "init/arm64/init.A311D.sh"
+  }
   module_install_dir = "bin"
   install_images = [ "vendor" ]
   part_name = "unionman_products"
