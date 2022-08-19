@@ -4,3 +4,5 @@
 #
 
 obj-$(CONFIG_RTL8822CS)	+= rtl88x2cs/
+obj-y += media/
+obj-y += isp/

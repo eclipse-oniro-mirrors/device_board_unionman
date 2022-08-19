@@ -1,68 +1,126 @@
+# Copyright (c) 2022 Unionman Technology Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
 #
-# SPDX-License-Identifier: GPL-2.0
+#     http://www.apache.org/licenses/LICENSE-2.0
 #
-# Copyright (C) 2011-2018 ARM or its affiliates
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; version 2.
-# This program is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-# or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-# for more details.
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
-CONFIG_MODULE_SIG=n
-
-
-#redefine ARCH
-ifeq ($(ARCH),)    
-    _ARCH=arm64
-    $(info "set default ARCH=${_ARCH}")
-else
-    _ARCH=${ARCH}
-endif
-
-#redefine CROSS_COMPILE
-ifeq ($(CROSS_COMPILE),)    
-    $(error "Please export CROSS_COMPILE variable before build")
-else
-    _CROSS_COMPILE=${CROSS_COMPILE}
-endif
-
-#redefine KDIR
-ifeq ($(KDIR),)    
-    $(error "Please export KDIR variable before build")
-else
-    _KDIR=${KDIR}
-endif
+KDIR = $(src)/../../../../../../../../../../out/kernel/src_tmp/linux-5.10
 
 obj-m += iv009_isp_iq.o
 
-ifeq ($(FW_SRC_OBJ),)
-	FW_SRC := $(wildcard src/*.c src/*/*.c src/*/*/*.c app/*.c app/*/*.c)
-	export FW_SRC_OBJ := $(FW_SRC:.c=.o)
+iv009_isp_iq-objs += app/soc_iq.o
+iv009_isp_iq-objs += src/fw_lib/acamera_math.o \
+				src/fw_lib/acamera_logger.o
+iv009_isp_iq-objs += src/calibration/acamera_calibrations_dynamic_linear_imx290_lens_4mm.o \
+				src/calibration/acamera_calibrations_static_linear_imx481.o \
+				src/calibration/acamera_calibrations_static_linear_ov5647.o \
+				src/calibration/acamera_calibrations_static_linear_imx219.o \
+				src/calibration/acamera_calibrations_static_fs_lin_sc4238.o \
+				src/calibration/acamera_calibrations_dynamic_fs_lin_imx335.o \
+				src/calibration/acamera_calibrations_dynamic_fs_lin_os08a10_tv.o \
+				src/calibration/acamera_calibrations_dynamic_linear_ov5647_lens_8mm.o \
+				src/calibration/acamera_calibrations_dynamic_linear_os08a10_ipc.o \
+				src/calibration/acamera_calibrations_static_fs_lin_imx307_demo.o \
+				src/calibration/acamera_calibrations_static_fs_lin_ov5647.o \
+				src/calibration/acamera_calibrations_static_linear_os08a10_tv.o \
+				src/calibration/acamera_calibrations_static_fs_lin_imx290_lens_4mm.o \
+				src/calibration/acamera_calibrations_static_linear_imx290_lens_8mm.o \
+				src/calibration/acamera_calibrations_dynamic_fs_lin_imx224.o \
+				src/calibration/acamera_calibrations_dynamic_linear_ov13858.o \
+				src/calibration/acamera_calibrations_dynamic_linear_imx290_lens_8mm.o \
+				src/calibration/acamera_calibrations_static_linear_imx290.o \
+				src/calibration/acamera_calibrations_dynamic_linear_sc4238.o \
+				src/calibration/acamera_calibrations_static_linear_imx307_demo.o \
+				src/calibration/acamera_calibrations_static_fs_lin_ov5647_lens_4mm.o \
+				src/calibration/acamera_calibrations_dynamic_linear_ov5647.o \
+				src/calibration/acamera_calibrations_dynamic_fs_lin_ov13858.o \
+				src/calibration/acamera_calibrations_dynamic_fs_lin_os08a10_slt.o \
+				src/calibration/acamera_calibrations_dynamic_linear_os08a10.o \
+				src/calibration/acamera_calibrations_static_linear_sc4238.o \
+				src/calibration/acamera_calibrations_dynamic_linear_imx307_demo.o \
+				src/calibration/acamera_calibrations_dynamic_linear_sc2335.o \
+				src/calibration/acamera_calibrations_dynamic_fs_lin_imx290.o \
+				src/calibration/acamera_calibrations_dynamic_linear_imx224.o \
+				src/calibration/acamera_calibrations_static_fs_lin_imx290_lens_8mm.o \
+				src/calibration/acamera_calibrations_static_fs_lin_os08a10_tv.o \
+				src/calibration/acamera_calibrations_dynamic_linear_imx227.o \
+				src/calibration/acamera_calibrations_static_linear_ov5647_slt.o \
+				src/calibration/acamera_calibrations_static_linear_imx227.o \
+				src/calibration/acamera_calibrations_static_fs_lin_os08a10_slt.o \
+				src/calibration/acamera_calibrations_static_linear_dummy.o \
+				src/calibration/acamera_calibrations_dynamic_linear_imx415.o \
+				src/calibration/acamera_calibrations_dynamic_linear_os08a10_slt.o \
+				src/calibration/acamera_calibrations_static_linear_imx307.o \
+				src/calibration/acamera_calibrations_dynamic_fs_lin_dummy.o \
+				src/calibration/acamera_calibrations_dynamic_fs_lin_imx334.o \
+				src/calibration/acamera_calibrations_dynamic_fs_lin_imx415.o \
+				src/calibration/acamera_calibrations_dynamic_fs_lin_imx307_demo.o \
+				src/calibration/acamera_calibrations_dynamic_fs_lin_imx290_lens_8mm.o \
+				src/calibration/acamera_calibrations_static_fs_lin_os08a10_ipc.o \
+				src/calibration/acamera_calibrations_static_linear_sc2232h.o \
+				src/calibration/acamera_calibrations_static_fs_lin_imx415.o \
+				src/calibration/acamera_calibrations_dynamic_linear_dummy.o \
+				src/calibration/acamera_calibrations_static_linear_imx335.o \
+				src/calibration/acamera_calibrations_dynamic_fs_lin_os08a10.o \
+				src/calibration/acamera_calibrations_dynamic_linear_sc2232h.o \
+				src/calibration/acamera_calibrations_dynamic_fs_lin_imx307.o \
+				src/calibration/acamera_calibrations_dynamic_fs_lin_ov5647_lens_8mm.o \
+				src/calibration/acamera_calibrations_dynamic_linear_imx335.o \
+				src/calibration/acamera_calibrations_dynamic_fs_lin_ov5647_lens_4mm.o \
+				src/calibration/acamera_calibrations_dynamic_linear_sc8238cs_tv.o \
+				src/calibration/acamera_calibrations_dynamic_fs_lin_sc4238.o \
+				src/calibration/acamera_calibrations_static_fs_lin_imx307.o \
+				src/calibration/acamera_calibrations_dynamic_linear_imx481.o \
+				src/calibration/acamera_calibrations_static_fs_lin_dummy.o \
+				src/calibration/acamera_calibrations_static_linear_imx415.o \
+				src/calibration/acamera_calibrations_static_linear_ov13858.o \
+				src/calibration/acamera_calibrations_dynamic_linear_os08a10_tv.o \
+				src/calibration/acamera_calibrations_static_linear_os08a10_ipc.o \
+				src/calibration/acamera_calibrations_static_linear_imx334.o \
+				src/calibration/acamera_calibrations_static_linear_sc8238cs_tv.o \
+				src/calibration/acamera_calibrations_dynamic_linear_imx334.o \
+				src/calibration/acamera_calibrations_dynamic_fs_lin_sc8238cs_tv.o \
+				src/calibration/acamera_calibrations_dynamic_linear_ov5647_slt.o \
+				src/calibration/acamera_calibrations_dynamic_linear_ov5647_lens_4mm.o \
+				src/calibration/acamera_calibrations_dynamic_linear_imx290_slt.o \
+				src/calibration/acamera_calibrations_static_fs_lin_sc8238cs_tv.o \
+				src/calibration/acamera_calibrations_static_linear_os08a10.o \
+				src/calibration/acamera_calibrations_static_fs_lin_ov5647_lens_8mm.o \
+				src/calibration/acamera_calibrations_dynamic_linear_imx219.o \
+				src/calibration/acamera_calibrations_static_fs_lin_os08a10.o \
+				src/calibration/acamera_calibrations_static_linear_imx290_lens_4mm.o \
+				src/calibration/acamera_calibrations_dynamic_fs_lin_ov5647.o \
+				src/calibration/acamera_calibrations_dynamic_fs_lin_imx290_lens_4mm.o \
+				src/calibration/acamera_calibrations_dynamic_linear_imx290.o \
+				src/calibration/acamera_calibrations_dynamic_fs_lin_os08a10_ipc.o \
+				src/calibration/acamera_calibrations_static_linear_ov5647_lens_4mm.o \
+				src/calibration/acamera_calibrations_static_fs_lin_imx290.o \
+				src/calibration/acamera_get_calibrations_dummy.o \
+				src/calibration/acamera_calibrations_static_fs_lin_imx224.o \
+				src/calibration/acamera_calibrations_static_linear_os08a10_slt.o \
+				src/calibration/acamera_calibrations_static_fs_lin_ov13858.o \
+				src/calibration/acamera_calibrations_dynamic_linear_imx307.o \
+				src/calibration/acamera_calibrations_static_linear_imx290_slt.o \
+				src/calibration/acamera_calibrations_static_linear_imx224.o \
+				src/calibration/acamera_calibrations_static_linear_ov5647_lens_8mm.o \
+				src/calibration/acamera_calibrations_static_linear_sc2335.o \
+				src/calibration/acamera_calibrations_static_fs_lin_imx334.o \
+				src/calibration/acamera_calibrations_static_fs_lin_imx335.o
+iv009_isp_iq-objs += src/platform/system_timer.o \
+				src/platform/system_stdlib.o \
+				src/platform/system_log.o
 
-	ifneq ($(wildcard src/fw_lib/libacamera_isp.a),) 
-		export FW_SRC_OBJ := $(FW_SRC_OBJ) src/fw_lib/libacamera_isp.a
-	endif
-##$(info ### FW_SRC_OBJ is: $(FW_SRC_OBJ))	
-endif
+#INCLUDE_DIRS := $(addprefix -I,$(shell find ../ -type d ))
 
-iv009_isp_iq-objs += $(FW_SRC_OBJ) 
-
-INCLUDE_DIRS := $(addprefix -I,$(shell find ../ -type d ))
-
-ccflags-y:=-I$(PWD)/app -I$(PWD)/inc -I$(PWD)/app/control -I$(PWD)/inc/api -I$(PWD)/inc/isp -I$(PWD)/inc/sys -I$(PWD)/src/platform -I$(PWD)/src/fw  -I$(PWD)/src/fw_lib -I$(PWD)/src/calibration -I$(PWD)/src/driver/sensor -I$(PWD)/src/driver/lens -I$(_KDIR)/include/linux/
+ccflags-y:=-I$(src)/app -I$(src)/inc -I$(src)/app/control -I$(src)/inc/api -I$(src)/inc/isp -I$(src)/inc/sys -I$(src)/src/platform -I$(src)/src/fw  -I$(src)/src/fw_lib -I$(src)/src/calibration -I$(src)/src/driver/sensor -I$(src)/src/driver/lens -I$(KDIR)/include/linux/
 
 ccflags-y += -Wno-declaration-after-statement -Wno-error
 
-all:
-		CROSS_COMPILE=${_CROSS_COMPILE} make ARCH=${_ARCH} -C $(_KDIR) M=$(PWD) modules
-
-clean:
-		CROSS_COMPILE=${_CROSS_COMPILE} make ARCH=${_ARCH} -C $(_KDIR) M=$(PWD) clean
 

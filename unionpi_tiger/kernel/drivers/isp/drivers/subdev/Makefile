@@ -11,4 +11,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-obj-y	+=	encoder/
+obj-y += iq/
+obj-y += lens/
+obj-y += sensor/

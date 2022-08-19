@@ -1,0 +1,5 @@
+config MEDIA
+	tristate "media"
+	help
+	  Help message of media
+        default m
