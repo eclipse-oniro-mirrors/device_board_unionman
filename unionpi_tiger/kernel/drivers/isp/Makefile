@@ -11,23 +11,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-.PHONY: all clean
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-##########################################################################################
-#	compile config
-##########################################################################################
-
-.PHONY: all clean
-
-#++++++++++++++++++++++++++++++++++++++++++++++++++++
-#	Target Compile
-#++++++++++++++++++++++++++++++++++++++++++++++++++++
-all:
-	@echo "Modules ..."
-	@sh ./drivers/mkmod
-
-clean:
-	@echo "Clean ..."
-	@sh ./drivers/mkmod_clean
+obj-y += drivers/
 
