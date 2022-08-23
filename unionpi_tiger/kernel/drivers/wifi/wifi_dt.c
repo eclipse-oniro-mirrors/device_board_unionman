@@ -393,8 +393,8 @@ static int wifi_dev_probe(struct platform_device *pdev)
             plat->interrupt_pin = 0;
         } else {
             desc = of_get_named_gpio_flags(pdev->dev.of_node, "interrupt_pin", 0, NULL);
-            plat->interrupt_desc = gpio_to_desc(*desc);
-            plat->interrupt_pin = *desc;
+            plat->interrupt_desc = gpio_to_desc(desc);
+            plat->interrupt_pin = desc;
     
             ret = of_property_read_string(pdev->dev.of_node, "irq_trigger_type", &value);
             if (ret) {
@@ -427,8 +427,8 @@ static int wifi_dev_probe(struct platform_device *pdev)
             plat->power_on_pin_OD = 0;
         } else {
             desc = of_get_named_gpio_flags(pdev->dev.of_node, "power_on_pin", 0, NULL);
-            plat->power_desc = gpio_to_desc(*desc);
-            plat->power_on_pin = *desc;
+            plat->power_desc = gpio_to_desc(desc);
+            plat->power_on_pin = desc;
         }
 
         ret = of_property_read_u32(pdev->dev.of_node, "power_on_pin_level", &plat->power_on_pin_level);
@@ -446,7 +446,7 @@ static int wifi_dev_probe(struct platform_device *pdev)
             plat->power_on_pin2 = 0;
         } else {
             desc = of_get_named_gpio_flags(pdev->dev.of_node, "power_on_pin2", 0, NULL);
-            plat->power_on_pin2 = *desc;
+            plat->power_on_pin2 = desc;
         }
 
         if (of_get_property(pdev->dev.of_node, "dhd_static_buf", NULL)) {
