@@ -1,0 +1,54 @@
+{
+    "install_list": [
+        {
+            "bundleName": "com.example.kikakeyboard",
+            "singleton": true,
+            "keepAlive": true,
+            "bootable": false,
+            "runningResourcesApply": false,
+            "associatedWakeUp": false,
+            "app_signature" : [],
+            "allowCommontEvent": []
+        },
+        {
+            "bundleName": "com.ohos.systemui",
+            "singleton": true,
+            "keepAlive": true,
+            "bootable": false,
+            "runningResourcesApply": false,
+            "associatedWakeUp": false
+        },
+        {
+            "bundleName": "com.ohos.callui",
+            "singleton": true,
+            "keepAlive": true
+        },
+        {
+            "bundleName": "com.ohos.mms",
+            "singleton": true,
+            "keepAlive": true
+        },
+        {
+            "bundleName": "com.ohos.screenlock",
+            "singleton": true,
+            "keepAlive": true
+        },
+        {
+            "bundleName": "com.ohos.settingsdata",
+            "singleton": true,
+            "keepAlive": true
+        },
+        {
+            "bundleName": "ohos.backgroundtaskmgr.resources",
+            "singleton": true
+        },
+        {
+            "bundleName": "ohos.global.systemres",
+            "singleton": true
+        },
+        {
+            "bundleName": "com.ohos.launcher",
+            "keepAlive": true
+        }
+    ]
+}
