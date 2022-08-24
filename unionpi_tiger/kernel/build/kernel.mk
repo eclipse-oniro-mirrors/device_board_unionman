@@ -64,9 +64,9 @@ KERNEL_MAKE := \
     PATH="$$PATH" \
     $(KERNEL_PREBUILT_MAKE)
 
-KERNEL_PATCH_FILE := $(DEVICE_PATH)/../../../../kernel/linux/patches/linux-5.10/unionpi_tiger_pacth/linux-5.10.patch
+KERNEL_PATCH_FILE := $(DEVICE_PATH)/kernel/build/linux-5.10.patch
 HDF_PATCH_FILE := $(DEVICE_PATH)/../../../../kernel/linux/patches/linux-5.10/unionpi_tiger_pacth/hdf.patch
-KERNEL_CONFIG_FILE := $(DEVICE_PATH)/../../../../kernel/linux/config/linux-5.10/arch/arm64/configs/unionpi_tiger_standard_defconfig
+KERNEL_CONFIG_FILE := $(DEVICE_PATH)/kernel/build/unionpi_tiger_standard_defconfig
 KERNEL_LOGO_FILE := $(DEVICE_PATH)/resource/logo/logo.ppm
 
 ifeq ($(KERNEL_ARCH), arm)
@@ -81,13 +81,16 @@ export KBUILD_OUTPUT=$(KERNEL_OBJ_TMP_PATH)
 $(KERNEL_IMAGE_FILE):
 	@rm -rf $(KERNEL_SRC_TMP_PATH);mkdir -p $(KERNEL_SRC_TMP_PATH);cp -arfL $(KERNEL_SRC_PATH)/* $(KERNEL_SRC_TMP_PATH)/
 	@cd $(KERNEL_SRC_TMP_PATH) && patch -p1 < $(KERNEL_PATCH_FILE)
+	@rm -rf $(DEVICE_PATH)/../../../../device/soc/amlogic/a311d/soc/drivers
 	@$(DEVICE_PATH)/kernel/build/patch_hdf.sh $(OHOS_ROOT_PATH) $(KERNEL_SRC_TMP_PATH) $(HDF_PATCH_FILE)
 	@cp -rf $(KERNEL_LOGO_FILE) $(KERNEL_SRC_TMP_PATH)/drivers/video/logo/logo_linux_clut224.ppm
 	@cp -rf $(KERNEL_CONFIG_FILE) $(KERNEL_SRC_TMP_PATH)/arch/arm64/configs/defconfig
 	@$(KERNEL_MAKE) -C $(KERNEL_SRC_TMP_PATH) ARCH=$(KERNEL_ARCH) TEXT_OFFSET=0x01080000 $(KERNEL_CROSS_COMPILE) $(DEFCONFIG_FILE)
 	@$(KERNEL_MAKE) -C $(KERNEL_SRC_TMP_PATH) ARCH=$(KERNEL_ARCH) TEXT_OFFSET=0x01080000 $(KERNEL_CROSS_COMPILE) modules_prepare
 	$(KERNEL_MAKE) -C $(KERNEL_SRC_TMP_PATH) ARCH=$(KERNEL_ARCH) TEXT_OFFSET=0x01080000 $(KERNEL_CROSS_COMPILE) -j128 modules Image Image.gz dtbs
-	@$(DEVICE_PATH)/common/tools/linux/dtbTool -o $(IMAGES_PATH)/dtb.img $(KERNEL_OBJ_TMP_PATH)/arch/arm64/boot/dts/amlogic/ > /dev/null
+	if [ -f $(KERNEL_OBJ_TMP_PATH)/vendor/arch/arm64/boot/dts/amlogic/meson-g12b-unionpi-tiger.dtb ]; then \
+		$(DEVICE_PATH)/common/tools/linux/dtbTool -o $(IMAGES_PATH)/dtb.img $(KERNEL_OBJ_TMP_PATH)/vendor/arch/arm64/boot/dts/amlogic/ > /dev/null; \
+	fi
 	@gzip $(IMAGES_PATH)/dtb.img
 	@mv $(IMAGES_PATH)/dtb.img.gz $(IMAGES_PATH)/dtb.img
 ifeq ($(RAMDISK_ENABLE), false)
