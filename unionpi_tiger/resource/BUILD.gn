@@ -23,5 +23,8 @@ ohos_prebuilt_etc("bootanimation-800x480") {
 }
 
 group("resource") {
-  deps = [ ":bootanimation-800x480" ]
+  deps = [
+    ":bootanimation-800x480",
+    "//vendor/unionman/unionpi_tiger/resourceschedule:resourceschedule",
+  ]
 }
