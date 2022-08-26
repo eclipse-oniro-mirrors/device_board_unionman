@@ -54,7 +54,7 @@ ohos_shared_library("camera_v4l2_adapter") {
   include_dirs = [
     "$camera_path/include",
     "include",
-    "//foundation/multimedia/camera_standard/frameworks/native/metadata/include",
+    "//foundation/multimedia/camera_framework/frameworks/native/metadata/include",
     "//drivers/peripheral/camera/interfaces/metadata/include",
     "//device/soc/amlogic/a311d/hardware/ge2d/include",
   ]
