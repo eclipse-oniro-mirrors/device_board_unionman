@@ -565,11 +565,11 @@ static void process_c2h_event(PADAPTER adapter, u8 *c2h, u32 size)
 
 	case CMD_ID_C2H_CUR_CHANNEL:
 	{
-		/*PHAL_DATA_TYPE hal = GET_HAL_DATA(adapter);*/
-		/*struct submit_ctx *chsw_sctx = &hal->chsw_sctx;*/
+		PHAL_DATA_TYPE hal = GET_HAL_DATA(adapter);
+		struct submit_ctx *chsw_sctx = &hal->chsw_sctx;
 
-		/* RTW_INFO("[C2H], CMD_ID_C2H_CUR_CHANNEL!!\n"); */
-		/*rtw_sctx_done(&chsw_sctx);*/
+		RTW_INFO("[C2H], CMD_ID_C2H_CUR_CHANNEL!!\n");
+		rtw_sctx_done(&chsw_sctx);
 		break;
 	}
 

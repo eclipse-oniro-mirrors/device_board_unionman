@@ -66,7 +66,7 @@ static u8 sdio_io(struct dvobj_priv *d, u32 addr, void *buf, size_t len, u8 writ
 		if (write)
 			err = d->intf_ops->write(d, addr_drv, buf, len, 0);
 		else
-			err = d->intf_ops->read(d, addr_drv, buf, len, 0);
+			err = d->intf_ops->read(d, addr_drv, buf, len, 1);
 		if (!err) {
 			if (retry) {
 				RTW_INFO("%s: Retry %s OK! addr=0x%05x %zu bytes, retry=%u,%u\n",
