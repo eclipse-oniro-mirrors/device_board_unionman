@@ -188,7 +188,7 @@ RetCode AMLCodecNode::Flush(const int32_t streamId)
 }
 
 void AMLCodecNode::encodeJpegToMemory(unsigned char* image, int width, int height, \
-    size_t* jpegSize, unsigned char** jpegBuf)
+    unsigned long* jpegSize, unsigned char** jpegBuf)
 {
     struct jpeg_compress_struct cInfo;
     struct jpeg_error_mgr jErr;
@@ -290,7 +290,7 @@ void AMLCodecNode::EncodeForJpeg(std::shared_ptr<IBuffer>& buffer)
     int dmaFd = -1;
     uint8_t *srcBuf = nullptr;
     unsigned char* jBuf = nullptr;
-    size_t jpegSize = 0;
+    unsigned long jpegSize = 0;
     Ge2dCanvasInfo srcInfo;
     Ge2dCanvasInfo dstInfo;
 

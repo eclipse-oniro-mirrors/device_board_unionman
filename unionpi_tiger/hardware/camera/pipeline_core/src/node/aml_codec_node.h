@@ -37,7 +37,7 @@ public:
     RetCode Flush(const int32_t streamId);
 private:
     void encodeJpegToMemory(unsigned char* image, int width, int height,
-            size_t* jpegSize, unsigned char** jpegBuf);
+            unsigned long* jpegSize, unsigned char** jpegBuf);
     void EncodeForPreview(std::shared_ptr<IBuffer>& buffer);
     void EncodeForJpeg(std::shared_ptr<IBuffer>& buffer);
     void EncodeForVideo(std::shared_ptr<IBuffer>& buffer);
