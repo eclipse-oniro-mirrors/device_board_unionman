@@ -119,9 +119,18 @@ ohos_prebuilt_etc("install_list_permissions_config") {
   part_name = "unionman_products"
 }
 
+ohos_prebuilt_etc("distributed_hardware_components_cfg") {
+  source = "distributedhardware/distributed_hardware_components_cfg.json"
+  install_enable = true
+  module_install_dir = "etc/distributedhardware/"
+  install_images = [ "vendor" ]
+  part_name = "unionman_products"
+}
+
 group("init_configs") {
   deps = [
     ":50.usb.rules",
+    ":distributed_hardware_components_cfg",
     ":fstab.A311D",
     ":fstab.required",
     ":init.A311D.cfg",
