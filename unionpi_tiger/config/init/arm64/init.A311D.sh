@@ -13,4 +13,5 @@
 /system/bin/insmod /vendor/modules/decoder_common.ko
 /system/bin/insmod /vendor/modules/encoder.ko
 /system/bin/insmod /vendor/modules/jpegenc.ko
+/system/bin/chmod 666 /dev/HDF_PLATFORM_*
 LD_LIBRARY_PATH=/vendor/lib64/glibc/ /vendor/bin/iv009_isp &
