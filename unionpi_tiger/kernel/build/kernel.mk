@@ -65,7 +65,7 @@ KERNEL_MAKE := \
     $(KERNEL_PREBUILT_MAKE)
 
 KERNEL_PATCH_FILE := $(DEVICE_PATH)/kernel/build/linux-5.10.patch
-HDF_PATCH_FILE := $(DEVICE_PATH)/../../../../kernel/linux/patches/linux-5.10/unionpi_tiger_pacth/hdf.patch
+HDF_PATCH_FILE := $(DEVICE_PATH)/../../../../kernel/linux/patches/linux-5.10/common_patch/hdf.patch
 KERNEL_CONFIG_FILE := $(DEVICE_PATH)/kernel/build/unionpi_tiger_standard_defconfig
 KERNEL_LOGO_FILE := $(DEVICE_PATH)/resource/logo/logo.ppm
 
