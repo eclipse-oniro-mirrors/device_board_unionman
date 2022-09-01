@@ -22,6 +22,20 @@
 
 #define VOLUME_DEFAULT          (T9015_VOLUME_MAX * 4 / 5)
 
+static const struct AudioSapmRoute g_audioRoutes[] = {
+    { "SPKL", NULL, "SPKL PGA"},
+    { "HPL", NULL, "HPL PGA"},
+    { "HPR", NULL, "HPR PGA"},
+    { "SPKL PGA", "Speaker1 Switch", "DAC1"},
+    { "HPL PGA", "Headphone1 Switch", "DAC2"},
+    { "HPR PGA", "Headphone2 Switch", "DAC3"},
+
+    { "ADCL", NULL, "LPGA"},
+    { "ADCR", NULL, "RPGA"},
+    { "LPGA", "LPGA MIC Switch", "MIC1"},
+    { "RPGA", "RPGA MIC Switch", "MIC2"},
+};
+
 static int32_t A311DGetCtrlOps(const struct AudioKcontrol *kcontrol, struct AudioCtrlElemValue *elemValue)
 {
     struct AudioMixerControl *mixerCtrl = NULL;
@@ -96,6 +110,27 @@ int32_t A311DCodecDeviceInit(struct AudioCard *audioCard, const struct CodecDevi
 
     if (AudioAddControls(audioCard, device->devData->controls, device->devData->numControls) != HDF_SUCCESS) {
         AUDIO_DRIVER_LOG_ERR("add controls failed.");
+        return HDF_FAILURE;
+    }
+
+    if (AudioSapmNewComponents(audioCard, device->devData->sapmComponents,
+        device->devData->numSapmComponent) != HDF_SUCCESS) {
+        AUDIO_DRIVER_LOG_ERR("new components failed.");
+        return HDF_FAILURE;
+    }
+
+    if (AudioSapmAddRoutes(audioCard, g_audioRoutes, HDF_ARRAY_SIZE(g_audioRoutes)) != HDF_SUCCESS) {
+        AUDIO_DRIVER_LOG_ERR("add route failed.");
+        return HDF_FAILURE;
+    }
+
+    if (AudioSapmNewControls(audioCard) != HDF_SUCCESS) {
+        AUDIO_DRIVER_LOG_ERR("add sapm controls failed.");
+        return HDF_FAILURE;
+    }
+
+    if (AudioSapmSleep(audioCard) != HDF_SUCCESS) {
+        AUDIO_DRIVER_LOG_ERR("add sapm sleep modular failed.");
         return HDF_FAILURE;
     }
 
