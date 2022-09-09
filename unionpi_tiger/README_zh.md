@@ -101,7 +101,7 @@ pip3 install -i https://repo.huaweicloud.com/repository/pypi/simple requests
 
 **获取源码操作步骤**
 
-1） 通过repo + ssh 下载（需注册公钥，请参考码云帮助中心）。
+1） 通过repo + ssh 下载（需注册公钥，请参考码云帮助中心）：
 
 ```shell
 repo init -u git@gitee.com:openharmony/manifest.git -b master --no-repo-verify
@@ -109,7 +109,7 @@ repo sync -c
 repo forall -c 'git lfs pull'
 ```
 
-2） 通过repo + https 下载。
+2） 通过repo + https 下载：
 
 ```shell
 repo init -u https://gitee.com/openharmony/manifest.git -b master --no-repo-verify
@@ -119,7 +119,7 @@ repo forall -c 'git lfs pull'
 
 **执行prebuilts**
 
-在源码根目录下执行脚本，安装编译器及二进制工具。
+在源码根目录下执行脚本，安装编译器及二进制工具：
 
 ```shell
 bash build/prebuilts_download.sh
@@ -133,7 +133,7 @@ bash build/prebuilts_download.sh
 
 在Linux环境进行如下操作:
 
-1） 进入源码根目录，执行如下命令进行版本编译。
+1） 进入源码根目录，执行如下命令进行版本编译：
 
 ```shell
 ./build.sh --product-name unionpi_tiger –ccache
@@ -157,7 +157,7 @@ out/unionpi_tiger/packages/phone/images/ 目录下。
 ./device/board/unionman/unionpi_tiger/common/tools/packer-unionpi.sh
 ```
 
-打包完成后的镜像名称为OpenHarmony.img, 也生成在out/unionpi_tiger/packages/phone/images/ 目录下。
+打包完成后的镜像名称为OpenHarmony.img, 也生成在out/unionpi_tiger/packages/phone/images/ 目录下：
 
 > 1.该步骤每次编译完成后执行一次即可；
 > 
