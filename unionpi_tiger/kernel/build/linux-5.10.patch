@@ -8182,3 +8182,418 @@ diff -Naur a/scripts/dtc/include-prefixes/dt-bindings/clock/g12a-clkc.h b/script
 +#define CLKID_HEVCF_MUX					285
 +	
  #endif /* __G12A_CLKC_H */
+diff --git a/drivers/clk/meson/g12a-vcodec-clk.c b/drivers/clk/meson/g12a-vcodec-clk.c
+index e3e30a038..509d1b21e 100644
+--- a/drivers/clk/meson/g12a-vcodec-clk.c
++++ b/drivers/clk/meson/g12a-vcodec-clk.c
+@@ -429,6 +429,80 @@ static struct clk_mux hevcf_mux = {
+ 	},
+ };
+ 
++static const char * const vpu_clkb_tmp_parent_names[] = { "vpu",
++	"fclk_div4", "fclk_div5", "fclk_div7"};
++
++static struct clk_mux vpu_clkb_tmp_mux = {
++	.reg = (void *)HHI_VPU_CLKB_CNTL,
++	.mask = 0x3,
++	.shift = 20,
++	.lock = &meson_clk_lock,
++	.hw.init = &(struct clk_init_data){
++		.name = "vpu_clkb_tmp_mux",
++		.ops = &clk_mux_ops,
++		.parent_names = vpu_clkb_tmp_parent_names,
++		.num_parents = ARRAY_SIZE(vpu_clkb_tmp_parent_names),
++		.flags = CLK_GET_RATE_NOCACHE,
++	},
++};
++
++static struct clk_divider vpu_clkb_tmp_div = {
++	.reg = (void *)HHI_VPU_CLKB_CNTL,
++	.shift = 16,
++	.width = 4,
++	.lock = &meson_clk_lock,
++	.hw.init = &(struct clk_init_data){
++		.name = "vpu_clkb_tmp_div",
++		.ops = &clk_divider_ops,
++		.parent_names = (const char *[]){ "vpu_clkb_tmp_mux" },
++		.num_parents = 1,
++		.flags = CLK_GET_RATE_NOCACHE,
++	},
++};
++
++static struct clk_gate vpu_clkb_tmp_gate = {
++	.reg = (void *)HHI_VPU_CLKB_CNTL,
++	.bit_idx = 24,
++	.lock = &meson_clk_lock,
++	.hw.init = &(struct clk_init_data) {
++		.name = "vpu_clkb_tmp_gate",
++		.ops = &clk_gate_ops,
++		.parent_names = (const char *[]){ "vpu_clkb_tmp_div" },
++		.num_parents = 1,
++		.flags = CLK_GET_RATE_NOCACHE,
++	},
++};
++
++static const char * const vpu_clkb_parent_names[]
++						= { "vpu_clkb_tmp_composite" };
++
++static struct clk_divider vpu_clkb_div = {
++	.reg = (void *)HHI_VPU_CLKB_CNTL,
++	.shift = 0,
++	.width = 8,
++	.lock = &meson_clk_lock,
++	.hw.init = &(struct clk_init_data){
++		.name = "vpu_clkb_div",
++		.ops = &clk_divider_ops,
++		.parent_names = (const char *[]){ "vpu_clkb_tmp_composite" },
++		.num_parents = 1,
++		.flags = CLK_GET_RATE_NOCACHE,
++	},
++};
++
++static struct clk_gate vpu_clkb_gate = {
++	.reg = (void *)HHI_VPU_CLKB_CNTL,
++	.bit_idx = 8,
++	.lock = &meson_clk_lock,
++	.hw.init = &(struct clk_init_data) {
++		.name = "vpu_clkb_gate",
++		.ops = &clk_gate_ops,
++		.parent_names = (const char *[]){ "vpu_clkb_div" },
++		.num_parents = 1,
++		.flags = CLK_GET_RATE_NOCACHE,
++	},
++};
++
+ void meson_g12a_vcodec_init(struct clk_hw **clk_hws, void __iomem *clk_base)
+ {
+ 	/* cts_vdec_clk */
+@@ -467,6 +541,13 @@ void meson_g12a_vcodec_init(struct clk_hw **clk_hws, void __iomem *clk_base)
+ 	hevcf_p1_gate.reg = clk_base + (unsigned long)(hevcf_p1_gate.reg);
+ 	hevcf_mux.reg = clk_base + (unsigned long)(hevcf_mux.reg);
+ 
++	vpu_clkb_tmp_mux.reg = clk_base + (unsigned long)(vpu_clkb_tmp_mux.reg);
++	vpu_clkb_tmp_div.reg = clk_base + (unsigned long)(vpu_clkb_tmp_div.reg);
++	vpu_clkb_tmp_gate.reg = clk_base + (unsigned long)(vpu_clkb_tmp_gate.reg);
++	
++	vpu_clkb_div.reg = clk_base + (unsigned long)(vpu_clkb_div.reg);
++	vpu_clkb_gate.reg = clk_base + (unsigned long)(vpu_clkb_gate.reg);
++	
+ 	/* cts_vdec_clk */
+ 	clk_hws[CLKID_VDEC_P0_COMP] = clk_hw_register_composite(NULL,
+ 		"vdec_p0_composite",
+@@ -619,6 +700,32 @@ void meson_g12a_vcodec_init(struct clk_hw **clk_hws, void __iomem *clk_base)
+ 		panic("%s: %d clk_hw_register hevcf_mux error\n",
+ 			__func__, __LINE__);
+ 
++	clk_hws[CLKID_VPU_CLKB_TMP_COMP] = clk_hw_register_composite(NULL,
++			"vpu_clkb_tmp_composite",
++			vpu_clkb_tmp_parent_names, 4,
++			&vpu_clkb_tmp_mux.hw,
++			&clk_mux_ops,
++			&vpu_clkb_tmp_div.hw,
++			&clk_divider_ops,
++			&vpu_clkb_tmp_gate.hw,
++			&clk_gate_ops, 0);
++	if (IS_ERR(clk_hws[CLKID_VPU_CLKB_TMP_COMP]))
++		panic("%s: %d clk_register_composite vpu_clkb_tmp_composite error\n",
++			__func__, __LINE__);
++
++	clk_hws[CLKID_VPU_CLKB_COMP] = clk_hw_register_composite(NULL,
++			"vpu_clkb_composite",
++			vpu_clkb_parent_names, 1,
++			NULL,
++			NULL,
++			&vpu_clkb_div.hw,
++			&clk_divider_ops,
++			&vpu_clkb_gate.hw,
++			&clk_gate_ops, 0);
++	if (IS_ERR(clk_hws[CLKID_VPU_CLKB_COMP]))
++		panic("%s: %d clk_register_composite vpu_clkb_composite error\n",
++			__func__, __LINE__);
++
+ 	pr_info("%s: register meson media clk\n", __func__);
+ }
+ 
+diff --git a/drivers/clk/meson/g12a.c b/drivers/clk/meson/g12a.c
+index bc10156db..8f7e04e32 100644
+--- a/drivers/clk/meson/g12a.c
++++ b/drivers/clk/meson/g12a.c
+@@ -5360,37 +5360,6 @@ static int meson_g12a_dvfs_setup_common(struct platform_device *pdev,
+ 
+ 	xtal = clk_hw_get_parent_by_index(hws[CLKID_CPU_CLK_DYN1_SEL], 0);
+ 
+-	/* Setup clock notifier for cpu_clk_postmux0 */
+-	g12a_cpu_clk_postmux0_nb_data.xtal = xtal;
+-	notifier_clk_name = clk_hw_get_name(&g12a_cpu_clk_postmux0.hw);
+-	notifier_clk = __clk_lookup(notifier_clk_name);
+-	ret = clk_notifier_register(notifier_clk,
+-				    &g12a_cpu_clk_postmux0_nb_data.nb);
+-	if (ret) {
+-		dev_err(&pdev->dev, "failed to register the cpu_clk_postmux0 notifier\n");
+-		return ret;
+-	}
+-
+-	/* Setup clock notifier for cpu_clk_dyn mux */
+-	notifier_clk_name = clk_hw_get_name(&g12a_cpu_clk_dyn.hw);
+-	notifier_clk = __clk_lookup(notifier_clk_name);
+-	ret = clk_notifier_register(notifier_clk, &g12a_cpu_clk_mux_nb);
+-	if (ret) {
+-		dev_err(&pdev->dev, "failed to register the cpu_clk_dyn notifier\n");
+-		return ret;
+-	}
+-
+-	return 0;
+-}
+-
+-static int meson_g12b_dvfs_setup(struct platform_device *pdev)
+-{
+-	struct clk_hw **hws = g12b_hw_onecell_data.hws;
+-	const char *notifier_clk_name;
+-	struct clk *notifier_clk;
+-	struct clk_hw *xtal;
+-	int ret;
+-	
+ 	void __iomem *clk_base;
+ 
+ 	clk_base = of_iomap(of_get_parent(pdev->dev.of_node), 0);
+@@ -5442,6 +5411,37 @@ static int meson_g12b_dvfs_setup(struct platform_device *pdev)
+ 
+ 	meson_g12a_vcodec_init(hws, clk_base);
+ 	
++	/* Setup clock notifier for cpu_clk_postmux0 */
++	g12a_cpu_clk_postmux0_nb_data.xtal = xtal;
++	notifier_clk_name = clk_hw_get_name(&g12a_cpu_clk_postmux0.hw);
++	notifier_clk = __clk_lookup(notifier_clk_name);
++	ret = clk_notifier_register(notifier_clk,
++				    &g12a_cpu_clk_postmux0_nb_data.nb);
++	if (ret) {
++		dev_err(&pdev->dev, "failed to register the cpu_clk_postmux0 notifier\n");
++		return ret;
++	}
++
++	/* Setup clock notifier for cpu_clk_dyn mux */
++	notifier_clk_name = clk_hw_get_name(&g12a_cpu_clk_dyn.hw);
++	notifier_clk = __clk_lookup(notifier_clk_name);
++	ret = clk_notifier_register(notifier_clk, &g12a_cpu_clk_mux_nb);
++	if (ret) {
++		dev_err(&pdev->dev, "failed to register the cpu_clk_dyn notifier\n");
++		return ret;
++	}
++
++	return 0;
++}
++
++static int meson_g12b_dvfs_setup(struct platform_device *pdev)
++{
++	struct clk_hw **hws = g12b_hw_onecell_data.hws;
++	const char *notifier_clk_name;
++	struct clk *notifier_clk;
++	struct clk_hw *xtal;
++	int ret;
++
+ 	ret = meson_g12a_dvfs_setup_common(pdev, hws);
+ 	if (ret)
+ 		return ret;
+diff --git a/drivers/clk/meson/g12a.h b/drivers/clk/meson/g12a.h
+index 2b736f19f..8b3128cc3 100644
+--- a/drivers/clk/meson/g12a.h
++++ b/drivers/clk/meson/g12a.h
+@@ -269,7 +269,7 @@
+ #define CLKID_NNA_CORE_CLK_DIV			266
+ #define CLKID_MIPI_DSI_PXCLK_DIV		268
+ 
+-#define NR_CLKS					286
++#define NR_CLKS					288
+ 
+ /* include the CLKIDs that have been made part of the DT binding */
+ #include <dt-bindings/clock/g12a-clkc.h>
+diff --git a/drivers/gpu/drm/meson/meson_crtc.c b/drivers/gpu/drm/meson/meson_crtc.c
+index 6e4fa60bc..be8931219 100644
+--- a/drivers/gpu/drm/meson/meson_crtc.c
++++ b/drivers/gpu/drm/meson/meson_crtc.c
+@@ -46,6 +46,10 @@ struct meson_crtc {
+ };
+ #define to_meson_crtc(x) container_of(x, struct meson_crtc, base)
+ 
++static bool s_force_commit = false;
++static bool s_force_osd1_disable = false;
++static bool s_force_video_zorder_up = false;
++
+ /* CRTC */
+ 
+ static int meson_crtc_enable_vblank(struct drm_crtc *crtc)
+@@ -82,6 +86,9 @@ static const struct drm_crtc_funcs meson_crtc_funcs = {
+ 
+ };
+ 
++struct drm_display_mode meson_display_mode = { 0 };
++EXPORT_SYMBOL(meson_display_mode);
++
+ static void meson_g12a_crtc_atomic_enable(struct drm_crtc *crtc,
+ 					  struct drm_crtc_state *old_crtc_state)
+ {
+@@ -130,6 +137,8 @@ static void meson_g12a_crtc_atomic_enable(struct drm_crtc *crtc,
+ 			priv->io_base + _REG(VPP_OUT_H_V_SIZE));
+ 
+ 	drm_crtc_vblank_on(crtc);
++
++	memcpy(&meson_display_mode, &crtc_state->mode, sizeof(meson_display_mode));
+ }
+ 
+ static void meson_crtc_atomic_enable(struct drm_crtc *crtc,
+@@ -302,8 +311,13 @@ static void meson_g12a_crtc_enable_osd1(struct meson_drm *priv)
+ 	writel_relaxed(priv->viu.osd_blend_din0_scope_v,
+ 		       priv->io_base +
+ 		       _REG(VIU_OSD_BLEND_DIN0_SCOPE_V));
+-	writel_bits_relaxed(OSD_BLEND_POSTBLD_SRC_OSD1, OSD_BLEND_POSTBLD_SRC_OSD1,
+-			    priv->io_base + _REG(OSD1_BLEND_SRC_CTRL));
++	if (s_force_video_zorder_up) {
++		writel_bits_relaxed(0xF << 8, OSD_BLEND_POSTBLD_SRC_VD1,
++				priv->io_base + _REG(OSD1_BLEND_SRC_CTRL));
++	} else {
++		writel_bits_relaxed(OSD_BLEND_POSTBLD_SRC_OSD1, OSD_BLEND_POSTBLD_SRC_OSD1,
++				priv->io_base + _REG(OSD1_BLEND_SRC_CTRL));
++	}
+ }
+ 
+ static void meson_g12a_crtc_enable_osd2(struct meson_drm *priv)
+@@ -349,8 +363,22 @@ void meson_crtc_irq(struct meson_drm *priv)
+ 	struct meson_crtc *meson_crtc = to_meson_crtc(priv->crtc);
+ 	unsigned long flags;
+ 
++	if (s_force_commit) {
++		s_force_commit = false;
++		priv->viu.osd1_commit = true;
++		if (s_force_osd1_disable) {
++			writel_bits_relaxed(OSD_BLEND_POSTBLD_SRC_OSD1, 0,
++					priv->io_base + _REG(OSD1_BLEND_SRC_CTRL));
++		} else if (s_force_video_zorder_up) {
++			writel_bits_relaxed(0xF << 8, OSD_BLEND_POSTBLD_SRC_VD1,
++					priv->io_base + _REG(OSD1_BLEND_SRC_CTRL)); // OSD1 postblend src -> vd1
++			writel_bits_relaxed(0xF << 8, OSD_BLEND_POSTBLD_SRC_OSD1,
++					priv->io_base + _REG(VD1_BLEND_SRC_CTRL)); // VD1 postblend src -> osd1
++		}
++	}
++
+ 	/* Update the OSD registers */
+-	if (priv->viu.osd1_enabled && priv->viu.osd1_commit) {
++	if (!s_force_osd1_disable && priv->viu.osd1_enabled && priv->viu.osd1_commit) {
+ 		writel_relaxed(priv->viu.osd1_ctrl_stat,
+ 				priv->io_base + _REG(VIU_OSD1_CTRL_STAT));
+ 		writel_relaxed(priv->viu.osd1_ctrl_stat2,
+@@ -742,12 +770,77 @@ void meson_crtc_irq(struct meson_drm *priv)
+ 	spin_unlock_irqrestore(&priv->drm->event_lock, flags);
+ }
+ 
++static ssize_t enable_osd_store(struct class *class,
++		struct class_attribute *attr,
++		const char *buf, size_t count)
++{
++	pr_info("enable_osd_store: %s\n", buf);
++	int osd1_enabled = 1;
++	if (1 != sscanf(buf, "%d", &osd1_enabled)) {
++		return 0;
++	}
++	s_force_osd1_disable = !osd1_enabled;
++	s_force_commit = true;
++	pr_info("s_force_osd1_disable=%d\n", s_force_osd1_disable);
++	return count;
++}
++
++static ssize_t enable_osd_show(struct class *class,
++		struct class_attribute *attr,
++		char *buf)
++{
++	return sprintf(buf, "%d\n", s_force_osd1_disable ? 0 : 1);
++}
++
++static ssize_t video_zorder_up_store(struct class *class,
++		struct class_attribute *attr,
++		const char *buf, size_t count)
++{
++	pr_info("enable_osd_store: %s\n", buf);
++	int video_zorder_up = 0;
++	if (1 != sscanf(buf, "%d", &video_zorder_up)) {
++		return 0;
++	}
++	s_force_video_zorder_up = video_zorder_up;
++	s_force_commit = true;
++	pr_info("s_force_video_zorder_up=%d\n", s_force_video_zorder_up);
++	return count;
++}
++
++static ssize_t video_zorder_up_show(struct class *class,
++		struct class_attribute *attr,
++		char *buf)
++{
++	return sprintf(buf, "%d\n", s_force_video_zorder_up ? 1 : 0);
++}
++
++static CLASS_ATTR_RW(enable_osd);
++static CLASS_ATTR_RW(video_zorder_up);
++
++
++static struct attribute *meson_crtc_class_attrs[] = {
++	&class_attr_enable_osd.attr,
++	&class_attr_video_zorder_up.attr,
++	NULL
++};
++
++ATTRIBUTE_GROUPS(meson_crtc_class);
++static struct class meson_crtc_class = {
++	.name = "meson_crtc",
++	.class_groups = meson_crtc_class_groups,
++};
++
++
+ int meson_crtc_create(struct meson_drm *priv)
+ {
+ 	struct meson_crtc *meson_crtc;
+ 	struct drm_crtc *crtc;
+ 	int ret;
+ 
++	ret = class_register(&meson_crtc_class);
++	if (ret < 0)
++		return ret;
++
+ 	meson_crtc = devm_kzalloc(priv->drm->dev, sizeof(*meson_crtc),
+ 				  GFP_KERNEL);
+ 	if (!meson_crtc)
+diff --git a/drivers/gpu/drm/meson/meson_drv.c b/drivers/gpu/drm/meson/meson_drv.c
+index c56ef3470..e183017de 100644
+--- a/drivers/gpu/drm/meson/meson_drv.c
++++ b/drivers/gpu/drm/meson/meson_drv.c
+@@ -350,7 +350,7 @@ static int meson_drv_bind_master(struct device *dev, bool has_components)
+ 	if (ret)
+ 		goto exit_afbcd;
+ 
+-	ret = request_irq(priv->vsync_irq, meson_irq, 0, drm->driver->name, drm);
++	ret = request_irq(priv->vsync_irq, meson_irq, IRQF_SHARED, drm->driver->name, drm);
+ 	if (ret)
+ 		goto exit_afbcd;
+ 
+diff --git a/include/dt-bindings/clock/g12a-clkc.h b/include/dt-bindings/clock/g12a-clkc.h
+index d2832f6c2..80b16fa86 100644
+--- a/include/dt-bindings/clock/g12a-clkc.h
++++ b/include/dt-bindings/clock/g12a-clkc.h
+@@ -165,5 +165,8 @@
+ #define CLKID_HEVCF_P0_COMP				283
+ #define CLKID_HEVCF_P1_COMP				284
+ #define CLKID_HEVCF_MUX					285
++
++#define CLKID_VPU_CLKB_TMP_COMP			286
++#define CLKID_VPU_CLKB_COMP				287
+ 	
+ #endif /* __G12A_CLKC_H */
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index e2f00be4b..02c7f491a 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -5713,6 +5713,7 @@ int sched_setscheduler(struct task_struct *p, int policy,
+ {
+ 	return _sched_setscheduler(p, policy, param, true);
+ }
++EXPORT_SYMBOL_GPL(sched_setscheduler);
+ 
+ int sched_setattr(struct task_struct *p, const struct sched_attr *attr)
+ {
