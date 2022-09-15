@@ -8155,33 +8155,6 @@ diff -Naur a/Makefile b/Makefile
  endif
  
  ifneq ($(dtstree),)
-diff -Naur a/scripts/dtc/include-prefixes/dt-bindings/clock/g12a-clkc.h b/scripts/dtc/include-prefixes/dt-bindings/clock/g12a-clkc.h
---- a/scripts/dtc/include-prefixes/dt-bindings/clock/g12a-clkc.h	2022-08-22 12:44:19.372288719 +0800
-+++ b/scripts/dtc/include-prefixes/dt-bindings/clock/g12a-clkc.h	2022-08-23 14:43:08.272199053 +0800
-@@ -147,5 +147,23 @@
- #define CLKID_SPICC1_SCLK			261
- #define CLKID_NNA_AXI_CLK			264
- #define CLKID_NNA_CORE_CLK			267
-+#define CLKID_MIPI_DSI_PXCLK_SEL		269
-+#define CLKID_MIPI_DSI_PXCLK			270
-+#define CLKID_24M						271
-+#define CLKID_MIPI_ISP_CLK_COMP			272
-+#define CLKID_MIPI_CSI_PHY_CLK0_COMP	273
- 
-+#define CLKID_VDEC_P0_COMP				274
-+#define CLKID_VDEC_P1_COMP				275
-+#define CLKID_VDEC_MUX					276
-+#define CLKID_HCODEC_P0_COMP			277
-+#define CLKID_HCODEC_P1_COMP			278
-+#define CLKID_HCODEC_MUX				279
-+#define CLKID_HEVC_P0_COMP				280
-+#define CLKID_HEVC_P1_COMP				281
-+#define CLKID_HEVC_MUX					282
-+#define CLKID_HEVCF_P0_COMP				283
-+#define CLKID_HEVCF_P1_COMP				284
-+#define CLKID_HEVCF_MUX					285
-+	
- #endif /* __G12A_CLKC_H */
 diff --git a/drivers/clk/meson/g12a-vcodec-clk.c b/drivers/clk/meson/g12a-vcodec-clk.c
 index e3e30a038..509d1b21e 100644
 --- a/drivers/clk/meson/g12a-vcodec-clk.c
