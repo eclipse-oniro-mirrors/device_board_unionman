@@ -36,12 +36,12 @@ device/board/unionman
 
 Unionpi-Tiger参考:
 
-- [Unionpi-Tiger](https://gitee.com/openharmony-sig/device_board_unionman/blob/master/unionpi_tiger/README_zh.md)
+- [Unionpi-Tiger](https://gitee.com/openharmony/device_board_unionman/blob/master/unionpi_tiger/README_zh.md)
 
 ## 相关仓
 
 - device_board_unionman
 
-- [vendor_unionman](https://gitee.com/openharmony-sig/vendor_unionman)
+- [vendor_unionman](https://gitee.com/openharmony/vendor_unionman)
 
-- [device_soc_amlogic](https://gitee.com/openharmony-sig/device_soc_amlogic)
+- [device_soc_amlogic](https://gitee.com/openharmony/device_soc_amlogic)
