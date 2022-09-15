@@ -79,7 +79,7 @@ DEFCONFIG_FILE := defconfig
 export KBUILD_OUTPUT=$(KERNEL_OBJ_TMP_PATH)
 
 $(KERNEL_IMAGE_FILE):
-	@rm -rf $(KERNEL_SRC_TMP_PATH);mkdir -p $(KERNEL_SRC_TMP_PATH);cp -arfL $(KERNEL_SRC_PATH)/* $(KERNEL_SRC_TMP_PATH)/
+	@rm -rf $(KERNEL_SRC_TMP_PATH);mkdir -p $(KERNEL_SRC_TMP_PATH);cp -arf $(KERNEL_SRC_PATH)/* $(KERNEL_SRC_TMP_PATH)/
 	@cd $(KERNEL_SRC_TMP_PATH) && patch -p1 < $(KERNEL_PATCH_FILE)
 	@rm -rf $(DEVICE_PATH)/../../../../device/soc/amlogic/a311d/soc/drivers
 	@$(DEVICE_PATH)/kernel/build/patch_hdf.sh $(OHOS_ROOT_PATH) $(KERNEL_SRC_TMP_PATH) $(HDF_PATCH_FILE)
