@@ -122,7 +122,7 @@ static int doBlit(aml_ge2d_t *ge2d, Ge2dCanvasInfo & srcInfo, Ge2dCanvasInfo & d
 
     ret = aml_ge2d_process(pge2dinfo);
     if (ret) {
-        CAMERA_LOGE("aml_ge2d_process() failed. ret=%{bublic}d", ret);
+        CAMERA_LOGE("aml_ge2d_process() failed. ret=%{public}d", ret);
     }
 
     return ret;
