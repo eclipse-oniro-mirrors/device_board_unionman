@@ -155,7 +155,7 @@ static int AlsaOpen(struct AlsaCtx *aCtx)
     }
 
     struct pcm_config config;
-    (void)memcpy_s(&config, sioef(config), &aCtx->config, sizeof(config));
+    (void)memcpy_s(&config, sizeof(config), &aCtx->config, sizeof(config));
     struct pcm *pcm = pcm_open(sound_card_id, sound_dev_id, PCM_IN, &config);
     if (!pcm_is_ready(pcm)) {
         HDF_LOGE("Error: %{public}s() Cannot open PCM_IN(card %{public}d, "
