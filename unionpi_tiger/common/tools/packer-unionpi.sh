@@ -16,6 +16,7 @@
 root_src_dir=$(pwd)
 
 pushd ${root_src_dir}
+wget https://gitee.com/umspark/uboot/releases/download/v2022.09.22/u-boot.bin -O ${root_src_dir}/out/unionpi_tiger/packages/phone/images/u-boot.bin
 cp ${root_src_dir}/device/board/unionman/unionpi_tiger/bootloader/images/* ${root_src_dir}/out/unionpi_tiger/packages/phone/images -rvf
 ${root_src_dir}/device/board/unionman/unionpi_tiger/common/tools/linux/img2simg ${root_src_dir}/out/unionpi_tiger/packages/phone/images/system.img ${root_src_dir}/out/unionpi_tiger/packages/phone/images/system.img2simg
 mv ${root_src_dir}/out/unionpi_tiger/packages/phone/images/system.img2simg ${root_src_dir}/out/unionpi_tiger/packages/phone/images/system.img
