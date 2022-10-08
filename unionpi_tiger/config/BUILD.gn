@@ -127,6 +127,20 @@ ohos_prebuilt_etc("distributed_hardware_components_cfg") {
   part_name = "unionman_products"
 }
 
+ohos_prebuilt_etc("para_for_chip_prod") {
+  source = "etc/para/hardware_unionpi_tiger.para"
+  install_images = [ chip_prod_base_dir ]
+  relative_install_dir = "para"
+  part_name = "unionman_products"
+}
+
+ohos_prebuilt_etc("para_for_sys_prod") {
+  source = "etc/para/product_unionpi_tiger.para"
+  install_images = [ sys_prod_base_dir ]
+  relative_install_dir = "para"
+  part_name = "unionman_products"
+}
+
 group("init_configs") {
   deps = [
     ":50.usb.rules",
@@ -139,6 +153,8 @@ group("init_configs") {
     ":install_list_capability_config",
     ":install_list_config",
     ":install_list_permissions_config",
+    ":para_for_chip_prod",
+    ":para_for_sys_prod",
     ":sdcard_mount.sh",
     ":selinux_config",
     ":udisk_mount.sh",
