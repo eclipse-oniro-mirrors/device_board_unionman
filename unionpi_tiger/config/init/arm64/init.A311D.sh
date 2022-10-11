@@ -2,7 +2,6 @@
 
 /system/bin/insmod /vendor/modules/gpu-sched.ko
 /system/bin/insmod /vendor/modules/panfrost.ko
-/system/bin/insmod /vendor/modules/v4l2-mem2mem.ko
 
 /system/bin/insmod /vendor/modules/iv009_isp_iq.ko
 /system/bin/insmod /vendor/modules/iv009_isp_lens.ko
