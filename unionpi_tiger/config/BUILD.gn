@@ -46,7 +46,7 @@ ohos_prebuilt_executable("init.A311D.sh") {
     source = "init/arm64/init.A311D.sh"
   }
   module_install_dir = "bin"
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
   part_name = "unionman_products"
   install_enable = true
 }
@@ -78,7 +78,7 @@ ohos_prebuilt_etc("sdcard_mount.sh") {
 ohos_prebuilt_etc("fstab.A311D") {
   source = "fstab.A311D"
   part_name = "unionman_products"
-  install_images = [ vendor_base_dir ]
+  install_images = [ chipset_base_dir ]
   install_enable = true
 }
 
@@ -123,7 +123,7 @@ ohos_prebuilt_etc("distributed_hardware_components_cfg") {
   source = "distributedhardware/distributed_hardware_components_cfg.json"
   install_enable = true
   module_install_dir = "etc/distributedhardware/"
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
   part_name = "unionman_products"
 }
 
