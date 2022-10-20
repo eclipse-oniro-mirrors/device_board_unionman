@@ -77,7 +77,7 @@ ohos_shared_library("hdi_audio_interface_lib_capture.alsa") {
     "$hdf_uhdf_path/manager:hdf_devmgr.rc",
   ]
 
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
 
   external_deps = [
     "c_utils:utils",
@@ -122,7 +122,7 @@ ohos_shared_library("hdi_audio_interface_lib_render.alsa") {
     "$hdf_uhdf_path/manager:hdf_devmgr.rc",
   ]
 
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
 
   external_deps = [
     "c_utils:utils",

@@ -27,7 +27,7 @@ config("bt_warnings") {
 
 ohos_prebuilt_etc("rtl8822cs_config") {
   source = "firmware/rtl8822cs_config"
-  install_images = [ vendor_base_dir ]
+  install_images = [ chipset_base_dir ]
   relative_install_dir = "firmware"
   part_name = "unionman_products"
   install_enable = true
@@ -35,7 +35,7 @@ ohos_prebuilt_etc("rtl8822cs_config") {
 
 ohos_prebuilt_etc("rtl8822cs_fw") {
   source = "firmware/rtl8822cs_fw"
-  install_images = [ vendor_base_dir ]
+  install_images = [ chipset_base_dir ]
   relative_install_dir = "firmware"
   part_name = "unionman_products"
   install_enable = true
@@ -43,7 +43,7 @@ ohos_prebuilt_etc("rtl8822cs_fw") {
 
 ohos_prebuilt_etc("rtkbt.conf") {
   source = "firmware/rtkbt.conf"
-  install_images = [ vendor_base_dir ]
+  install_images = [ chipset_base_dir ]
   relative_install_dir = "bluetooth"
   part_name = "unionman_products"
   install_enable = true
