@@ -95,23 +95,23 @@ static int32_t AlsaVolumeUpdate(struct AlsaCtx *aCtx)
 static enum pcm_format ConvertFormatToAlsa(enum AudioFormat format)
 {
     switch (format) {
-        case AUDIO_FORMAT_PCM_8_BIT:
+        case AUDIO_FORMAT_TYPE_PCM_8_BIT:
             return PCM_FORMAT_S8;
-        case AUDIO_FORMAT_PCM_16_BIT:
+        case AUDIO_FORMAT_TYPE_PCM_16_BIT:
             return PCM_FORMAT_S16_LE;
-        case AUDIO_FORMAT_PCM_24_BIT:
+        case AUDIO_FORMAT_TYPE_PCM_24_BIT:
             return PCM_FORMAT_S24_LE;
-        case AUDIO_FORMAT_PCM_32_BIT:
+        case AUDIO_FORMAT_TYPE_PCM_32_BIT:
             return PCM_FORMAT_S32_LE;
-        case AUDIO_FORMAT_AAC_MAIN:
-        case AUDIO_FORMAT_AAC_LC:
-        case AUDIO_FORMAT_AAC_LD:
-        case AUDIO_FORMAT_AAC_ELD:
-        case AUDIO_FORMAT_AAC_HE_V1:
-        case AUDIO_FORMAT_AAC_HE_V2:
-        case AUDIO_FORMAT_G711A:
-        case AUDIO_FORMAT_G711U:
-        case AUDIO_FORMAT_G726:
+        case AUDIO_FORMAT_TYPE_AAC_MAIN:
+        case AUDIO_FORMAT_TYPE_AAC_LC:
+        case AUDIO_FORMAT_TYPE_AAC_LD:
+        case AUDIO_FORMAT_TYPE_AAC_ELD:
+        case AUDIO_FORMAT_TYPE_AAC_HE_V1:
+        case AUDIO_FORMAT_TYPE_AAC_HE_V2:
+        case AUDIO_FORMAT_TYPE_G711A:
+        case AUDIO_FORMAT_TYPE_G711U:
+        case AUDIO_FORMAT_TYPE_G726:
         default:
             return PCM_FORMAT_INVALID;
     }
@@ -199,11 +199,11 @@ static int CheckHwParam(struct AudioHwCaptureParam *handleData)
         return -1;
     }
 
-    if (handleData->frameCaptureMode.attrs.format == AUDIO_FORMAT_PCM_8_BIT &&
+    if (handleData->frameCaptureMode.attrs.format == AUDIO_FORMAT_TYPE_PCM_8_BIT &&
         handleData->frameCaptureMode.attrs.sampleRate == 8000U)
         return -1;
 
-    if (handleData->frameCaptureMode.attrs.format == AUDIO_FORMAT_PCM_32_BIT &&
+    if (handleData->frameCaptureMode.attrs.format == AUDIO_FORMAT_TYPE_PCM_32_BIT &&
         handleData->frameCaptureMode.attrs.sampleRate == 11025U)
         return -1;
 
