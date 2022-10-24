@@ -143,19 +143,19 @@ int32_t A311DDaiStartup(const struct AudioCard *card, const struct DaiDevice *de
 static int32_t FormatToBitWidth(enum AudioFormat format, uint32_t *bitWidth, uint32_t *phyBitWidth)
 {
     switch (format) {
-        case AUDIO_FORMAT_PCM_32_BIT:
+        case AUDIO_FORMAT_TYPE_PCM_32_BIT:
             *bitWidth = BIT_WIDTH32;
             *phyBitWidth = BIT_WIDTH32;
             break;
-        case AUDIO_FORMAT_PCM_24_BIT:
+        case AUDIO_FORMAT_TYPE_PCM_24_BIT:
             *bitWidth = BIT_WIDTH24;
             *phyBitWidth = BIT_WIDTH32;
             break;
-        case AUDIO_FORMAT_PCM_16_BIT:
+        case AUDIO_FORMAT_TYPE_PCM_16_BIT:
             *bitWidth = BIT_WIDTH16;
             *phyBitWidth = BIT_WIDTH16;
             break;
-        case AUDIO_FORMAT_PCM_8_BIT:
+        case AUDIO_FORMAT_TYPE_PCM_8_BIT:
             *bitWidth = BIT_WIDTH8;
             *phyBitWidth = BIT_WIDTH8;
             break;
