@@ -114,6 +114,7 @@ ohos_shared_library("camera_pipeline_core") {
     "//foundation/communication/ipc/ipc/native/src/core/include",
     "//commonlibrary/c_utils/base/include",
     "//drivers/peripheral/camera/interfaces/metadata/include",
+    "//drivers/peripheral/camera/hal/metadata_manager/include",
     "src/node",
 
     # hcs parser
@@ -132,6 +133,7 @@ ohos_shared_library("camera_pipeline_core") {
     "$board_camera_path:params.c",
     "$camera_path/buffer_manager:camera_buffer_manager",
     "$camera_path/device_manager:camera_device_manager",
+    "$camera_path/metadata_manager:camera_metadata_manager",
     "$hdf_uhdf_path/utils:libhdf_utils",
     "//device/soc/amlogic/a311d/hardware/ge2d:libge2d",
     "//device/soc/amlogic/a311d/hardware/media/libvpcodec:libvpcodec",
