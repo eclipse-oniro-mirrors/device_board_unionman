@@ -5788,6 +5788,7 @@ CONFIG_ACCESS_TOKENID=y
 # Vendor Hooks
 #
 CONFIG_VENDOR_HOOKS=y
+CONFIG_OHOS_VENDOR=y
 # end of Vendor Hooks
 # end of Device Drivers
 
