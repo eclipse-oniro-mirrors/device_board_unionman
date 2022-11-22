@@ -143,6 +143,10 @@
         {
             "app_dir" : "/system/app/com.ohos.wallpaper",
             "removable" : true
+        },
+        {
+            "app_dir": "/system/app/com.ohos.sharepickerdialog",
+            "removable": false
         }
     ]
 }
