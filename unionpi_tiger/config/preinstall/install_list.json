@@ -154,7 +154,7 @@
         },
         {
             "app_dir": "/system/app/com.ohos.amsdialog",
-            "removable": true
+            "removable": false
         },
         {
             "app_dir": "/system/app/com.usb.right",
