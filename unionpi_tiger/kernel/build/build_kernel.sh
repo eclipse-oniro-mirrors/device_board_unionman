@@ -15,6 +15,7 @@
 
 echo "Build kernel..."
 set -e
+export PATH=$(realpath ${4}/../../../../)/prebuilts/clang/ohos/linux-x86_64/llvm/bin/:$PATH
 export PRODUCT_COMPANY=unionman
 export DEVICE_NAME=unionpi_tiger
 export KERNEL_OBJ_PATH=$2
@@ -22,11 +23,13 @@ export IMAGES_PATH=$3
 export DEVICE_PATH=$4
 export PRODUCT_PATH=$5
 export RAMDISK_ENABLE=$6
-mkdir -p ${2}
+export KBUILD_OUTPUT=${2}/kernel/OBJ/linux-5.10
+mkdir -p ${2}/kernel/OBJ/linux-5.10
 mkdir -p ${3}
 make -f ${4}/kernel/build/kernel.mk
 
-if [ -f ${2}/kernel/src_tmp/linux-5.10/arch/arm64/boot/Image.gz ]; then
+if [ -f ${2}/kernel/OBJ/linux-5.10/arch/arm64/boot/Image.gz ]; then
 	mkdir -p ${2}/kernel/src_tmp/linux-5.10/unionpi_tiger
-	cp -rf ${2}/kernel/src_tmp/linux-5.10/arch/arm64/boot/Image.gz ${2}/kernel/src_tmp/linux-5.10/unionpi_tiger/
+	cp -rf ${2}/kernel/OBJ/linux-5.10/arch/arm64/boot/Image.gz ${2}/kernel/src_tmp/linux-5.10/unionpi_tiger/
 fi
+

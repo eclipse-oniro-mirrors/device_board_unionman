@@ -20,7 +20,7 @@ BUILD_TYPE = standard
 OHOS_ROOT_PATH = $(realpath $(shell pwd)/../..)
 
 KERNEL_SRC_TMP_PATH := $(KERNEL_OBJ_PATH)/kernel/src_tmp/linux-5.10
-KERNEL_OBJ_TMP_PATH := $(KERNEL_OBJ_PATH)/kernel/src_tmp/linux-5.10
+KERNEL_OBJ_TMP_PATH := $(KERNEL_OBJ_PATH)/kernel/OBJ/linux-5.10
 
 KERNEL_SRC_PATH := $(OHOS_ROOT_PATH)/kernel/linux/${KERNEL_VERSION}
 
@@ -38,7 +38,7 @@ endif
 ifeq ($(KERNEL_ARCH), arm64)
     KERNEL_ARCH := arm64
     KERNEL_TARGET_TOOLCHAIN := $(PREBUILTS_GCC_DIR)/linux-x86/aarch64/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin
-    KERNEL_TARGET_TOOLCHAIN_PREFIX := $(KERNEL_TARGET_TOOLCHAIN)/aarch64-linux-gnu-
+    KERNEL_TARGET_TOOLCHAIN_PREFIX := aarch64-linux-gnu-
 endif
     CLANG_CC := $(CLANG_HOST_TOOLCHAIN)/clang
 else ifeq ($(BUILD_TYPE), small)
@@ -76,8 +76,6 @@ KERNEL_IMAGE_FILE := $(KERNEL_SRC_TMP_PATH)/arch/arm64/boot/uImage
 endif
 DEFCONFIG_FILE := defconfig
 
-export KBUILD_OUTPUT=$(KERNEL_OBJ_TMP_PATH)
-
 $(KERNEL_IMAGE_FILE):
 	@rm -rf $(KERNEL_SRC_TMP_PATH);mkdir -p $(KERNEL_SRC_TMP_PATH);cp -arf $(KERNEL_SRC_PATH)/* $(KERNEL_SRC_TMP_PATH)/
 	@cd $(KERNEL_SRC_TMP_PATH) && patch -p1 < $(KERNEL_PATCH_FILE)
@@ -85,9 +83,11 @@ $(KERNEL_IMAGE_FILE):
 	@$(DEVICE_PATH)/kernel/build/patch_hdf.sh $(OHOS_ROOT_PATH) $(KERNEL_SRC_TMP_PATH) $(HDF_PATCH_FILE)
 	@cp -rf $(KERNEL_LOGO_FILE) $(KERNEL_SRC_TMP_PATH)/drivers/video/logo/logo_linux_clut224.ppm
 	@cp -rf $(KERNEL_CONFIG_FILE) $(KERNEL_SRC_TMP_PATH)/arch/arm64/configs/defconfig
-	@$(KERNEL_MAKE) -C $(KERNEL_SRC_TMP_PATH) ARCH=$(KERNEL_ARCH) TEXT_OFFSET=0x01080000 $(KERNEL_CROSS_COMPILE) $(DEFCONFIG_FILE)
-	@$(KERNEL_MAKE) -C $(KERNEL_SRC_TMP_PATH) ARCH=$(KERNEL_ARCH) TEXT_OFFSET=0x01080000 $(KERNEL_CROSS_COMPILE) modules_prepare
-	$(KERNEL_MAKE) -C $(KERNEL_SRC_TMP_PATH) ARCH=$(KERNEL_ARCH) TEXT_OFFSET=0x01080000 $(KERNEL_CROSS_COMPILE) -j128 modules Image Image.gz dtbs
+	@$(KERNEL_MAKE) -C $(KERNEL_SRC_TMP_PATH) LLVM=1 LLVM_IAS=1 ARCH=$(KERNEL_ARCH) TEXT_OFFSET=0x01080000 $(KERNEL_CROSS_COMPILE) $(DEFCONFIG_FILE)
+	@$(KERNEL_MAKE) -C $(KERNEL_SRC_TMP_PATH) LLVM=1 LLVM_IAS=1 ARCH=$(KERNEL_ARCH) TEXT_OFFSET=0x01080000 $(KERNEL_CROSS_COMPILE) modules_prepare
+	@mkdir -p $(KERNEL_OBJ_TMP_PATH)/vendor/include 
+	@cp -rf $(KERNEL_SRC_TMP_PATH)/vendor/include/* $(KERNEL_OBJ_TMP_PATH)/vendor/include 
+	$(KERNEL_MAKE) -C $(KERNEL_SRC_TMP_PATH) LLVM=1 LLVM_IAS=1 ARCH=$(KERNEL_ARCH) TEXT_OFFSET=0x01080000 $(KERNEL_CROSS_COMPILE) -j128 modules Image Image.gz dtbs
 	if [ -f $(KERNEL_OBJ_TMP_PATH)/vendor/arch/arm64/boot/dts/amlogic/meson-g12b-unionpi-tiger.dtb ]; then \
 		$(DEVICE_PATH)/common/tools/linux/dtbTool -o $(IMAGES_PATH)/dtb.img $(KERNEL_OBJ_TMP_PATH)/vendor/arch/arm64/boot/dts/amlogic/ > /dev/null; \
 	fi
