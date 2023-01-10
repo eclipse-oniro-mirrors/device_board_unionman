@@ -38,6 +38,10 @@
             {
                 "name" : "ohos.permission.SEND_MESSAGES",
                 "userCancellable" : false
+            },
+            {
+                "name" : "ohos.permission.ANSWER_CALL",
+                "userCancellable" : false
             }
         ]
     },
@@ -173,6 +177,50 @@
             },
             {
                 "name" : "ohos.permission.LOCATION_IN_BACKGROUND",
+                "userCancellable" : false
+            },
+            {
+                "name" : "ohos.permission.APPROXIMATELY_LOCATION",
+                "userCancellable" : false
+            }
+        ]
+    },
+    {
+        "bundleName": "cn.openharmony.inputmethodchoosedialog",
+        "app_signature" : ["8E93863FC32EE238060BF69A9B37E2608FFFB21F93C862DD511CBAC9F30024B5"],
+        "permissions" : [
+            {
+                "name" : "ohos.permission.CONNECT_IME_ABILITY",
+                "userCancellable" : false
+            }
+        ]
+    },
+    {
+        "bundleName": "com.huawei.ohos.hiviewx",
+        "app_signature" : ["57D4E9DFE7504D12EB6ACAF39876F420BCABCA2F4721989B90FD2E4F1FB7ED2B"],
+        "permissions" : [
+            {
+                "name" : "ohos.permission.sec.ACCESS_UDID",
+                "userCancellable" : false
+            },
+            {
+                "name" : "ohos.permission.GET_WIFI_INFO",
+                "userCancellable" : false
+            },
+            {
+                "name" : "ohos.permission.GET_NETWORK_INFO",
+                "userCancellable" : false
+            },
+            {
+                "name" : "ohos.permission.INTERNET",
+                "userCancellable" : false
+            },
+            {
+                "name" : "ohos.permission.GET_BUNDLE_INFO_PRIVILEGED",
+                "userCancellable" : false
+            },
+            {
+                "name" : "ohos.permission.READ_DFX_SYSEVENT",
                 "userCancellable" : false
             }
         ]
