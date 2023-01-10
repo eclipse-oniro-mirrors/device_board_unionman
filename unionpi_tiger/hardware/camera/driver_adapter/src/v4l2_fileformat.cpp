@@ -60,7 +60,7 @@ RetCode HosFileFormat::V4L2SearchFormat(int fd, std::vector<DeviceFormat>& fmtDe
                 }
 
                 DeviceFormat currentFormat = {};
-                currentFormat.fmtdesc.description = std::string((char*)enumFmtDesc.description);
+                currentFormat.fmtdesc.description = std::string(reinterpret_cast<char*>(enumFmtDesc.description));
                 currentFormat.fmtdesc.pixelformat = enumFmtDesc.pixelformat;
                 currentFormat.fmtdesc.width = frmSize.discrete.width;
                 currentFormat.fmtdesc.height = frmSize.discrete.height;
@@ -124,12 +124,12 @@ RetCode HosFileFormat::V4L2GetCapability(int fd, const std::string& devName, std
         return RC_ERROR;
     }
 
-    if (cameraId != std::string((char*)cap.driver)) {
+    if (cameraId != std::string(reinterpret_cast<char*>(cap.driver))) {
         return RC_ERROR;
     }
 
     std::lock_guard<std::mutex> l(HosV4L2Dev::deviceFdLock_);
-    HosV4L2Dev::deviceMatch.insert(std::make_pair(std::string((char*)cap.driver), devName));
+    HosV4L2Dev::deviceMatch.insert(std::make_pair(std::string(reinterpret_cast<char*>(cap.driver)), devName));
 
     CAMERA_LOGD("v4l2 driver name = %{public}s\n", cap.driver);
     CAMERA_LOGD("v4l2 capabilities = 0x%{public}x\n", cap.capabilities);
@@ -180,7 +180,7 @@ RetCode HosFileFormat::V4L2SetFmt(int fd, DeviceFormat& format)
     if (bufType_ == 0) {
         V4L2SearchBufType(fd);
         if (bufType_ == V4L2_BUF_TYPE_PRIVATE) {
-            CAMERA_LOGE("V4L2GetFmt bufType_ == 0\n");
+            CAMERA_LOGE("V4L2SetFmt bufType_ == 0\n");
             return RC_ERROR;
         }
     }
@@ -203,17 +203,6 @@ RetCode HosFileFormat::V4L2SetFmt(int fd, DeviceFormat& format)
 
     // Force for IMX219
     fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_NV21;
-
-    if ((fmt.fmt.pix.width >= 1920) || (fmt.fmt.pix.height >= 1080)) {
-        fmt.fmt.pix.width = 1920;
-        fmt.fmt.pix.height = 1080;
-    } else if ((fmt.fmt.pix.width >= 1280) || (fmt.fmt.pix.height >= 720)) {
-        fmt.fmt.pix.width = 1280;
-        fmt.fmt.pix.height = 720;
-    } else {
-        fmt.fmt.pix.width = 1920;
-        fmt.fmt.pix.height = 1080;
-    }
 
     int rc = ioctl(fd, VIDIOC_S_FMT, &fmt);
     if (rc < 0) {
@@ -285,7 +274,7 @@ RetCode HosFileFormat::V4L2GetCropCap(int fd, DeviceFormat& format)
     if (bufType_ == 0) {
         V4L2SearchBufType(fd);
         if (bufType_ == V4L2_BUF_TYPE_PRIVATE) {
-            CAMERA_LOGE("V4L2GetFmt bufType_ == 0\n");
+            CAMERA_LOGE("V4L2GetCropCap bufType_ == 0\n");
             return RC_ERROR;
         }
     }
@@ -316,7 +305,7 @@ RetCode HosFileFormat::V4L2GetCropCap(int fd, DeviceFormat& format)
 int HosFileFormat::V4L2OpenDevice(const std::string& deviceName)
 {
     if (deviceName.length() == 0) {
-        CAMERA_LOGD("V4L2OpenDevice deviceName length is 0\n");
+        CAMERA_LOGE("V4L2OpenDevice deviceName length is 0\n");
     }
 
     int rc = 0;

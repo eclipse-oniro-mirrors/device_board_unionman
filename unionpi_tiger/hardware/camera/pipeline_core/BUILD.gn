@@ -85,6 +85,7 @@ ohos_shared_library("camera_pipeline_core") {
     "$camera_path/hdi_impl/include",
     "$camera_path/device_manager",
     "$camera_path/device_manager/include",
+    "$camera_path/metadata_manager/include",
     "$camera_path/pipeline_core",
     "$camera_path/pipeline_core/host_stream/include",
     "$camera_path/pipeline_core/utils",
@@ -114,6 +115,7 @@ ohos_shared_library("camera_pipeline_core") {
     "//foundation/communication/ipc/ipc/native/src/core/include",
     "//commonlibrary/c_utils/base/include",
     "//drivers/peripheral/camera/interfaces/metadata/include",
+    "//drivers/peripheral/camera/hal/metadata_manager/include",
     "src/node",
 
     # hcs parser
