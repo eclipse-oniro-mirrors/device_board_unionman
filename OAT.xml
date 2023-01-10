@@ -76,6 +76,7 @@ Note:If the text contains special characters, please escape them according to th
         </policylist>
 		<filefilterlist>
 			<filefilter name="defaultFilter" desc="Files not to check">
+				<filteritem type="filename" name="NOTICE" desc="Temp files"/>
 				<filteritem type="filepath" name="BUILD.gn" desc="编译脚本本仓涉及多种许可"/>
 				<filteritem type="filepath" name="Makefile" desc="配置文件，不能加其他注释"/>
 				<filteritem type="filepath" name="updater_ramdisk_resource_config.ini" desc="配置文件，不能加其他注释"/>
