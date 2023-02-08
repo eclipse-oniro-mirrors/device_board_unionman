@@ -72,17 +72,17 @@ static int battery_get_property(struct power_supply *psy, enum power_supply_prop
         val->intval = 0;
     } else if (psp == POWER_SUPPLY_PROP_CAPACITY) {
         val->intval = 100L;
-    } else if (psp == POWER_SUPPLY_PROP_CHARGE_COUNTER || POWER_SUPPLY_PROP_CHARGE_FULL) {
+    } else if ((psp == POWER_SUPPLY_PROP_CHARGE_COUNTER) || (psp == POWER_SUPPLY_PROP_CHARGE_FULL)) {
         val->intval = 3000L * 1000L;
     } else if (psp == POWER_SUPPLY_PROP_CHARGE_NOW) {
         val->intval = 3000L * 1000L;
-    } else if (psp == POWER_SUPPLY_PROP_VOLTAGE_NOW || POWER_SUPPLY_PROP_VOLTAGE_AVG) {
+    } else if ((psp == POWER_SUPPLY_PROP_VOLTAGE_NOW) || (psp == POWER_SUPPLY_PROP_VOLTAGE_AVG)) {
         val->intval = 4200L * 1000L;
     } else if (psp == POWER_SUPPLY_PROP_TEMP) {
         val->intval = 25L;
     } else if (psp == POWER_SUPPLY_PROP_TEMP_MIN) {
         val->intval = -40L;
-    } else if (psp = POWER_SUPPLY_PROP_TEMP_MAX) {
+    } else if (psp == POWER_SUPPLY_PROP_TEMP_MAX) {
         val->intval = 100L;
     } else if (psp == POWER_SUPPLY_PROP_CURRENT_AVG) {
         val->intval = 4200L * 1000L;
