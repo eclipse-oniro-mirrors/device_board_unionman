@@ -119,7 +119,8 @@
         {
             "bundleName": "com.ohos.powerdialog",
             "app_signature": ["8E93863FC32EE238060BF69A9B37E2608FFFB21F93C862DD511CBAC9F30024B5"],
-            "allowAppUsePrivilegeExtension": true
+            "allowAppUsePrivilegeExtension": true,
+            "allowAppDesktopIconHide": true
         },
         {
             "bundleName": "com.ohos.sharepickerdialog",
@@ -147,6 +148,7 @@
         {
             "bundleName": "com.ohos.nweb",
             "app_signature" : ["49D779C85200D36A00DE63E2D85AEF22FE5C72FB268BE13923E589B49BFAFFDA"],
+            "singleton": true,
             "allowAppDesktopIconHide": true
         }
     ]
