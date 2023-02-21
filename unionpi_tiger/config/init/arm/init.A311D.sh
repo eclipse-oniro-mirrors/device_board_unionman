@@ -45,5 +45,9 @@ echo power_on 0 > /sys/class/vdec/debug
 sleep 0.5
 echo power_off 0 > /sys/class/vdec/debug
 
+/system/bin/begetctl service_control stop usb_service
+sleep 0.1
+/system/bin/begetctl service_control start usb_service
+
 /system/bin/chmod 666 /dev/HDF_PLATFORM_*
 LD_LIBRARY_PATH=/vendor/lib/glibc/ /vendor/bin/iv009_isp &
