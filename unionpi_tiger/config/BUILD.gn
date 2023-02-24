@@ -141,6 +141,16 @@ ohos_prebuilt_etc("para_for_sys_prod") {
   part_name = "unionman_products"
 }
 
+ohos_prebuilt_etc("sysctl.conf") {
+  source = "etc/sysctl.conf"
+  install_images = [
+    "system",
+    "ramdisk",
+  ]
+  install_enable = true
+  part_name = "unionman_products"
+}
+
 group("init_configs") {
   deps = [
     ":50.usb.rules",
@@ -157,6 +167,7 @@ group("init_configs") {
     ":para_for_sys_prod",
     ":sdcard_mount.sh",
     ":selinux_config",
+    ":sysctl.conf",
     ":udisk_mount.sh",
     ":uninstall_list_config",
   ]
