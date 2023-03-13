@@ -119,12 +119,7 @@ ohos_shared_library("camera_pipeline_core") {
     "src/node",
 
     # hcs parser
-    "//drivers/hdf_core/framework/include/osal",
-    "//drivers/hdf_core/framework/include/utils",
-    "//drivers/hdf_core/adapter/uhdf2/osal/include",
     "//system/core/include/cutils",
-    "//drivers/hdf_core/framework/utils/include",
-    "//drivers/hdf_core/adapter/uhdf2/osal/include",
     "//device/soc/amlogic/a311d/hardware/ge2d/include",
     "//device/soc/amlogic/a311d/hardware/media/libvpcodec/include",
   ]
@@ -146,6 +141,7 @@ ohos_shared_library("camera_pipeline_core") {
   if (is_standard_system) {
     external_deps = [
       "c_utils:utils",
+      "hdf_core:libhdf_utils",
       "hiviewdfx_hilog_native:libhilog",
     ]
   } else {

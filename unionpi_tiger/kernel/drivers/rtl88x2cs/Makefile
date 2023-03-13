@@ -41,6 +41,10 @@ HDF_FRAMEWORKS_INC := \
    -I$(srctree)/drivers/hdf/framework/support/platform/include/platform \
    -I$(srctree)/drivers/hdf/framework/utils/include \
    -I$(srctree)/drivers/hdf/khdf/osal/include \
+   -I$(srctree)/drivers/hdf/inner_api/osal/shared \
+   -I$(srctree)/drivers/hdf/inner_api/host/shared \
+   -I$(srctree)/drivers/hdf/inner_api/utils \
+   -I$(srctree)/drivers/hdf/inner_api/core \
    -I$(srctree)/drivers/hdf/khdf/config/include \
    -I$(srctree)/include/hdf \
    -I$(srctree)/include/hdf/osal \
