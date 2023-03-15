@@ -56,15 +56,7 @@ ohos_shared_library("hdi_audio_interface_lib_capture.alsa") {
     "//drivers/peripheral/audio/hal/hdi_passthrough/include",
     "//drivers/peripheral/audio/supportlibs/adm_adapter/include",
     "//drivers/peripheral/audio/interfaces/include",
-    "$hdf_framework_path/include/core",
-    "$hdf_framework_path/include/utils",
-    "$hdf_framework_path/include/osal",
-    "$hdf_framework_path/include",
     "//third_party/bounds_checking_function/include",
-    "$hdf_framework_path/ability/sbuf/include",
-    "$hdf_framework_path/utils/include",
-    "$hdf_framework_path/ability/sbuf/include",
-    "$hdf_uhdf_path/osal/include",
     "//device/unionman/unionpi_tiger/third_party/tinyalsa/include",
   ]
 
@@ -81,6 +73,7 @@ ohos_shared_library("hdi_audio_interface_lib_capture.alsa") {
 
   external_deps = [
     "c_utils:utils",
+    "hdf_core:libhdf_utils",
     "hiviewdfx_hilog_native:libhilog",
   ]
 
@@ -101,15 +94,7 @@ ohos_shared_library("hdi_audio_interface_lib_render.alsa") {
     "//drivers/peripheral/audio/hal/hdi_passthrough/include",
     "//drivers/peripheral/audio/supportlibs/adm_adapter/include",
     "//drivers/peripheral/audio/interfaces/include",
-    "$hdf_framework_path/include/core",
-    "$hdf_framework_path/include/utils",
-    "$hdf_framework_path/include/osal",
-    "$hdf_framework_path/include",
     "//third_party/bounds_checking_function/include",
-    "$hdf_framework_path/ability/sbuf/include",
-    "$hdf_framework_path/utils/include",
-    "$hdf_framework_path/ability/sbuf/include",
-    "$hdf_uhdf_path/osal/include",
     "//device/unionman/unionpi_tiger/third_party/tinyalsa/include",
   ]
 
@@ -126,6 +111,7 @@ ohos_shared_library("hdi_audio_interface_lib_render.alsa") {
 
   external_deps = [
     "c_utils:utils",
+    "hdf_core:libhdf_utils",
     "hiviewdfx_hilog_native:libhilog",
   ]
 
