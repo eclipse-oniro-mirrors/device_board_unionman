@@ -1,6 +1,6 @@
 diff -Naur a/drivers/clk/meson/clk-mux.c b/drivers/clk/meson/clk-mux.c
---- a/drivers/clk/meson/clk-mux.c	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/clk/meson/clk-mux.c	2022-09-29 21:18:12.210019807 +0800
+--- a/drivers/clk/meson/clk-mux.c	1970-01-01 00:00:00.000000000 +0000
++++ b/drivers/clk/meson/clk-mux.c	2023-03-16 06:30:25.241230983 +0000
 @@ -0,0 +1,214 @@
 +/*
 + * drivers/amlogic/clk/clk-mux.c
@@ -217,8 +217,8 @@ diff -Naur a/drivers/clk/meson/clk-mux.c b/drivers/clk/meson/clk-mux.c
 +	.get_parent = meson_clk_mux_get_parent,
 +};
 diff -Naur a/drivers/clk/meson/clk-mux.h b/drivers/clk/meson/clk-mux.h
---- a/drivers/clk/meson/clk-mux.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/clk/meson/clk-mux.h	2022-09-29 21:18:12.210019807 +0800
+--- a/drivers/clk/meson/clk-mux.h	1970-01-01 00:00:00.000000000 +0000
++++ b/drivers/clk/meson/clk-mux.h	2023-03-16 06:30:25.241230983 +0000
 @@ -0,0 +1,19 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -240,8 +240,8 @@ diff -Naur a/drivers/clk/meson/clk-mux.h b/drivers/clk/meson/clk-mux.h
 +
 +#endif /* __MESON_CLK_MUX_H */
 diff -Naur a/drivers/clk/meson/clk-pll.c b/drivers/clk/meson/clk-pll.c
---- a/drivers/clk/meson/clk-pll.c	2022-08-22 12:44:16.036256748 +0800
-+++ b/drivers/clk/meson/clk-pll.c	2022-09-29 21:18:12.210019807 +0800
+--- a/drivers/clk/meson/clk-pll.c	2023-03-14 02:55:19.346005151 +0000
++++ b/drivers/clk/meson/clk-pll.c	2023-03-16 06:30:25.241230983 +0000
 @@ -283,6 +283,8 @@
  		delay--;
  	} while (delay > 0);
@@ -262,8 +262,8 @@ diff -Naur a/drivers/clk/meson/clk-pll.c b/drivers/clk/meson/clk-pll.c
  	meson_parm_write(clk->map, &pll->rst, 0);
  
 diff -Naur a/drivers/clk/meson/clk-pll.h b/drivers/clk/meson/clk-pll.h
---- a/drivers/clk/meson/clk-pll.h	2022-08-22 12:44:16.036256748 +0800
-+++ b/drivers/clk/meson/clk-pll.h	2022-09-29 21:18:12.210019807 +0800
+--- a/drivers/clk/meson/clk-pll.h	2023-03-14 02:55:19.346005151 +0000
++++ b/drivers/clk/meson/clk-pll.h	2023-03-16 06:30:25.241230983 +0000
 @@ -41,6 +41,7 @@
  	const struct pll_params_table *table;
  	const struct pll_mult_range *range;
@@ -273,8 +273,8 @@ diff -Naur a/drivers/clk/meson/clk-pll.h b/drivers/clk/meson/clk-pll.h
  
  extern const struct clk_ops meson_clk_pll_ro_ops;
 diff -Naur a/drivers/clk/meson/g12a.c b/drivers/clk/meson/g12a.c
---- a/drivers/clk/meson/g12a.c	2022-08-22 12:44:16.036256748 +0800
-+++ b/drivers/clk/meson/g12a.c	2022-09-29 21:18:25.881189992 +0800
+--- a/drivers/clk/meson/g12a.c	2023-03-14 02:55:19.346005151 +0000
++++ b/drivers/clk/meson/g12a.c	2023-03-16 06:30:25.241230983 +0000
 @@ -15,6 +15,7 @@
  #include <linux/of_device.h>
  #include <linux/platform_device.h>
@@ -620,8 +620,8 @@ diff -Naur a/drivers/clk/meson/g12a.c b/drivers/clk/meson/g12a.c
  	g12a_cpu_clk_postmux0_nb_data.xtal = xtal;
  	notifier_clk_name = clk_hw_get_name(&g12a_cpu_clk_postmux0.hw);
 diff -Naur a/drivers/clk/meson/g12a.h b/drivers/clk/meson/g12a.h
---- a/drivers/clk/meson/g12a.h	2022-08-22 12:44:16.036256748 +0800
-+++ b/drivers/clk/meson/g12a.h	2022-09-29 21:18:25.881189992 +0800
+--- a/drivers/clk/meson/g12a.h	2023-03-14 02:55:19.346005151 +0000
++++ b/drivers/clk/meson/g12a.h	2023-03-16 06:30:25.241230983 +0000
 @@ -44,6 +44,7 @@
  #define HHI_PCIE_PLL_CNTL4		0x0A8
  #define HHI_PCIE_PLL_CNTL5		0x0AC
@@ -658,8 +658,8 @@ diff -Naur a/drivers/clk/meson/g12a.h b/drivers/clk/meson/g12a.h
  /* include the CLKIDs that have been made part of the DT binding */
  #include <dt-bindings/clock/g12a-clkc.h>
 diff -Naur a/drivers/clk/meson/g12a-vcodec-clk.c b/drivers/clk/meson/g12a-vcodec-clk.c
---- a/drivers/clk/meson/g12a-vcodec-clk.c	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/clk/meson/g12a-vcodec-clk.c	2022-09-29 21:18:25.881189992 +0800
+--- a/drivers/clk/meson/g12a-vcodec-clk.c	1970-01-01 00:00:00.000000000 +0000
++++ b/drivers/clk/meson/g12a-vcodec-clk.c	2023-03-16 06:30:25.245231058 +0000
 @@ -0,0 +1,731 @@
 +/*
 + * drivers/amlogic/clk/g12a/g12a_clk_media.c
@@ -1393,8 +1393,8 @@ diff -Naur a/drivers/clk/meson/g12a-vcodec-clk.c b/drivers/clk/meson/g12a-vcodec
 +}
 +
 diff -Naur a/drivers/clk/meson/g12a-vcodec-clk.h b/drivers/clk/meson/g12a-vcodec-clk.h
---- a/drivers/clk/meson/g12a-vcodec-clk.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/clk/meson/g12a-vcodec-clk.h	2022-09-29 21:18:12.214020748 +0800
+--- a/drivers/clk/meson/g12a-vcodec-clk.h	1970-01-01 00:00:00.000000000 +0000
++++ b/drivers/clk/meson/g12a-vcodec-clk.h	2023-03-16 06:30:25.245231058 +0000
 @@ -0,0 +1,12 @@
 +/* SPDX-License-Identifier: (GPL-2.0+ OR MIT) */
 +/*
@@ -1409,8 +1409,8 @@ diff -Naur a/drivers/clk/meson/g12a-vcodec-clk.h b/drivers/clk/meson/g12a-vcodec
 +
 +#endif /* __G12A_VCODEC_CLK_H */
 diff -Naur a/drivers/clk/meson/Makefile b/drivers/clk/meson/Makefile
---- a/drivers/clk/meson/Makefile	2022-08-22 12:44:16.036256748 +0800
-+++ b/drivers/clk/meson/Makefile	2022-09-29 21:18:12.214020748 +0800
+--- a/drivers/clk/meson/Makefile	2023-03-14 02:55:19.346005151 +0000
++++ b/drivers/clk/meson/Makefile	2023-03-16 06:30:25.245231058 +0000
 @@ -7,7 +7,7 @@
  obj-$(CONFIG_COMMON_CLK_MESON_EE_CLKC) += meson-eeclk.o
  obj-$(CONFIG_COMMON_CLK_MESON_MPLL) += clk-mpll.o
@@ -1428,8 +1428,8 @@ diff -Naur a/drivers/clk/meson/Makefile b/drivers/clk/meson/Makefile
 +obj-$(CONFIG_COMMON_CLK_G12A) += g12a.o g12a-aoclk.o g12a-vcodec-clk.o
  obj-$(CONFIG_COMMON_CLK_MESON8B) += meson8b.o meson8-ddr.o
 diff -Naur a/drivers/clk/meson/vid-pll-div.c b/drivers/clk/meson/vid-pll-div.c
---- a/drivers/clk/meson/vid-pll-div.c	2022-08-22 12:44:16.040256787 +0800
-+++ b/drivers/clk/meson/vid-pll-div.c	2022-09-29 21:18:12.214020748 +0800
+--- a/drivers/clk/meson/vid-pll-div.c	2023-03-14 02:55:19.350005265 +0000
++++ b/drivers/clk/meson/vid-pll-div.c	2023-03-16 06:30:25.245231058 +0000
 @@ -39,12 +39,14 @@
  	}
  
@@ -1446,8 +1446,8 @@ diff -Naur a/drivers/clk/meson/vid-pll-div.c b/drivers/clk/meson/vid-pll-div.c
  	VID_PLL_DIV(0x0e38, 0, 6, 1),	/* 6/1  => /6 */
  	VID_PLL_DIV(0x0000, 3, 25, 4),	/* 25/4 => /6.25 */
 diff -Naur a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
---- a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c	2022-09-29 21:05:43.811872572 +0800
-+++ b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c	2022-09-29 21:38:20.186027098 +0800
+--- a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c	2023-03-14 02:55:20.058025612 +0000
++++ b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c	2023-03-16 06:30:25.245231058 +0000
 @@ -143,6 +143,7 @@
  struct dw_hdmi {
  	struct drm_connector connector;
@@ -1621,8 +1621,8 @@ diff -Naur a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c b/drivers/gpu/drm/bridge/
  	if (hdmi->i2c)
  		i2c_del_adapter(&hdmi->i2c->adap);
 diff -Naur a/drivers/gpu/drm/bridge/synopsys/dw-hdmi-cec.c b/drivers/gpu/drm/bridge/synopsys/dw-hdmi-cec.c
---- a/drivers/gpu/drm/bridge/synopsys/dw-hdmi-cec.c	2022-08-22 12:44:16.800264070 +0800
-+++ b/drivers/gpu/drm/bridge/synopsys/dw-hdmi-cec.c	2022-09-29 21:18:23.168567800 +0800
+--- a/drivers/gpu/drm/bridge/synopsys/dw-hdmi-cec.c	2023-03-14 02:55:20.058025612 +0000
++++ b/drivers/gpu/drm/bridge/synopsys/dw-hdmi-cec.c	2023-03-16 06:30:25.245231058 +0000
 @@ -265,11 +265,9 @@
  	/* override the module pointer */
  	cec->adap->owner = THIS_MODULE;
@@ -1638,8 +1638,8 @@ diff -Naur a/drivers/gpu/drm/bridge/synopsys/dw-hdmi-cec.c b/drivers/gpu/drm/bri
  	ret = devm_request_threaded_irq(&pdev->dev, cec->irq,
  					dw_hdmi_cec_hardirq,
 diff -Naur a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c b/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
---- a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c	2022-08-22 12:44:16.804264108 +0800
-+++ b/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c	2022-09-29 21:39:49.121829712 +0800
+--- a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c	2023-03-14 02:55:20.058025612 +0000
++++ b/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c	2023-03-16 06:30:25.249231133 +0000
 @@ -246,6 +246,7 @@
  
  	struct clk *pclk;
@@ -1801,8 +1801,8 @@ diff -Naur a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c b/drivers/gpu/drm/bri
  	return dsi;
  }
 diff -Naur a/drivers/gpu/drm/drm_aperture.c b/drivers/gpu/drm/drm_aperture.c
---- a/drivers/gpu/drm/drm_aperture.c	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/gpu/drm/drm_aperture.c	2022-09-29 21:18:25.861185413 +0800
+--- a/drivers/gpu/drm/drm_aperture.c	1970-01-01 00:00:00.000000000 +0000
++++ b/drivers/gpu/drm/drm_aperture.c	2023-03-16 06:30:25.249231133 +0000
 @@ -0,0 +1,353 @@
 +// SPDX-License-Identifier: MIT
 +
@@ -2158,8 +2158,8 @@ diff -Naur a/drivers/gpu/drm/drm_aperture.c b/drivers/gpu/drm/drm_aperture.c
 +}
 +EXPORT_SYMBOL(drm_aperture_remove_conflicting_pci_framebuffers);
 diff -Naur a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
---- a/drivers/gpu/drm/drm_connector.c	2022-08-22 12:44:16.808264147 +0800
-+++ b/drivers/gpu/drm/drm_connector.c	2022-09-29 21:18:25.861185413 +0800
+--- a/drivers/gpu/drm/drm_connector.c	2023-03-14 02:55:20.062025727 +0000
++++ b/drivers/gpu/drm/drm_connector.c	2023-03-16 06:30:25.249231133 +0000
 @@ -2144,6 +2144,55 @@
  EXPORT_SYMBOL(drm_connector_attach_max_bpc_property);
  
@@ -2217,8 +2217,8 @@ diff -Naur a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
   * capable property for a connector
   * @connector: drm connector
 diff -Naur a/drivers/gpu/drm/drm_ioctl.c b/drivers/gpu/drm/drm_ioctl.c
---- a/drivers/gpu/drm/drm_ioctl.c	2022-08-22 12:44:16.812264185 +0800
-+++ b/drivers/gpu/drm/drm_ioctl.c	2022-09-29 21:18:25.861185413 +0800
+--- a/drivers/gpu/drm/drm_ioctl.c	2023-03-14 02:55:20.066025841 +0000
++++ b/drivers/gpu/drm/drm_ioctl.c	2023-03-16 06:30:25.249231133 +0000
 @@ -678,9 +678,9 @@
  	DRM_IOCTL_DEF(DRM_IOCTL_MODE_RMFB, drm_mode_rmfb_ioctl, 0),
  	DRM_IOCTL_DEF(DRM_IOCTL_MODE_PAGE_FLIP, drm_mode_page_flip_ioctl, DRM_MASTER),
@@ -2233,8 +2233,8 @@ diff -Naur a/drivers/gpu/drm/drm_ioctl.c b/drivers/gpu/drm/drm_ioctl.c
  	DRM_IOCTL_DEF(DRM_IOCTL_MODE_OBJ_SETPROPERTY, drm_mode_obj_set_property_ioctl, DRM_MASTER),
  	DRM_IOCTL_DEF(DRM_IOCTL_MODE_CURSOR2, drm_mode_cursor2_ioctl, DRM_MASTER),
 diff -Naur a/drivers/gpu/drm/drm_plane_helper.c b/drivers/gpu/drm/drm_plane_helper.c
---- a/drivers/gpu/drm/drm_plane_helper.c	2022-08-22 12:44:16.816264224 +0800
-+++ b/drivers/gpu/drm/drm_plane_helper.c	2022-09-29 21:18:25.861185413 +0800
+--- a/drivers/gpu/drm/drm_plane_helper.c	2023-03-14 02:55:20.070025957 +0000
++++ b/drivers/gpu/drm/drm_plane_helper.c	2023-03-16 06:30:25.249231133 +0000
 @@ -123,6 +123,7 @@
  		.crtc_w = drm_rect_width(dst),
  		.crtc_h = drm_rect_height(dst),
@@ -2244,8 +2244,8 @@ diff -Naur a/drivers/gpu/drm/drm_plane_helper.c b/drivers/gpu/drm/drm_plane_help
  	struct drm_crtc_state crtc_state = {
  		.crtc = crtc,
 diff -Naur a/drivers/gpu/drm/drm_vblank.c b/drivers/gpu/drm/drm_vblank.c
---- a/drivers/gpu/drm/drm_vblank.c	2022-08-22 12:44:16.816264224 +0800
-+++ b/drivers/gpu/drm/drm_vblank.c	2022-09-29 21:18:25.865186328 +0800
+--- a/drivers/gpu/drm/drm_vblank.c	2023-03-14 02:55:20.070025957 +0000
++++ b/drivers/gpu/drm/drm_vblank.c	2023-03-16 06:30:25.249231133 +0000
 @@ -1725,6 +1725,15 @@
  	reply->tval_usec = ts.tv_nsec / 1000;
  }
@@ -2290,8 +2290,8 @@ diff -Naur a/drivers/gpu/drm/drm_vblank.c b/drivers/gpu/drm/drm_vblank.c
  
  	crtc = drm_crtc_find(dev, file_priv, queue_seq->crtc_id);
 diff -Naur a/drivers/gpu/drm/Makefile b/drivers/gpu/drm/Makefile
---- a/drivers/gpu/drm/Makefile	2022-08-22 12:44:16.204258359 +0800
-+++ b/drivers/gpu/drm/Makefile	2022-09-29 21:18:25.865186328 +0800
+--- a/drivers/gpu/drm/Makefile	2023-03-14 02:55:19.510009864 +0000
++++ b/drivers/gpu/drm/Makefile	2023-03-16 06:30:25.253231208 +0000
 @@ -18,7 +18,7 @@
  		drm_dumb_buffers.o drm_mode_config.o drm_vblank.o \
  		drm_syncobj.o drm_lease.o drm_writeback.o drm_client.o \
@@ -2302,8 +2302,8 @@ diff -Naur a/drivers/gpu/drm/Makefile b/drivers/gpu/drm/Makefile
  drm-$(CONFIG_DRM_LEGACY) += drm_legacy_misc.o drm_bufs.o drm_context.o drm_dma.o drm_scatter.o drm_lock.o
  drm-$(CONFIG_DRM_LIB_RANDOM) += lib/drm_random.o
 diff -Naur a/drivers/gpu/drm/meson/Kconfig b/drivers/gpu/drm/meson/Kconfig
---- a/drivers/gpu/drm/meson/Kconfig	2022-08-22 12:44:16.888264914 +0800
-+++ b/drivers/gpu/drm/meson/Kconfig	2022-09-29 21:18:25.865186328 +0800
+--- a/drivers/gpu/drm/meson/Kconfig	2023-03-14 02:55:20.142028026 +0000
++++ b/drivers/gpu/drm/meson/Kconfig	2023-03-16 06:30:25.253231208 +0000
 @@ -6,9 +6,11 @@
  	select DRM_KMS_HELPER
  	select DRM_KMS_CMA_HELPER
@@ -2328,8 +2328,8 @@ diff -Naur a/drivers/gpu/drm/meson/Kconfig b/drivers/gpu/drm/meson/Kconfig
 +	select DRM_DW_MIPI_DSI
 +	select GENERIC_PHY_MIPI_DPHY
 diff -Naur a/drivers/gpu/drm/meson/Makefile b/drivers/gpu/drm/meson/Makefile
---- a/drivers/gpu/drm/meson/Makefile	2022-08-22 12:44:16.888264914 +0800
-+++ b/drivers/gpu/drm/meson/Makefile	2022-09-29 21:18:25.865186328 +0800
+--- a/drivers/gpu/drm/meson/Makefile	2023-03-14 02:55:20.142028026 +0000
++++ b/drivers/gpu/drm/meson/Makefile	2023-03-16 06:30:25.253231208 +0000
 @@ -1,7 +1,9 @@
  # SPDX-License-Identifier: GPL-2.0-only
 -meson-drm-y := meson_drv.o meson_plane.o meson_crtc.o meson_venc_cvbs.o
@@ -2342,8 +2342,8 @@ diff -Naur a/drivers/gpu/drm/meson/Makefile b/drivers/gpu/drm/meson/Makefile
  obj-$(CONFIG_DRM_MESON_DW_HDMI) += meson_dw_hdmi.o
 +obj-$(CONFIG_DRM_MESON_DW_MIPI_DSI) += meson_dw_mipi_dsi.o
 diff -Naur a/drivers/gpu/drm/meson/meson_crtc.c b/drivers/gpu/drm/meson/meson_crtc.c
---- a/drivers/gpu/drm/meson/meson_crtc.c	2022-08-22 12:44:16.892264952 +0800
-+++ b/drivers/gpu/drm/meson/meson_crtc.c	2022-09-29 21:18:25.885190908 +0800
+--- a/drivers/gpu/drm/meson/meson_crtc.c	2023-03-14 02:55:20.142028026 +0000
++++ b/drivers/gpu/drm/meson/meson_crtc.c	2023-03-16 06:30:25.253231208 +0000
 @@ -36,6 +36,7 @@
  	struct drm_pending_vblank_event *event;
  	struct meson_drm *priv;
@@ -2687,8 +2687,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_crtc.c b/drivers/gpu/drm/meson/meson_cr
  		if (meson_vpu_is_compatible(priv, VPU_COMPATIBLE_GXM)) {
  			meson_crtc->enable_osd1_afbc =
 diff -Naur a/drivers/gpu/drm/meson/meson_cursor.c b/drivers/gpu/drm/meson/meson_cursor.c
---- a/drivers/gpu/drm/meson/meson_cursor.c	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/gpu/drm/meson/meson_cursor.c	2022-09-29 21:18:25.865186328 +0800
+--- a/drivers/gpu/drm/meson/meson_cursor.c	1970-01-01 00:00:00.000000000 +0000
++++ b/drivers/gpu/drm/meson/meson_cursor.c	2023-03-16 06:30:25.253231208 +0000
 @@ -0,0 +1,244 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
@@ -2935,8 +2935,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_cursor.c b/drivers/gpu/drm/meson/meson_
 +	return 0;
 +}
 diff -Naur a/drivers/gpu/drm/meson/meson_cursor.h b/drivers/gpu/drm/meson/meson_cursor.h
---- a/drivers/gpu/drm/meson/meson_cursor.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/gpu/drm/meson/meson_cursor.h	2022-09-29 21:18:25.865186328 +0800
+--- a/drivers/gpu/drm/meson/meson_cursor.h	1970-01-01 00:00:00.000000000 +0000
++++ b/drivers/gpu/drm/meson/meson_cursor.h	2023-03-16 06:30:25.253231208 +0000
 @@ -0,0 +1,14 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
 +/*
@@ -2953,8 +2953,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_cursor.h b/drivers/gpu/drm/meson/meson_
 +
 +#endif /* __MESON_CURSOR_H */
 diff -Naur a/drivers/gpu/drm/meson/meson_drv.c b/drivers/gpu/drm/meson/meson_drv.c
---- a/drivers/gpu/drm/meson/meson_drv.c	2022-08-22 12:44:16.892264952 +0800
-+++ b/drivers/gpu/drm/meson/meson_drv.c	2022-09-29 21:18:25.885190908 +0800
+--- a/drivers/gpu/drm/meson/meson_drv.c	2023-03-14 02:55:20.142028026 +0000
++++ b/drivers/gpu/drm/meson/meson_drv.c	2023-03-16 06:30:25.253231208 +0000
 @@ -15,12 +15,12 @@
  #include <linux/platform_device.h>
  #include <linux/soc/amlogic/meson-canvas.h>
@@ -3223,8 +3223,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_drv.c b/drivers/gpu/drm/meson/meson_drv
  
  	if (count && !match)
 diff -Naur a/drivers/gpu/drm/meson/meson_drv.h b/drivers/gpu/drm/meson/meson_drv.h
---- a/drivers/gpu/drm/meson/meson_drv.h	2022-08-22 12:44:16.892264952 +0800
-+++ b/drivers/gpu/drm/meson/meson_drv.h	2022-09-29 21:18:25.865186328 +0800
+--- a/drivers/gpu/drm/meson/meson_drv.h	2023-03-14 02:55:20.142028026 +0000
++++ b/drivers/gpu/drm/meson/meson_drv.h	2023-03-16 06:30:25.253231208 +0000
 @@ -43,12 +43,14 @@
  
  	struct meson_canvas *canvas;
@@ -3263,8 +3263,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_drv.h b/drivers/gpu/drm/meson/meson_drv
  
  		bool vd1_enabled;
 diff -Naur a/drivers/gpu/drm/meson/meson_dw_hdmi.c b/drivers/gpu/drm/meson/meson_dw_hdmi.c
---- a/drivers/gpu/drm/meson/meson_dw_hdmi.c	2022-08-22 12:44:16.892264952 +0800
-+++ b/drivers/gpu/drm/meson/meson_dw_hdmi.c	2022-09-29 22:25:08.553471640 +0800
+--- a/drivers/gpu/drm/meson/meson_dw_hdmi.c	2023-03-14 02:55:20.142028026 +0000
++++ b/drivers/gpu/drm/meson/meson_dw_hdmi.c	2023-03-16 06:30:25.253231208 +0000
 @@ -22,14 +22,11 @@
  #include <drm/drm_probe_helper.h>
  #include <drm/drm_print.h>
@@ -3761,8 +3761,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_dw_hdmi.c b/drivers/gpu/drm/meson/meson
  	DRM_DEBUG_DRIVER("HDMI controller initialized\n");
  
 diff -Naur a/drivers/gpu/drm/meson/meson_dw_mipi_dsi.c b/drivers/gpu/drm/meson/meson_dw_mipi_dsi.c
---- a/drivers/gpu/drm/meson/meson_dw_mipi_dsi.c	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/gpu/drm/meson/meson_dw_mipi_dsi.c	2022-09-29 21:18:25.869187244 +0800
+--- a/drivers/gpu/drm/meson/meson_dw_mipi_dsi.c	1970-01-01 00:00:00.000000000 +0000
++++ b/drivers/gpu/drm/meson/meson_dw_mipi_dsi.c	2023-03-16 06:30:25.253231208 +0000
 @@ -0,0 +1,364 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
@@ -4129,8 +4129,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_dw_mipi_dsi.c b/drivers/gpu/drm/meson/m
 +MODULE_DESCRIPTION(DRIVER_DESC);
 +MODULE_LICENSE("GPL");
 diff -Naur a/drivers/gpu/drm/meson/meson_dw_mipi_dsi.h b/drivers/gpu/drm/meson/meson_dw_mipi_dsi.h
---- a/drivers/gpu/drm/meson/meson_dw_mipi_dsi.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/gpu/drm/meson/meson_dw_mipi_dsi.h	2022-09-29 21:18:25.869187244 +0800
+--- a/drivers/gpu/drm/meson/meson_dw_mipi_dsi.h	1970-01-01 00:00:00.000000000 +0000
++++ b/drivers/gpu/drm/meson/meson_dw_mipi_dsi.h	2023-03-16 06:30:25.253231208 +0000
 @@ -0,0 +1,160 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
 +/*
@@ -4293,8 +4293,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_dw_mipi_dsi.h b/drivers/gpu/drm/meson/m
 +
 +#endif /* __MESON_DW_MIPI_DSI_H */
 diff -Naur a/drivers/gpu/drm/meson/meson_encoder_cvbs.c b/drivers/gpu/drm/meson/meson_encoder_cvbs.c
---- a/drivers/gpu/drm/meson/meson_encoder_cvbs.c	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/gpu/drm/meson/meson_encoder_cvbs.c	2022-09-29 21:18:25.869187244 +0800
+--- a/drivers/gpu/drm/meson/meson_encoder_cvbs.c	1970-01-01 00:00:00.000000000 +0000
++++ b/drivers/gpu/drm/meson/meson_encoder_cvbs.c	2023-03-16 06:30:25.253231208 +0000
 @@ -0,0 +1,284 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
@@ -4581,8 +4581,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_encoder_cvbs.c b/drivers/gpu/drm/meson/
 +	return 0;
 +}
 diff -Naur a/drivers/gpu/drm/meson/meson_encoder_cvbs.h b/drivers/gpu/drm/meson/meson_encoder_cvbs.h
---- a/drivers/gpu/drm/meson/meson_encoder_cvbs.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/gpu/drm/meson/meson_encoder_cvbs.h	2022-09-29 21:18:25.869187244 +0800
+--- a/drivers/gpu/drm/meson/meson_encoder_cvbs.h	1970-01-01 00:00:00.000000000 +0000
++++ b/drivers/gpu/drm/meson/meson_encoder_cvbs.h	2023-03-16 06:30:25.253231208 +0000
 @@ -0,0 +1,29 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
 +/*
@@ -4614,8 +4614,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_encoder_cvbs.h b/drivers/gpu/drm/meson/
 +
 +#endif /* __MESON_VENC_CVBS_H */
 diff -Naur a/drivers/gpu/drm/meson/meson_encoder_dsi.c b/drivers/gpu/drm/meson/meson_encoder_dsi.c
---- a/drivers/gpu/drm/meson/meson_encoder_dsi.c	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/gpu/drm/meson/meson_encoder_dsi.c	2022-09-29 21:18:25.869187244 +0800
+--- a/drivers/gpu/drm/meson/meson_encoder_dsi.c	1970-01-01 00:00:00.000000000 +0000
++++ b/drivers/gpu/drm/meson/meson_encoder_dsi.c	2023-03-16 06:30:25.253231208 +0000
 @@ -0,0 +1,168 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
@@ -4786,8 +4786,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_encoder_dsi.c b/drivers/gpu/drm/meson/m
 +	return 0;
 +}
 diff -Naur a/drivers/gpu/drm/meson/meson_encoder_dsi.h b/drivers/gpu/drm/meson/meson_encoder_dsi.h
---- a/drivers/gpu/drm/meson/meson_encoder_dsi.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/gpu/drm/meson/meson_encoder_dsi.h	2022-09-29 21:18:25.869187244 +0800
+--- a/drivers/gpu/drm/meson/meson_encoder_dsi.h	1970-01-01 00:00:00.000000000 +0000
++++ b/drivers/gpu/drm/meson/meson_encoder_dsi.h	2023-03-16 06:30:25.253231208 +0000
 @@ -0,0 +1,12 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
 +/*
@@ -4802,8 +4802,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_encoder_dsi.h b/drivers/gpu/drm/meson/m
 +
 +#endif /* __MESON_ENCODER_DSI_H */
 diff -Naur a/drivers/gpu/drm/meson/meson_encoder_hdmi.c b/drivers/gpu/drm/meson/meson_encoder_hdmi.c
---- a/drivers/gpu/drm/meson/meson_encoder_hdmi.c	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/gpu/drm/meson/meson_encoder_hdmi.c	2022-09-29 21:18:25.869187244 +0800
+--- a/drivers/gpu/drm/meson/meson_encoder_hdmi.c	1970-01-01 00:00:00.000000000 +0000
++++ b/drivers/gpu/drm/meson/meson_encoder_hdmi.c	2023-03-16 06:30:25.253231208 +0000
 @@ -0,0 +1,455 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
@@ -5261,8 +5261,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_encoder_hdmi.c b/drivers/gpu/drm/meson/
 +	return 0;
 +}
 diff -Naur a/drivers/gpu/drm/meson/meson_encoder_hdmi.h b/drivers/gpu/drm/meson/meson_encoder_hdmi.h
---- a/drivers/gpu/drm/meson/meson_encoder_hdmi.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/drivers/gpu/drm/meson/meson_encoder_hdmi.h	2022-09-29 21:18:25.869187244 +0800
+--- a/drivers/gpu/drm/meson/meson_encoder_hdmi.h	1970-01-01 00:00:00.000000000 +0000
++++ b/drivers/gpu/drm/meson/meson_encoder_hdmi.h	2023-03-16 06:30:25.253231208 +0000
 @@ -0,0 +1,12 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
 +/*
@@ -5277,8 +5277,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_encoder_hdmi.h b/drivers/gpu/drm/meson/
 +
 +#endif /* __MESON_ENCODER_HDMI_H */
 diff -Naur a/drivers/gpu/drm/meson/meson_osd_afbcd.c b/drivers/gpu/drm/meson/meson_osd_afbcd.c
---- a/drivers/gpu/drm/meson/meson_osd_afbcd.c	2022-08-22 12:44:16.892264952 +0800
-+++ b/drivers/gpu/drm/meson/meson_osd_afbcd.c	2022-09-29 21:18:25.869187244 +0800
+--- a/drivers/gpu/drm/meson/meson_osd_afbcd.c	2023-03-14 02:55:20.142028026 +0000
++++ b/drivers/gpu/drm/meson/meson_osd_afbcd.c	2023-03-16 06:30:25.253231208 +0000
 @@ -79,11 +79,6 @@
  	return meson_gxm_afbcd_pixel_fmt(modifier, format) >= 0;
  }
@@ -5364,8 +5364,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_osd_afbcd.c b/drivers/gpu/drm/meson/mes
  	.enable = meson_g12a_afbcd_enable,
  	.disable = meson_g12a_afbcd_disable,
 diff -Naur a/drivers/gpu/drm/meson/meson_osd_afbcd.h b/drivers/gpu/drm/meson/meson_osd_afbcd.h
---- a/drivers/gpu/drm/meson/meson_osd_afbcd.h	2022-08-22 12:44:16.892264952 +0800
-+++ b/drivers/gpu/drm/meson/meson_osd_afbcd.h	2022-09-29 21:18:25.869187244 +0800
+--- a/drivers/gpu/drm/meson/meson_osd_afbcd.h	2023-03-14 02:55:20.142028026 +0000
++++ b/drivers/gpu/drm/meson/meson_osd_afbcd.h	2023-03-16 06:30:25.253231208 +0000
 @@ -14,6 +14,7 @@
  
  struct meson_afbcd_ops {
@@ -5375,8 +5375,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_osd_afbcd.h b/drivers/gpu/drm/meson/mes
  	int (*enable)(struct meson_drm *priv);
  	int (*disable)(struct meson_drm *priv);
 diff -Naur a/drivers/gpu/drm/meson/meson_overlay.c b/drivers/gpu/drm/meson/meson_overlay.c
---- a/drivers/gpu/drm/meson/meson_overlay.c	2022-08-22 12:44:16.892264952 +0800
-+++ b/drivers/gpu/drm/meson/meson_overlay.c	2022-09-29 21:18:25.869187244 +0800
+--- a/drivers/gpu/drm/meson/meson_overlay.c	2023-03-14 02:55:20.142028026 +0000
++++ b/drivers/gpu/drm/meson/meson_overlay.c	2023-03-16 06:30:25.253231208 +0000
 @@ -10,10 +10,10 @@
  #include <drm/drm_atomic.h>
  #include <drm/drm_atomic_helper.h>
@@ -5449,8 +5449,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_overlay.c b/drivers/gpu/drm/meson/meson
  	struct meson_overlay *meson_overlay = to_meson_overlay(plane);
  	struct meson_drm *priv = meson_overlay->priv;
 diff -Naur a/drivers/gpu/drm/meson/meson_plane.c b/drivers/gpu/drm/meson/meson_plane.c
---- a/drivers/gpu/drm/meson/meson_plane.c	2022-08-22 12:44:16.892264952 +0800
-+++ b/drivers/gpu/drm/meson/meson_plane.c	2022-09-29 21:18:25.869187244 +0800
+--- a/drivers/gpu/drm/meson/meson_plane.c	2023-03-14 02:55:20.142028026 +0000
++++ b/drivers/gpu/drm/meson/meson_plane.c	2023-03-16 06:30:25.257231283 +0000
 @@ -73,12 +73,15 @@
  static int meson_plane_atomic_check(struct drm_plane *plane,
  				    struct drm_plane_state *state)
@@ -5583,8 +5583,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_plane.c b/drivers/gpu/drm/meson/meson_p
  	struct meson_plane *meson_plane = to_meson_plane(plane);
  	struct meson_drm *priv = meson_plane->priv;
 diff -Naur a/drivers/gpu/drm/meson/meson_registers.h b/drivers/gpu/drm/meson/meson_registers.h
---- a/drivers/gpu/drm/meson/meson_registers.h	2022-08-22 12:44:16.892264952 +0800
-+++ b/drivers/gpu/drm/meson/meson_registers.h	2022-09-29 21:18:25.873188160 +0800
+--- a/drivers/gpu/drm/meson/meson_registers.h	2023-03-14 02:55:20.142028026 +0000
++++ b/drivers/gpu/drm/meson/meson_registers.h	2023-03-16 06:30:25.257231283 +0000
 @@ -812,6 +812,7 @@
  #define VENC_STATA 0x1b6d
  #define VENC_INTCTRL 0x1b6e
@@ -5659,8 +5659,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_registers.h b/drivers/gpu/drm/meson/mes
  #define MLVDS_CLK_CTL1_HI 0x1443
  #define MLVDS_CLK_CTL1_LO 0x1444
 diff -Naur a/drivers/gpu/drm/meson/meson_vclk.c b/drivers/gpu/drm/meson/meson_vclk.c
---- a/drivers/gpu/drm/meson/meson_vclk.c	2022-08-22 12:44:16.892264952 +0800
-+++ b/drivers/gpu/drm/meson/meson_vclk.c	2022-09-29 21:18:25.873188160 +0800
+--- a/drivers/gpu/drm/meson/meson_vclk.c	2023-03-14 02:55:20.142028026 +0000
++++ b/drivers/gpu/drm/meson/meson_vclk.c	2023-03-16 06:30:25.257231283 +0000
 @@ -55,6 +55,8 @@
  #define VCLK2_DIV_MASK		0xff
  #define VCLK2_DIV_EN		BIT(16)
@@ -5798,8 +5798,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_vclk.c b/drivers/gpu/drm/meson/meson_vc
  
  	hdmi_tx_div = vclk_freq / dac_freq;
 diff -Naur a/drivers/gpu/drm/meson/meson_vclk.h b/drivers/gpu/drm/meson/meson_vclk.h
---- a/drivers/gpu/drm/meson/meson_vclk.h	2022-08-22 12:44:16.892264952 +0800
-+++ b/drivers/gpu/drm/meson/meson_vclk.h	2022-09-29 21:18:25.873188160 +0800
+--- a/drivers/gpu/drm/meson/meson_vclk.h	2023-03-14 02:55:20.142028026 +0000
++++ b/drivers/gpu/drm/meson/meson_vclk.h	2023-03-16 06:30:25.257231283 +0000
 @@ -17,6 +17,7 @@
  	MESON_VCLK_TARGET_CVBS = 0,
  	MESON_VCLK_TARGET_HDMI = 1,
@@ -5809,8 +5809,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_vclk.h b/drivers/gpu/drm/meson/meson_vc
  
  /* 27MHz is the CVBS Pixel Clock */
 diff -Naur a/drivers/gpu/drm/meson/meson_venc.c b/drivers/gpu/drm/meson/meson_venc.c
---- a/drivers/gpu/drm/meson/meson_venc.c	2022-08-22 12:44:16.892264952 +0800
-+++ b/drivers/gpu/drm/meson/meson_venc.c	2022-09-29 21:18:25.873188160 +0800
+--- a/drivers/gpu/drm/meson/meson_venc.c	2023-03-14 02:55:20.142028026 +0000
++++ b/drivers/gpu/drm/meson/meson_venc.c	2023-03-16 06:30:25.257231283 +0000
 @@ -6,6 +6,7 @@
   */
  
@@ -6078,8 +6078,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_venc.c b/drivers/gpu/drm/meson/meson_ve
  }
  
 diff -Naur a/drivers/gpu/drm/meson/meson_venc_cvbs.c b/drivers/gpu/drm/meson/meson_venc_cvbs.c
---- a/drivers/gpu/drm/meson/meson_venc_cvbs.c	2022-08-22 12:44:16.892264952 +0800
-+++ b/drivers/gpu/drm/meson/meson_venc_cvbs.c	1970-01-01 08:00:00.000000000 +0800
+--- a/drivers/gpu/drm/meson/meson_venc_cvbs.c	2023-03-14 02:55:20.142028026 +0000
++++ b/drivers/gpu/drm/meson/meson_venc_cvbs.c	1970-01-01 00:00:00.000000000 +0000
 @@ -1,293 +0,0 @@
 -// SPDX-License-Identifier: GPL-2.0-or-later
 -/*
@@ -6375,8 +6375,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_venc_cvbs.c b/drivers/gpu/drm/meson/mes
 -	return 0;
 -}
 diff -Naur a/drivers/gpu/drm/meson/meson_venc_cvbs.h b/drivers/gpu/drm/meson/meson_venc_cvbs.h
---- a/drivers/gpu/drm/meson/meson_venc_cvbs.h	2022-08-22 12:44:16.892264952 +0800
-+++ b/drivers/gpu/drm/meson/meson_venc_cvbs.h	1970-01-01 08:00:00.000000000 +0800
+--- a/drivers/gpu/drm/meson/meson_venc_cvbs.h	2023-03-14 02:55:20.142028026 +0000
++++ b/drivers/gpu/drm/meson/meson_venc_cvbs.h	1970-01-01 00:00:00.000000000 +0000
 @@ -1,29 +0,0 @@
 -/* SPDX-License-Identifier: GPL-2.0-or-later */
 -/*
@@ -6408,8 +6408,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_venc_cvbs.h b/drivers/gpu/drm/meson/mes
 -
 -#endif /* __MESON_VENC_CVBS_H */
 diff -Naur a/drivers/gpu/drm/meson/meson_venc.h b/drivers/gpu/drm/meson/meson_venc.h
---- a/drivers/gpu/drm/meson/meson_venc.h	2022-08-22 12:44:16.892264952 +0800
-+++ b/drivers/gpu/drm/meson/meson_venc.h	2022-09-29 21:18:25.873188160 +0800
+--- a/drivers/gpu/drm/meson/meson_venc.h	2023-03-14 02:55:20.142028026 +0000
++++ b/drivers/gpu/drm/meson/meson_venc.h	2023-03-16 06:30:25.257231283 +0000
 @@ -21,6 +21,7 @@
  	MESON_VENC_MODE_CVBS_PAL,
  	MESON_VENC_MODE_CVBS_NTSC,
@@ -6438,8 +6438,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_venc.h b/drivers/gpu/drm/meson/meson_ve
  
  void meson_venc_enable_vsync(struct meson_drm *priv);
 diff -Naur a/drivers/gpu/drm/meson/meson_viu.c b/drivers/gpu/drm/meson/meson_viu.c
---- a/drivers/gpu/drm/meson/meson_viu.c	2022-08-22 12:44:16.892264952 +0800
-+++ b/drivers/gpu/drm/meson/meson_viu.c	2022-09-29 21:18:25.873188160 +0800
+--- a/drivers/gpu/drm/meson/meson_viu.c	2023-03-14 02:55:20.142028026 +0000
++++ b/drivers/gpu/drm/meson/meson_viu.c	2023-03-16 06:30:25.257231283 +0000
 @@ -78,32 +78,52 @@
  	EOTF_COEFF_RIGHTSHIFT /* right shift */
  };
@@ -6600,8 +6600,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_viu.c b/drivers/gpu/drm/meson/meson_viu
  			       VIU_OSD_BLEND_HOLD_LINES(4),
  			       priv->io_base + _REG(VIU_OSD_BLEND_CTRL));
 diff -Naur a/drivers/gpu/drm/meson/meson_vpp.h b/drivers/gpu/drm/meson/meson_vpp.h
---- a/drivers/gpu/drm/meson/meson_vpp.h	2022-08-22 12:44:16.892264952 +0800
-+++ b/drivers/gpu/drm/meson/meson_vpp.h	2022-09-29 21:18:25.873188160 +0800
+--- a/drivers/gpu/drm/meson/meson_vpp.h	2023-03-14 02:55:20.142028026 +0000
++++ b/drivers/gpu/drm/meson/meson_vpp.h	2023-03-16 06:30:25.257231283 +0000
 @@ -12,6 +12,8 @@
  struct drm_rect;
  struct meson_drm;
@@ -6612,8 +6612,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_vpp.h b/drivers/gpu/drm/meson/meson_vpp
  #define MESON_VIU_VPP_MUX_ENCI	0x5
  /* Mux VIU/VPP to ENCP */
 diff -Naur a/drivers/gpu/drm/panfrost/panfrost_devfreq.c b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
---- a/drivers/gpu/drm/panfrost/panfrost_devfreq.c	2022-08-22 12:44:16.984265833 +0800
-+++ b/drivers/gpu/drm/panfrost/panfrost_devfreq.c	2022-09-29 21:18:25.873188160 +0800
+--- a/drivers/gpu/drm/panfrost/panfrost_devfreq.c	2023-03-14 02:55:20.238030784 +0000
++++ b/drivers/gpu/drm/panfrost/panfrost_devfreq.c	2023-03-16 06:30:25.257231283 +0000
 @@ -81,6 +81,7 @@
  }
  
@@ -6641,8 +6641,8 @@ diff -Naur a/drivers/gpu/drm/panfrost/panfrost_devfreq.c b/drivers/gpu/drm/panfr
  		DRM_DEV_ERROR(dev, "Couldn't initialize GPU devfreq\n");
  		ret = PTR_ERR(devfreq);
 diff -Naur a/drivers/gpu/drm/panfrost/panfrost_devfreq.h b/drivers/gpu/drm/panfrost/panfrost_devfreq.h
---- a/drivers/gpu/drm/panfrost/panfrost_devfreq.h	2022-08-22 12:44:16.984265833 +0800
-+++ b/drivers/gpu/drm/panfrost/panfrost_devfreq.h	2022-09-29 21:18:25.873188160 +0800
+--- a/drivers/gpu/drm/panfrost/panfrost_devfreq.h	2023-03-14 02:55:20.238030784 +0000
++++ b/drivers/gpu/drm/panfrost/panfrost_devfreq.h	2023-03-16 06:30:25.257231283 +0000
 @@ -4,6 +4,7 @@
  #ifndef __PANFROST_DEVFREQ_H__
  #define __PANFROST_DEVFREQ_H__
@@ -6660,8 +6660,8 @@ diff -Naur a/drivers/gpu/drm/panfrost/panfrost_devfreq.h b/drivers/gpu/drm/panfr
  
  	ktime_t busy_time;
 diff -Naur a/drivers/gpu/drm/panfrost/panfrost_job.c b/drivers/gpu/drm/panfrost/panfrost_job.c
---- a/drivers/gpu/drm/panfrost/panfrost_job.c	2022-08-22 12:44:16.984265833 +0800
-+++ b/drivers/gpu/drm/panfrost/panfrost_job.c	2022-09-29 21:18:25.877189076 +0800
+--- a/drivers/gpu/drm/panfrost/panfrost_job.c	2023-03-14 02:55:20.238030784 +0000
++++ b/drivers/gpu/drm/panfrost/panfrost_job.c	2023-03-16 06:30:25.257231283 +0000
 @@ -157,7 +157,7 @@
  
  	panfrost_devfreq_record_busy(&pfdev->pfdevfreq);
@@ -6672,8 +6672,8 @@ diff -Naur a/drivers/gpu/drm/panfrost/panfrost_job.c b/drivers/gpu/drm/panfrost/
  		return;
  
 diff -Naur a/drivers/gpu/drm/panfrost/panfrost_mmu.c b/drivers/gpu/drm/panfrost/panfrost_mmu.c
---- a/drivers/gpu/drm/panfrost/panfrost_mmu.c	2022-08-22 12:44:16.984265833 +0800
-+++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c	2022-09-29 21:18:25.877189076 +0800
+--- a/drivers/gpu/drm/panfrost/panfrost_mmu.c	2023-03-14 02:55:20.238030784 +0000
++++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c	2023-03-16 06:30:25.257231283 +0000
 @@ -632,22 +632,20 @@
  {
  	struct panfrost_device *pfdev = data;
@@ -6735,9 +6735,246 @@ diff -Naur a/drivers/gpu/drm/panfrost/panfrost_mmu.c b/drivers/gpu/drm/panfrost/
  	}
  
  	mmu_write(pfdev, MMU_INT_MASK, ~0);
+diff -Naur a/drivers/input/touchscreen/edt-ft5x06.c b/drivers/input/touchscreen/edt-ft5x06.c
+--- a/drivers/input/touchscreen/edt-ft5x06.c	2023-03-14 02:55:20.526039061 +0000
++++ b/drivers/input/touchscreen/edt-ft5x06.c	2023-03-16 06:37:30.598424323 +0000
+@@ -69,6 +69,11 @@
+ #define EDT_RAW_DATA_RETRIES		100
+ #define EDT_RAW_DATA_DELAY		1000 /* usec */
+ 
++#define EDT_DEFAULT_NUM_X		800
++#define EDT_DEFAULT_NUM_Y		480
++
++#define POLL_INTERVAL_MS		17	/* 17ms = 60fps */
++
+ enum edt_pmode {
+ 	EDT_PMODE_NOT_SUPPORTED,
+ 	EDT_PMODE_HIBERNATE,
+@@ -121,11 +126,15 @@
+ 	int offset_y;
+ 	int report_rate;
+ 	int max_support_points;
++	unsigned int known_ids;
+ 
+ 	char name[EDT_NAME_LEN];
+ 
+ 	struct edt_reg_addr reg_addr;
+ 	enum edt_ver version;
++
++	struct timer_list timer;
++	struct work_struct work_i2c_poll;
+ };
+ 
+ struct edt_i2c_chip_data {
+@@ -192,6 +201,10 @@
+ 	int i, type, x, y, id;
+ 	int offset, tplen, datalen, crclen;
+ 	int error;
++	unsigned int active_ids = 0, known_ids = tsdata->known_ids;
++	long released_ids;
++	int b = 0;
++	unsigned int num_points;
+ 
+ 	switch (tsdata->version) {
+ 	case EDT_M06:
+@@ -239,9 +252,15 @@
+ 
+ 		if (!edt_ft5x06_ts_check_crc(tsdata, rdbuf, datalen))
+ 			goto out;
++		num_points = tsdata->max_support_points;
++	} else {
++		/* Register 2 is TD_STATUS, containing the number of touch
++		 * points.
++		 */
++		num_points = min(rdbuf[2] & 0xf, tsdata->max_support_points);
+ 	}
+ 
+-	for (i = 0; i < tsdata->max_support_points; i++) {
++	for (i = 0; i < num_points; i++) {
+ 		u8 *buf = &rdbuf[i * tplen + offset];
+ 
+ 		type = buf[0] >> 6;
+@@ -263,10 +282,25 @@
+ 
+ 		input_mt_slot(tsdata->input, id);
+ 		if (input_mt_report_slot_state(tsdata->input, MT_TOOL_FINGER,
+-					       type != TOUCH_EVENT_UP))
++					       type != TOUCH_EVENT_UP)) {
+ 			touchscreen_report_pos(tsdata->input, &tsdata->prop,
+ 					       x, y, true);
++			active_ids |= BIT(id);
++		} else {
++			known_ids &= ~BIT(id);
++		}
++	}
++
++	/* One issue with the device is the TOUCH_UP message is not always
++	 * returned. Instead track which ids we know about and report when they
++	 * are no longer updated
++	 */
++	released_ids = known_ids & ~active_ids;
++	for_each_set_bit_from(b, &released_ids, tsdata->max_support_points) {
++		input_mt_slot(tsdata->input, b);
++		input_mt_report_slot_inactive(tsdata->input);
+ 	}
++	tsdata->known_ids = active_ids;
+ 
+ 	input_mt_report_pointer_emulation(tsdata->input, true);
+ 	input_sync(tsdata->input);
+@@ -275,6 +309,22 @@
+ 	return IRQ_HANDLED;
+ }
+ 
++static void edt_ft5x06_ts_irq_poll_timer(struct timer_list *t)
++{
++	struct edt_ft5x06_ts_data *tsdata = from_timer(tsdata, t, timer);
++
++	schedule_work(&tsdata->work_i2c_poll);
++	mod_timer(&tsdata->timer, jiffies + msecs_to_jiffies(POLL_INTERVAL_MS));
++}
++
++static void edt_ft5x06_ts_work_i2c_poll(struct work_struct *work)
++{
++	struct edt_ft5x06_ts_data *tsdata = container_of(work,
++			struct edt_ft5x06_ts_data, work_i2c_poll);
++
++	edt_ft5x06_ts_isr(0, tsdata);
++}
++
+ static int edt_ft5x06_register_write(struct edt_ft5x06_ts_data *tsdata,
+ 				     u8 addr, u8 value)
+ {
+@@ -895,6 +945,7 @@
+ 		 * the identification registers.
+ 		 */
+ 		switch (rdbuf[0]) {
++		case 0x11:   /* EDT EP0110M09 */
+ 		case 0x35:   /* EDT EP0350M09 */
+ 		case 0x43:   /* EDT EP0430M09 */
+ 		case 0x50:   /* EDT EP0500M09 */
+@@ -997,17 +1048,14 @@
+ 	if (reg_addr->reg_report_rate != NO_REGISTER)
+ 		tsdata->report_rate = edt_ft5x06_register_read(tsdata,
+ 						reg_addr->reg_report_rate);
+-	if (tsdata->version == EDT_M06 ||
+-	    tsdata->version == EDT_M09 ||
+-	    tsdata->version == EDT_M12) {
++	tsdata->num_x = EDT_DEFAULT_NUM_X;
++	if (reg_addr->reg_num_x != NO_REGISTER)
+ 		tsdata->num_x = edt_ft5x06_register_read(tsdata,
+ 							 reg_addr->reg_num_x);
++	tsdata->num_y = EDT_DEFAULT_NUM_Y;
++	if (reg_addr->reg_num_y != NO_REGISTER)
+ 		tsdata->num_y = edt_ft5x06_register_read(tsdata,
+ 							 reg_addr->reg_num_y);
+-	} else {
+-		tsdata->num_x = -1;
+-		tsdata->num_y = -1;
+-	}
+ }
+ 
+ static void
+@@ -1053,10 +1101,13 @@
+ 	case GENERIC_FT:
+ 		/* this is a guesswork */
+ 		reg_addr->reg_threshold = M09_REGISTER_THRESHOLD;
++		reg_addr->reg_report_rate = NO_REGISTER;
+ 		reg_addr->reg_gain = M09_REGISTER_GAIN;
+ 		reg_addr->reg_offset = M09_REGISTER_OFFSET;
+ 		reg_addr->reg_offset_x = NO_REGISTER;
+ 		reg_addr->reg_offset_y = NO_REGISTER;
++		reg_addr->reg_num_x = NO_REGISTER;
++		reg_addr->reg_num_y = NO_REGISTER;
+ 		break;
+ 	}
+ }
+@@ -1187,7 +1238,7 @@
+ 	edt_ft5x06_ts_get_defaults(&client->dev, tsdata);
+ 	edt_ft5x06_ts_get_parameters(tsdata);
+ 
+-	dev_dbg(&client->dev,
++	dev_info(&client->dev,
+ 		"Model \"%s\", Rev. \"%s\", %dx%d sensors\n",
+ 		tsdata->name, fw_version, tsdata->num_x, tsdata->num_y);
+ 
+@@ -1195,20 +1246,10 @@
+ 	input->id.bustype = BUS_I2C;
+ 	input->dev.parent = &client->dev;
+ 
+-	if (tsdata->version == EDT_M06 ||
+-	    tsdata->version == EDT_M09 ||
+-	    tsdata->version == EDT_M12) {
+-		input_set_abs_params(input, ABS_MT_POSITION_X,
+-				     0, tsdata->num_x * 64 - 1, 0, 0);
+-		input_set_abs_params(input, ABS_MT_POSITION_Y,
+-				     0, tsdata->num_y * 64 - 1, 0, 0);
+-	} else {
+-		/* Unknown maximum values. Specify via devicetree */
+-		input_set_abs_params(input, ABS_MT_POSITION_X,
+-				     0, 65535, 0, 0);
+-		input_set_abs_params(input, ABS_MT_POSITION_Y,
+-				     0, 65535, 0, 0);
+-	}
++	input_set_abs_params(input, ABS_MT_POSITION_X,
++			     0, tsdata->num_x * 64 - 1, 0, 0);
++	input_set_abs_params(input, ABS_MT_POSITION_Y,
++			     0, tsdata->num_y * 64 - 1, 0, 0);
+ 
+ 	touchscreen_parse_properties(input, true, &tsdata->prop);
+ 
+@@ -1221,17 +1262,27 @@
+ 
+ 	i2c_set_clientdata(client, tsdata);
+ 
+-	irq_flags = irq_get_trigger_type(client->irq);
+-	if (irq_flags == IRQF_TRIGGER_NONE)
+-		irq_flags = IRQF_TRIGGER_FALLING;
+-	irq_flags |= IRQF_ONESHOT;
+-
+-	error = devm_request_threaded_irq(&client->dev, client->irq,
+-					NULL, edt_ft5x06_ts_isr, irq_flags,
+-					client->name, tsdata);
+-	if (error) {
+-		dev_err(&client->dev, "Unable to request touchscreen IRQ.\n");
+-		return error;
++	if (client->irq) {
++		irq_flags = irq_get_trigger_type(client->irq);
++		if (irq_flags == IRQF_TRIGGER_NONE)
++			irq_flags = IRQF_TRIGGER_FALLING;
++		irq_flags |= IRQF_ONESHOT;
++
++		error = devm_request_threaded_irq(&client->dev, client->irq,
++						  NULL, edt_ft5x06_ts_isr,
++						  irq_flags, client->name,
++						  tsdata);
++		if (error) {
++			dev_err(&client->dev, "Unable to request touchscreen IRQ.\n");
++			return error;
++		}
++	} else {
++		INIT_WORK(&tsdata->work_i2c_poll,
++			  edt_ft5x06_ts_work_i2c_poll);
++		timer_setup(&tsdata->timer, edt_ft5x06_ts_irq_poll_timer, 0);
++		tsdata->timer.expires = jiffies +
++					msecs_to_jiffies(POLL_INTERVAL_MS);
++		add_timer(&tsdata->timer);
+ 	}
+ 
+ 	error = devm_device_add_group(&client->dev, &edt_ft5x06_attr_group);
+@@ -1257,6 +1308,10 @@
+ {
+ 	struct edt_ft5x06_ts_data *tsdata = i2c_get_clientdata(client);
+ 
++	if (!client->irq) {
++		del_timer(&tsdata->timer);
++		cancel_work_sync(&tsdata->work_i2c_poll);
++	}
+ 	edt_ft5x06_ts_teardown_debugfs(tsdata);
+ 
+ 	return 0;
 diff -Naur a/drivers/irqchip/irq-meson-gpio.c b/drivers/irqchip/irq-meson-gpio.c
---- a/drivers/irqchip/irq-meson-gpio.c	2022-08-22 12:44:17.308268939 +0800
-+++ b/drivers/irqchip/irq-meson-gpio.c	2022-09-29 21:18:25.877189076 +0800
+--- a/drivers/irqchip/irq-meson-gpio.c	2023-03-14 02:55:20.546039635 +0000
++++ b/drivers/irqchip/irq-meson-gpio.c	2023-03-16 06:30:25.257231283 +0000
 @@ -15,6 +15,7 @@
  #include <linux/irqchip.h>
  #include <linux/of.h>
@@ -6881,8 +7118,8 @@ diff -Naur a/drivers/irqchip/irq-meson-gpio.c b/drivers/irqchip/irq-meson-gpio.c
 +MODULE_LICENSE("GPL v2");
 +MODULE_ALIAS("platform:meson-gpio-intc");
 diff -Naur a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
---- a/drivers/mmc/core/block.c	2022-08-22 12:44:17.648272197 +0800
-+++ b/drivers/mmc/core/block.c	2022-09-29 21:18:25.877189076 +0800
+--- a/drivers/mmc/core/block.c	2023-03-14 02:55:20.874049061 +0000
++++ b/drivers/mmc/core/block.c	2023-03-16 06:30:25.257231283 +0000
 @@ -44,7 +44,9 @@
  #include <linux/mmc/host.h>
  #include <linux/mmc/mmc.h>
@@ -6923,8 +7160,8 @@ diff -Naur a/drivers/mmc/core/block.c b/drivers/mmc/core/block.c
  
  	/* Add two debugfs entries */
 diff -Naur a/drivers/mmc/host/meson-gx-mmc.c b/drivers/mmc/host/meson-gx-mmc.c
---- a/drivers/mmc/host/meson-gx-mmc.c	2022-08-22 12:44:17.656272274 +0800
-+++ b/drivers/mmc/host/meson-gx-mmc.c	2022-09-29 21:18:25.877189076 +0800
+--- a/drivers/mmc/host/meson-gx-mmc.c	2023-03-14 02:55:20.878049175 +0000
++++ b/drivers/mmc/host/meson-gx-mmc.c	2023-03-16 06:30:25.261231357 +0000
 @@ -27,6 +27,7 @@
  #include <linux/interrupt.h>
  #include <linux/bitfield.h>
@@ -7031,8 +7268,8 @@ diff -Naur a/drivers/mmc/host/meson-gx-mmc.c b/drivers/mmc/host/meson-gx-mmc.c
  
  static const struct of_device_id meson_mmc_of_match[] = {
 diff -Naur a/drivers/pinctrl/meson/pinctrl-meson.c b/drivers/pinctrl/meson/pinctrl-meson.c
---- a/drivers/pinctrl/meson/pinctrl-meson.c	2022-08-22 12:44:18.400279403 +0800
-+++ b/drivers/pinctrl/meson/pinctrl-meson.c	2022-09-29 21:18:25.877189076 +0800
+--- a/drivers/pinctrl/meson/pinctrl-meson.c	2023-03-14 02:55:21.562068831 +0000
++++ b/drivers/pinctrl/meson/pinctrl-meson.c	2023-03-16 06:30:25.261231357 +0000
 @@ -56,6 +56,24 @@
  #include "../pinctrl-utils.h"
  #include "pinctrl-meson.h"
@@ -7225,8 +7462,8 @@ diff -Naur a/drivers/pinctrl/meson/pinctrl-meson.c b/drivers/pinctrl/meson/pinct
  }
 +EXPORT_SYMBOL(meson_pinctrl_probe);
 diff -Naur a/drivers/pinctrl/meson/pinctrl-meson.h b/drivers/pinctrl/meson/pinctrl-meson.h
---- a/drivers/pinctrl/meson/pinctrl-meson.h	2022-08-22 12:44:18.400279403 +0800
-+++ b/drivers/pinctrl/meson/pinctrl-meson.h	2022-09-29 21:18:25.877189076 +0800
+--- a/drivers/pinctrl/meson/pinctrl-meson.h	2023-03-14 02:55:21.562068831 +0000
++++ b/drivers/pinctrl/meson/pinctrl-meson.h	2023-03-16 06:30:25.261231357 +0000
 @@ -130,6 +130,7 @@
  	struct regmap *reg_gpio;
  	struct regmap *reg_ds;
@@ -7236,8 +7473,8 @@ diff -Naur a/drivers/pinctrl/meson/pinctrl-meson.h b/drivers/pinctrl/meson/pinct
  };
  
 diff -Naur a/drivers/soc/amlogic/meson-canvas.c b/drivers/soc/amlogic/meson-canvas.c
---- a/drivers/soc/amlogic/meson-canvas.c	2022-08-22 12:44:18.688282163 +0800
-+++ b/drivers/soc/amlogic/meson-canvas.c	2022-09-29 21:18:25.877189076 +0800
+--- a/drivers/soc/amlogic/meson-canvas.c	2023-03-14 02:55:21.830076532 +0000
++++ b/drivers/soc/amlogic/meson-canvas.c	2023-03-16 06:30:25.261231357 +0000
 @@ -148,6 +148,24 @@
  }
  EXPORT_SYMBOL_GPL(meson_canvas_alloc);
@@ -7264,8 +7501,8 @@ diff -Naur a/drivers/soc/amlogic/meson-canvas.c b/drivers/soc/amlogic/meson-canv
  {
  	unsigned long flags;
 diff -Naur a/drivers/usb/dwc3/dwc3-meson-g12a.c b/drivers/usb/dwc3/dwc3-meson-g12a.c
---- a/drivers/usb/dwc3/dwc3-meson-g12a.c	2022-08-22 12:44:18.956284732 +0800
-+++ b/drivers/usb/dwc3/dwc3-meson-g12a.c	2022-09-29 21:18:25.877189076 +0800
+--- a/drivers/usb/dwc3/dwc3-meson-g12a.c	2023-03-14 02:55:22.094084119 +0000
++++ b/drivers/usb/dwc3/dwc3-meson-g12a.c	2023-03-16 06:30:25.261231357 +0000
 @@ -269,6 +269,59 @@
  	const struct dwc3_meson_g12a_drvdata *drvdata;
  };
@@ -7338,8 +7575,8 @@ diff -Naur a/drivers/usb/dwc3/dwc3-meson-g12a.c b/drivers/usb/dwc3/dwc3-meson-g1
  }
  
 diff -Naur a/drivers/usb/gadget/composite.c b/drivers/usb/gadget/composite.c
---- a/drivers/usb/gadget/composite.c	2022-08-22 12:44:18.956284732 +0800
-+++ b/drivers/usb/gadget/composite.c	2022-09-29 21:18:25.877189076 +0800
+--- a/drivers/usb/gadget/composite.c	2023-03-14 02:55:22.094084119 +0000
++++ b/drivers/usb/gadget/composite.c	2023-03-16 06:30:25.261231357 +0000
 @@ -2061,7 +2061,7 @@
  	return value;
  }
@@ -7383,8 +7620,8 @@ diff -Naur a/drivers/usb/gadget/composite.c b/drivers/usb/gadget/composite.c
  
  	.suspend	= composite_suspend,
 diff -Naur a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
---- a/drivers/usb/gadget/configfs.c	2022-08-22 12:44:18.956284732 +0800
-+++ b/drivers/usb/gadget/configfs.c	2022-09-29 21:18:25.877189076 +0800
+--- a/drivers/usb/gadget/configfs.c	2023-03-14 02:55:22.098084233 +0000
++++ b/drivers/usb/gadget/configfs.c	2023-03-16 06:30:25.261231357 +0000
 @@ -10,6 +10,32 @@
  #include "u_f.h"
  #include "u_os_desc.h"
@@ -7779,8 +8016,8 @@ diff -Naur a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
  }
  module_exit(gadget_cfs_exit);
 diff -Naur a/drivers/usb/gadget/Kconfig b/drivers/usb/gadget/Kconfig
---- a/drivers/usb/gadget/Kconfig	2022-08-22 12:44:18.956284732 +0800
-+++ b/drivers/usb/gadget/Kconfig	2022-09-29 21:18:25.877189076 +0800
+--- a/drivers/usb/gadget/Kconfig	2023-03-14 02:55:22.094084119 +0000
++++ b/drivers/usb/gadget/Kconfig	2023-03-16 06:30:25.261231357 +0000
 @@ -216,6 +216,12 @@
  config USB_F_TCM
  	tristate
@@ -7834,8 +8071,8 @@ diff -Naur a/drivers/usb/gadget/Kconfig b/drivers/usb/gadget/Kconfig
  	bool "Audio Class 1.0"
  	depends on USB_CONFIGFS
 diff -Naur a/drivers/usb/serial/ch341.c b/drivers/usb/serial/ch341.c
---- a/drivers/usb/serial/ch341.c	2022-08-22 12:44:19.008285230 +0800
-+++ b/drivers/usb/serial/ch341.c	2022-09-29 21:18:25.877189076 +0800
+--- a/drivers/usb/serial/ch341.c	2023-03-14 02:55:22.146085613 +0000
++++ b/drivers/usb/serial/ch341.c	2023-03-16 06:30:25.261231357 +0000
 @@ -85,6 +85,7 @@
  	{ USB_DEVICE(0x1a86, 0x5523) },
  	{ USB_DEVICE(0x1a86, 0x7522) },
@@ -7845,8 +8082,8 @@ diff -Naur a/drivers/usb/serial/ch341.c b/drivers/usb/serial/ch341.c
  	{ USB_DEVICE(0x9986, 0x7523) },
  	{ },
 diff -Naur a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
---- a/drivers/video/fbdev/core/fbcon.c	2022-08-22 12:44:19.048285613 +0800
-+++ b/drivers/video/fbdev/core/fbcon.c	2022-09-29 21:18:25.881189992 +0800
+--- a/drivers/video/fbdev/core/fbcon.c	2023-03-14 02:55:22.182086647 +0000
++++ b/drivers/video/fbdev/core/fbcon.c	2023-03-16 06:30:25.261231357 +0000
 @@ -365,6 +365,7 @@
  
  static void fb_flashcursor(struct work_struct *work)
@@ -7880,8 +8117,8 @@ diff -Naur a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
  
  static int scrollback_phys_max = 0;
 diff -Naur a/drivers/video/fbdev/core/fbmem.c b/drivers/video/fbdev/core/fbmem.c
---- a/drivers/video/fbdev/core/fbmem.c	2022-08-22 12:44:19.048285613 +0800
-+++ b/drivers/video/fbdev/core/fbmem.c	2022-09-29 21:18:25.881189992 +0800
+--- a/drivers/video/fbdev/core/fbmem.c	2023-03-14 02:55:22.182086647 +0000
++++ b/drivers/video/fbdev/core/fbmem.c	2023-03-16 06:30:25.261231357 +0000
 @@ -53,9 +53,9 @@
  int num_registered_fb __read_mostly;
  EXPORT_SYMBOL(num_registered_fb);
@@ -7895,8 +8132,8 @@ diff -Naur a/drivers/video/fbdev/core/fbmem.c b/drivers/video/fbdev/core/fbmem.c
  static struct fb_info *get_fb_info(unsigned int idx)
  {
 diff -Naur a/include/drm/bridge/dw_hdmi.h b/include/drm/bridge/dw_hdmi.h
---- a/include/drm/bridge/dw_hdmi.h	2022-08-22 12:44:19.364288642 +0800
-+++ b/include/drm/bridge/dw_hdmi.h	2022-09-29 21:18:25.881189992 +0800
+--- a/include/drm/bridge/dw_hdmi.h	2023-03-14 02:55:22.474095037 +0000
++++ b/include/drm/bridge/dw_hdmi.h	2023-03-16 06:30:25.261231357 +0000
 @@ -126,6 +126,8 @@
  struct dw_hdmi_plat_data {
  	struct regmap *regm;
@@ -7916,8 +8153,8 @@ diff -Naur a/include/drm/bridge/dw_hdmi.h b/include/drm/bridge/dw_hdmi.h
  
  struct dw_hdmi *dw_hdmi_probe(struct platform_device *pdev,
 diff -Naur a/include/drm/bridge/dw_mipi_dsi.h b/include/drm/bridge/dw_mipi_dsi.h
---- a/include/drm/bridge/dw_mipi_dsi.h	2022-08-22 12:44:19.364288642 +0800
-+++ b/include/drm/bridge/dw_mipi_dsi.h	2022-09-29 21:18:25.881189992 +0800
+--- a/include/drm/bridge/dw_mipi_dsi.h	2023-03-14 02:55:22.474095037 +0000
++++ b/include/drm/bridge/dw_mipi_dsi.h	2023-03-16 06:30:25.261231357 +0000
 @@ -51,7 +51,9 @@
  	unsigned int max_data_lanes;
  
@@ -7930,8 +8167,8 @@ diff -Naur a/include/drm/bridge/dw_mipi_dsi.h b/include/drm/bridge/dw_mipi_dsi.h
  	const struct dw_mipi_dsi_phy_ops *phy_ops;
  	const struct dw_mipi_dsi_host_ops *host_ops;
 diff -Naur a/include/drm/drm_aperture.h b/include/drm/drm_aperture.h
---- a/include/drm/drm_aperture.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/include/drm/drm_aperture.h	2022-09-29 21:18:25.881189992 +0800
+--- a/include/drm/drm_aperture.h	1970-01-01 00:00:00.000000000 +0000
++++ b/include/drm/drm_aperture.h	2023-03-16 06:30:25.261231357 +0000
 @@ -0,0 +1,39 @@
 +/* SPDX-License-Identifier: MIT */
 +
@@ -7973,8 +8210,8 @@ diff -Naur a/include/drm/drm_aperture.h b/include/drm/drm_aperture.h
 +
 +#endif
 diff -Naur a/include/drm/drm_atomic_helper.h b/include/drm/drm_atomic_helper.h
---- a/include/drm/drm_atomic_helper.h	2022-08-22 12:44:19.364288642 +0800
-+++ b/include/drm/drm_atomic_helper.h	2022-09-29 21:18:25.881189992 +0800
+--- a/include/drm/drm_atomic_helper.h	2023-03-14 02:55:22.474095037 +0000
++++ b/include/drm/drm_atomic_helper.h	2023-03-16 06:30:25.265231433 +0000
 @@ -167,7 +167,7 @@
  	drm_for_each_plane_mask(plane, (crtc)->dev, (crtc)->state->plane_mask)
  
@@ -7994,8 +8231,8 @@ diff -Naur a/include/drm/drm_atomic_helper.h b/include/drm/drm_atomic_helper.h
   * @plane_state: loop cursor for the plane's state, must be const
   * @crtc_state: the incoming CRTC state
 diff -Naur a/include/drm/drm_connector.h b/include/drm/drm_connector.h
---- a/include/drm/drm_connector.h	2022-08-22 12:44:19.364288642 +0800
-+++ b/include/drm/drm_connector.h	2022-09-29 21:18:25.881189992 +0800
+--- a/include/drm/drm_connector.h	2023-03-14 02:55:22.474095037 +0000
++++ b/include/drm/drm_connector.h	2023-03-16 06:30:25.265231433 +0000
 @@ -1622,6 +1622,9 @@
  					       u32 scaling_mode_mask);
  int drm_connector_attach_vrr_capable_property(
@@ -8007,8 +8244,8 @@ diff -Naur a/include/drm/drm_connector.h b/include/drm/drm_connector.h
  int drm_mode_create_hdmi_colorspace_property(struct drm_connector *connector);
  int drm_mode_create_dp_colorspace_property(struct drm_connector *connector);
 diff -Naur a/include/dt-bindings/clock/g12a-clkc.h b/include/dt-bindings/clock/g12a-clkc.h
---- a/include/dt-bindings/clock/g12a-clkc.h	2022-08-22 12:44:19.372288719 +0800
-+++ b/include/dt-bindings/clock/g12a-clkc.h	2022-09-29 21:18:25.885190908 +0800
+--- a/include/dt-bindings/clock/g12a-clkc.h	2023-03-14 02:55:22.486095381 +0000
++++ b/include/dt-bindings/clock/g12a-clkc.h	2023-03-16 06:30:25.265231433 +0000
 @@ -147,5 +147,26 @@
  #define CLKID_SPICC1_SCLK			261
  #define CLKID_NNA_AXI_CLK			264
@@ -8037,8 +8274,8 @@ diff -Naur a/include/dt-bindings/clock/g12a-clkc.h b/include/dt-bindings/clock/g
 +	
  #endif /* __G12A_CLKC_H */
 diff -Naur a/include/linux/mmc/card.h b/include/linux/mmc/card.h
---- a/include/linux/mmc/card.h	2022-08-22 12:44:19.464289600 +0800
-+++ b/include/linux/mmc/card.h	2022-09-29 21:18:25.881189992 +0800
+--- a/include/linux/mmc/card.h	2023-03-14 02:55:22.582098141 +0000
++++ b/include/linux/mmc/card.h	2023-03-16 06:30:25.265231433 +0000
 @@ -310,6 +310,7 @@
  	struct dentry		*debugfs_root;
  	struct mmc_part	part[MMC_NUM_PHY_PARTITION]; /* physical partitions */
@@ -8048,8 +8285,8 @@ diff -Naur a/include/linux/mmc/card.h b/include/linux/mmc/card.h
  	unsigned int		bouncesz;	/* Bounce buffer size */
  	struct workqueue_struct *complete_wq;	/* Private workqueue */
 diff -Naur a/include/linux/mmc/emmc_partitions.h b/include/linux/mmc/emmc_partitions.h
---- a/include/linux/mmc/emmc_partitions.h	1970-01-01 08:00:00.000000000 +0800
-+++ b/include/linux/mmc/emmc_partitions.h	2022-09-29 21:18:25.881189992 +0800
+--- a/include/linux/mmc/emmc_partitions.h	1970-01-01 00:00:00.000000000 +0000
++++ b/include/linux/mmc/emmc_partitions.h	2023-03-16 06:30:25.265231433 +0000
 @@ -0,0 +1,85 @@
 +/* SPDX-License-Identifier: (GPL-2.0+ OR MIT) */
 +/*
@@ -8137,8 +8374,8 @@ diff -Naur a/include/linux/mmc/emmc_partitions.h b/include/linux/mmc/emmc_partit
 +extern struct mmc_partitions_fmt *pt_fmt;
 +
 diff -Naur a/include/linux/soc/amlogic/meson-canvas.h b/include/linux/soc/amlogic/meson-canvas.h
---- a/include/linux/soc/amlogic/meson-canvas.h	2022-08-22 12:44:19.508290021 +0800
-+++ b/include/linux/soc/amlogic/meson-canvas.h	2022-09-29 21:18:25.881189992 +0800
+--- a/include/linux/soc/amlogic/meson-canvas.h	2023-03-14 02:55:22.630099520 +0000
++++ b/include/linux/soc/amlogic/meson-canvas.h	2023-03-16 06:30:25.265231433 +0000
 @@ -39,6 +39,14 @@
  int meson_canvas_alloc(struct meson_canvas *canvas, u8 *canvas_index);
  
@@ -8155,8 +8392,8 @@ diff -Naur a/include/linux/soc/amlogic/meson-canvas.h b/include/linux/soc/amlogi
   *
   * @canvas: canvas provider instance retrieved from meson_canvas_get()
 diff -Naur a/include/linux/usb/composite.h b/include/linux/usb/composite.h
---- a/include/linux/usb/composite.h	2022-08-22 12:44:19.524290175 +0800
-+++ b/include/linux/usb/composite.h	2022-09-29 21:18:25.881189992 +0800
+--- a/include/linux/usb/composite.h	2023-03-14 02:55:22.646099979 +0000
++++ b/include/linux/usb/composite.h	2023-03-16 06:30:25.265231433 +0000
 @@ -525,6 +525,8 @@
  extern int usb_string_ids_n(struct usb_composite_dev *c, unsigned n);
  
@@ -8175,8 +8412,8 @@ diff -Naur a/include/linux/usb/composite.h b/include/linux/usb/composite.h
  			      const char *name);
  	void (*free_func_inst)(struct usb_function_instance *inst);
 diff -Naur a/Kconfig b/Kconfig
---- a/Kconfig	2022-08-22 12:44:15.044247242 +0800
-+++ b/Kconfig	2022-09-29 21:18:25.881189992 +0800
+--- a/Kconfig	2023-03-14 02:55:18.309975378 +0000
++++ b/Kconfig	2023-03-16 06:30:25.265231433 +0000
 @@ -30,3 +30,5 @@
  source "lib/Kconfig.debug"
  
@@ -8184,8 +8421,8 @@ diff -Naur a/Kconfig b/Kconfig
 +
 +source "vendor/Kconfig"
 diff -Naur a/kernel/dma/contiguous.c b/kernel/dma/contiguous.c
---- a/kernel/dma/contiguous.c	2022-08-22 12:44:19.660291479 +0800
-+++ b/kernel/dma/contiguous.c	2022-09-29 21:18:25.881189992 +0800
+--- a/kernel/dma/contiguous.c	2023-03-14 02:55:22.782103887 +0000
++++ b/kernel/dma/contiguous.c	2023-03-16 06:30:25.265231433 +0000
 @@ -262,6 +262,7 @@
  
  	return cma_alloc(dev_get_cma_area(dev), count, align, no_warn);
@@ -8203,8 +8440,8 @@ diff -Naur a/kernel/dma/contiguous.c b/kernel/dma/contiguous.c
  static struct page *cma_alloc_aligned(struct cma *cma, size_t size, gfp_t gfp)
  {
 diff -Naur a/kernel/sched/core.c b/kernel/sched/core.c
---- a/kernel/sched/core.c	2022-09-28 22:06:45.829514968 +0800
-+++ b/kernel/sched/core.c	2022-09-29 21:18:25.885190908 +0800
+--- a/kernel/sched/core.c	2023-03-14 02:55:22.806104577 +0000
++++ b/kernel/sched/core.c	2023-03-16 06:30:25.265231433 +0000
 @@ -5705,6 +5705,7 @@
  {
  	return _sched_setscheduler(p, policy, param, true);
@@ -8214,8 +8451,8 @@ diff -Naur a/kernel/sched/core.c b/kernel/sched/core.c
  int sched_setattr(struct task_struct *p, const struct sched_attr *attr)
  {
 diff -Naur a/Makefile b/Makefile
---- a/Makefile	2022-09-07 09:06:11.553398008 +0800
-+++ b/Makefile	2022-09-29 21:18:25.881189992 +0800
+--- a/Makefile	2023-03-14 02:55:18.313975493 +0000
++++ b/Makefile	2023-03-16 06:30:25.265231433 +0000
 @@ -491,6 +491,7 @@
  		-I$(objtree)/arch/$(SRCARCH)/include/generated \
  		$(if $(building_out_of_srctree),-I$(srctree)/include) \
