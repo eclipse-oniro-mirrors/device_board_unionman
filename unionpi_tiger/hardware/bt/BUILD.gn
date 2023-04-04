@@ -20,7 +20,10 @@ config("bt_warnings") {
     "-Werror",
     "-Wno-switch",
     "-Wno-unused-function",
+    "-Wno-implicit-int",
+    "-Wno-deprecated-non-prototype",
     "-Wno-incompatible-pointer-types",
+    "-Wno-unused-but-set-variable",
     "-Wno-address-of-packed-member",
   ]
 }
