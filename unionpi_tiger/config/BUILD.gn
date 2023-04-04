@@ -151,9 +151,26 @@ ohos_prebuilt_etc("sysctl.conf") {
   part_name = "unionman_products"
 }
 
+ohos_prebuilt_etc("window_manager_config") {
+  source = "etc/window_manager_config.xml"
+  install_enable = true
+  install_images = [ "system" ]
+  part_name = "unionman_products"
+  relative_install_dir = "window/resources"
+}
+
+ohos_prebuilt_etc("display_manager_config") {
+  source = "etc/display_manager_config.xml"
+  install_enable = true
+  install_images = [ "system" ]
+  part_name = "unionman_products"
+  relative_install_dir = "window/resources"
+}
+
 group("init_configs") {
   deps = [
     ":50.usb.rules",
+    ":display_manager_config",
     ":distributed_hardware_components_cfg",
     ":fstab.A311D",
     ":fstab.required",
@@ -170,5 +187,6 @@ group("init_configs") {
     ":sysctl.conf",
     ":udisk_mount.sh",
     ":uninstall_list_config",
+    ":window_manager_config",
   ]
 }
