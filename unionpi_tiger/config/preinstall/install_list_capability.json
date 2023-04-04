@@ -26,11 +26,18 @@
             "allowAppUsePrivilegeExtension": true
         },
         {
+            "bundleName": "com.ohos.contacts",
+            "app_signature" : ["04AC9C3F045EAB7DB992B7C4E38B59468CA3EABB7D654AE47641471B9785EA04"],
+            "singleton": true,
+            "keepAlive": false,
+            "allowCommonEvent": ["usual.event.INCOMING_CALL_MISSED","contact.event.CANCEL_MISSED"]
+        },
+        {
             "bundleName": "com.ohos.mms",
             "app_signature" : ["04AC9C3F045EAB7DB992B7C4E38B59468CA3EABB7D654AE47641471B9785EA04"],
             "singleton": true,
             "keepAlive": false,
-            "allowAppUsePrivilegeExtension": true
+            "allowCommonEvent": ["usual.event.SMS_RECEIVE_COMPLETED"]
         },
         {
             "bundleName": "com.ohos.settingsdata",
@@ -42,22 +49,33 @@
         {
             "bundleName": "ohos.backgroundtaskmgr.resources",
             "app_signature" : ["72BE2C651A9E0C57B4BB67825BA6F8180FC883858434712150A55C17C7E1A6F7"],
-            "singleton": true
+            "singleton": true,
+            "allowAppDesktopIconHide": true
         },
         {
             "bundleName": "ohos.global.systemres",
             "app_signature" : ["8E93863FC32EE238060BF69A9B37E2608FFFB21F93C862DD511CBAC9F30024B5"],
-            "singleton": true
+            "singleton": true,
+            "allowAppDesktopIconHide": true
         },
         {
             "bundleName": "com.ohos.devicetest",
             "app_signature" : ["8E93863FC32EE238060BF69A9B37E2608FFFB21F93C862DD511CBAC9F30024B5"],
-            "runningResourcesApply": true
+            "runningResourcesApply": true,
+            "associatedWakeUp": true,
+            "allowAppUsePrivilegeExtension": true
         },
         {
             "bundleName": "com.ohos.contactsdataability",
-            "app_signature" : ["8E93863FC32EE238060BF69A9B37E2608FFFB21F93C862DD511CBAC9F30024B5"],
-            "associatedWakeUp": true
+            "app_signature" : ["D729F438E1EF2E154994E2B077F6C0CD592BA9F9C938BB428FCDA564FF805EE4"],
+            "associatedWakeUp": true,
+            "allowAppUsePrivilegeExtension": true
+        },
+        {
+            "bundleName": "com.ohos.telephonydataability",
+            "app_signature" : ["D729F438E1EF2E154994E2B077F6C0CD592BA9F9C938BB428FCDA564FF805EE4"],
+            "associatedWakeUp": true,
+            "allowAppUsePrivilegeExtension": true
         },
         {
             "bundleName": "com.huawei.ohos.hiviewx",
@@ -70,6 +88,7 @@
         {
             "bundleName": "cn.openharmony.inputmethodchoosedialog",
             "app_signature" : ["8E93863FC32EE238060BF69A9B37E2608FFFB21F93C862DD511CBAC9F30024B5"],
+            "allowAppDesktopIconHide": true,
             "allowAppUsePrivilegeExtension": true
         },
         {
@@ -80,11 +99,13 @@
         {
             "bundleName": "com.ohos.amsdialog",
             "app_signature": ["8E93863FC32EE238060BF69A9B37E2608FFFB21F93C862DD511CBAC9F30024B5"],
-            "allowAppUsePrivilegeExtension": true
+            "allowAppUsePrivilegeExtension": true,
+            "allowAppDesktopIconHide": true
         },
         {
             "bundleName": "com.ohos.devicemanagerui",
             "app_signature": ["8E93863FC32EE238060BF69A9B37E2608FFFB21F93C862DD511CBAC9F30024B5"],
+            "allowAppDesktopIconHide": true,
             "allowAppUsePrivilegeExtension": true
         },
         {
@@ -95,7 +116,8 @@
         {
             "bundleName": "com.ohos.medialibrary.medialibrarydata",
             "app_signature": ["F9431859ED7A3959B5D72EF36FBE8B210A00082B044063E4424F823A01B3B7CA"],
-            "allowAppUsePrivilegeExtension": true
+            "allowAppUsePrivilegeExtension": true,
+            "allowAppDesktopIconHide": true
         },
         {
             "bundleName": "com.ohos.permissionmanager",
@@ -110,7 +132,8 @@
         {
             "bundleName": "com.ohos.powerdialog",
             "app_signature": ["8E93863FC32EE238060BF69A9B37E2608FFFB21F93C862DD511CBAC9F30024B5"],
-            "allowAppUsePrivilegeExtension": true
+            "allowAppUsePrivilegeExtension": true,
+            "allowAppDesktopIconHide": true
         },
         {
             "bundleName": "com.ohos.sharepickerdialog",
@@ -120,17 +143,39 @@
         {
             "bundleName": "com.usb.right",
             "app_signature": ["8E93863FC32EE238060BF69A9B37E2608FFFB21F93C862DD511CBAC9F30024B5"],
-            "allowAppUsePrivilegeExtension": true
+            "allowAppUsePrivilegeExtension": true,
+            "allowAppDesktopIconHide": true
         },
         {
             "bundleName": "com.ohos.screenshot",
             "app_signature" : ["8E93863FC32EE238060BF69A9B37E2608FFFB21F93C862DD511CBAC9F30024B5"],
-            "allowAppUsePrivilegeExtension": true
+            "allowAppUsePrivilegeExtension": true,
+            "allowAppDesktopIconHide": true
         },
         {
             "bundleName": "com.ohos.notificationdialog",
             "app_signature" : ["8E93863FC32EE238060BF69A9B37E2608FFFB21F93C862DD511CBAC9F30024B5"],
-            "allowAppUsePrivilegeExtension": true
+            "allowAppUsePrivilegeExtension": true,
+            "allowAppDesktopIconHide": true
+        },
+        {
+            "bundleName": "com.ohos.nweb",
+            "app_signature" : ["49D779C85200D36A00DE63E2D85AEF22FE5C72FB268BE13923E589B49BFAFFDA"],
+            "singleton": true,
+            "allowAppDesktopIconHide": true
+        },
+        {
+            "bundleName": "com.ohos.settings.faceauth",
+            "app_signature" : ["8E93863FC32EE238060BF69A9B37E2608FFFB21F93C862DD511CBAC9F30024B5"],
+            "singleton": true,
+            "allowAppDesktopIconHide": true
+        },
+        {
+            "bundleName": "com.ohos.formrenderservice",
+            "app_signature": ["8E93863FC32EE238060BF69A9B37E2608FFFB21F93C862DD511CBAC9F30024B5"],
+            "singleton": true,
+            "allowAppUsePrivilegeExtension": true,
+            "allowAppDesktopIconHide": true
         }
     ]
 }
