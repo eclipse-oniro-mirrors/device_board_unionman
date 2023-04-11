@@ -176,6 +176,11 @@
             "singleton": true,
             "allowAppUsePrivilegeExtension": true,
             "allowAppDesktopIconHide": true
+        },
+        {
+            "bundleName": "com.ohos.updateapp",
+            "app_signature" : ["BA6EBDF53DD63B7D5616F3789F8C15FD4DE134B2587C577B01DA4D027B44A23C"],
+            "allowAppUsePrivilegeExtension": true
         }
     ]
 }
