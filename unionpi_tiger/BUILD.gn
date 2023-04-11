@@ -12,6 +12,7 @@
 #limitations under the License.
 
 import("//build/ohos.gni")
+import("device.gni")
 
 print("unionpi_tiger_group build")
 group("unionpi_tiger_group") {
@@ -22,7 +23,12 @@ group("unionpi_tiger_group") {
     "kernel:kernel",
     "resource:resource",
     "updater:updater_files",
+  ]
+
+  deps += [
     "//device/soc/amlogic/a311d/hardware:hardware_group",
+    "//device/soc/amlogic/a311d/hardware/display:display_buffer_model",
+    "//device/soc/amlogic/a311d/hardware/display:display_composer_model",
     "//vendor/unionman/unionpi_tiger/sample:sample_group",
   ]
 }
