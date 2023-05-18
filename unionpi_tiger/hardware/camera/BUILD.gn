@@ -12,7 +12,7 @@
 # limitations under the License.
 import("//build/ohos.gni")
 import("//drivers/hdf_core/adapter/uhdf2/uhdf.gni")
-import("//drivers/peripheral/camera/hal/camera.gni")
+import("//drivers/peripheral/camera/camera.gni")
 import("$hdf_framework_path/tools/hc-gen/hc_gen.gni")
 
 hc_gen("build_camera_host_config") {
