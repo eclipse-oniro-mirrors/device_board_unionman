@@ -30,6 +30,8 @@ action("build_kernel") {
     rebase_path("$root_build_dir/packages/phone/images"),
     rebase_path("//device/board/unionman/$device_name"),
     product_path,
+    build_variant,
+    device_type,
   ]
 
   if (enable_ramdisk) {

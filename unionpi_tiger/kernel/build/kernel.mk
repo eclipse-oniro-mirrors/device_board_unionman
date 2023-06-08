@@ -69,6 +69,24 @@ HDF_PATCH_FILE := $(DEVICE_PATH)/../../../../kernel/linux/patches/linux-5.10/com
 KERNEL_CONFIG_FILE := $(DEVICE_PATH)/kernel/build/unionpi_tiger_standard_defconfig
 KERNEL_LOGO_FILE := $(DEVICE_PATH)/resource/logo/logo.ppm
 
+HARMONY_CONFIG_PATH := $(OHOS_ROOT_PATH)/kernel/linux/config/$(KERNEL_VERSION)
+DEVICE_CONFIG_PATH  := $(OHOS_ROOT_PATH)/kernel/linux/config/$(KERNEL_VERSION)/$(DEVICE_NAME)
+DEFCONFIG_BASE_FILE := $(HARMONY_CONFIG_PATH)/base_defconfig
+DEFCONFIG_TYPE_FILE := $(HARMONY_CONFIG_PATH)/type/$(BUILD_TYPE)_defconfig
+DEFCONFIG_FORM_FILE := $(HARMONY_CONFIG_PATH)/form/$(KERNEL_FORM)_defconfig
+DEFCONFIG_ARCH_FILE := $(DEVICE_CONFIG_PATH)/arch/$(KERNEL_ARCH)_defconfig
+DEFCONFIG_PROC_FILE := $(DEVICE_CONFIG_PATH)/product/$(KERNEL_PROD)_defconfig
+
+ifneq ($(shell test -e $DEFCONFIG_FORM_FILE), 0)
+    DEFCONFIG_FORM_FILE :=
+    $(warning no form config file $(DEFCONFIG_FORM_FILE))
+endif
+
+ifneq ($(shell test -e $DEFCONFIG_PROC_FILE), 0)
+    DEFCONFIG_PROC_FILE :=
+    $(warning no product config file $(DEFCONFIG_PROC_FILE))
+endif
+
 ifeq ($(KERNEL_ARCH), arm)
 KERNEL_IMAGE_FILE := $(KERNEL_SRC_TMP_PATH)/arch/arm/boot/uImage
 else ifeq ($(KERNEL_ARCH), arm64)
@@ -82,7 +100,8 @@ $(KERNEL_IMAGE_FILE):
 	@rm -rf $(DEVICE_PATH)/../../../../device/soc/amlogic/a311d/soc/drivers
 	@$(DEVICE_PATH)/kernel/build/patch_hdf.sh $(OHOS_ROOT_PATH) $(KERNEL_SRC_TMP_PATH) $(HDF_PATCH_FILE)
 	@cp -rf $(KERNEL_LOGO_FILE) $(KERNEL_SRC_TMP_PATH)/drivers/video/logo/logo_linux_clut224.ppm
-	@cp -rf $(KERNEL_CONFIG_FILE) $(KERNEL_SRC_TMP_PATH)/arch/arm64/configs/defconfig
+	sh $(OHOS_ROOT_PATH)/kernel/linux/$(KERNEL_VERSION)/scripts/kconfig/merge_config.sh -O $(KERNEL_SRC_TMP_PATH)/arch/$(KERNEL_ARCH)/configs/ -m $(DEFCONFIG_TYPE_FILE) $(DEFCONFIG_FORM_FILE) $(DEFCONFIG_ARCH_FILE) $(DEFCONFIG_PROC_FILE) $(DEFCONFIG_BASE_FILE)
+	mv $(KERNEL_SRC_TMP_PATH)/arch/$(KERNEL_ARCH)/configs/.config $(KERNEL_SRC_TMP_PATH)/arch/$(KERNEL_ARCH)/configs/$(DEFCONFIG_FILE)
 	@$(KERNEL_MAKE) -C $(KERNEL_SRC_TMP_PATH) LLVM=1 LLVM_IAS=1 ARCH=$(KERNEL_ARCH) TEXT_OFFSET=0x01080000 $(KERNEL_CROSS_COMPILE) $(DEFCONFIG_FILE)
 	@$(KERNEL_MAKE) -C $(KERNEL_SRC_TMP_PATH) LLVM=1 LLVM_IAS=1 ARCH=$(KERNEL_ARCH) TEXT_OFFSET=0x01080000 $(KERNEL_CROSS_COMPILE) modules_prepare
 	@mkdir -p $(KERNEL_OBJ_TMP_PATH)/vendor/include 
