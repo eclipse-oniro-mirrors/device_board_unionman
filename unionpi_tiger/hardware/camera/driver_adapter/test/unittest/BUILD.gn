@@ -1,4 +1,4 @@
-# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Copyright (c) 2021 - 2023 Huawei Device Co., Ltd.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -12,10 +12,11 @@
 # limitations under the License.
 
 import("//build/test.gni")
+import("//device/board/${product_company}/${device_name}/device.gni")
 import("//drivers/hdf_core/adapter/uhdf2/uhdf.gni")
 import("//drivers/peripheral/camera/camera.gni")
 
-module_output_path = "hdf/v4l2_adapter_test"
+module_output_path = "$root_out_dir/test/unittest/hdf"
 
 config("v4l2_utest_config") {
   visibility = [ ":*" ]
@@ -50,18 +51,18 @@ ohos_unittest("v4l2_adapter_unittest") {
   test_type = "unittest"
   testonly = true
   module_out_path = module_output_path
-  sources = [ "unittest/utest_v4l2.cpp" ]
+  sources = [ "src/utest_v4l2.cpp" ]
 
   include_dirs = [
     "$camera_path/include",
     "$camera_path/adapter/platform/v4l2/src/driver_adapter/include",
-    "$board_camera_path/camera/driver_adapter/test/unittest/include",
+    "include",
     "//third_party/googletest/googletest/include/gtest",
     "//commonlibrary/c_utils/base/include",
   ]
 
   deps = [
-    "$camera_path/adapter/platform/v4l2/src/driver_adapter:camera_v4l2_adapter",
+    "$board_camera_path/driver_adapter:camera_v4l2_adapter",
     "//third_party/googletest:gmock_main",
     "//third_party/googletest:gtest",
     "//third_party/googletest:gtest_main",
@@ -72,6 +73,7 @@ ohos_unittest("v4l2_adapter_unittest") {
   if (is_standard_system) {
     external_deps = [
       "c_utils:utils",
+      "hdf_core:libhdf_utils",
       "hiviewdfx_hilog_native:libhilog",
     ]
   } else {
