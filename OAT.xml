@@ -56,8 +56,8 @@ Note:If the text contains special characters, please escape them according to th
 -->
 <configuration>
     <oatconfig>
-		<licensefile>build/LICENSE|third_party/LICENSE</licensefile>
-        <policylist>
+		<licensefile>LICENSE</licensefile>
+     <policylist>
             <policy name="projectPolicy" desc="">
 				<policyitem type="copyright" name="Unionman Co., Ltd." path=".*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="Unionman copyright"/>
 				<policyitem type="copyright" name="Unionman Technology Co., Ltd." path=".*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc="Unionman copyright"/>
