@@ -160,8 +160,7 @@ ohos_shared_library("camera_pipeline_core") {
 
   public_configs = [ ":pipe_config" ]
   install_images = [ chipset_base_dir ]
-  subsystem_name = "unionman_products"
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 config("example_config") {
@@ -185,6 +184,5 @@ ohos_shared_library("camera_ipp_algo_example") {
   external_deps = [ "c_utils:utils" ]
   public_configs = [ ":example_config" ]
   install_images = [ chipset_base_dir ]
-  subsystem_name = "unionman_products"
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }

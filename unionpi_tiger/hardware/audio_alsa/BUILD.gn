@@ -80,7 +80,7 @@ ohos_shared_library("hdi_audio_interface_lib_capture.alsa") {
   public_configs = [ ":audio_interface_config_alsa" ]
 
   subsystem_name = "hdf"
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 ohos_shared_library("hdi_audio_interface_lib_render.alsa") {
@@ -118,7 +118,7 @@ ohos_shared_library("hdi_audio_interface_lib_render.alsa") {
   public_configs = [ ":audio_interface_config_alsa" ]
 
   subsystem_name = "hdf"
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }
 
 group("audio_alsa") {
