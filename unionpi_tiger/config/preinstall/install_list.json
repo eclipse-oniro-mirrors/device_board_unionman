@@ -61,6 +61,10 @@
             "removable" : false
         },
         {
+            "app_dir" : "/system/app/com.ohos.dlpmanager",
+            "removable" : false
+        },
+        {
             "app_dir" : "/system/app/com.example.kikakeyboard",
             "removable" : false
         },
@@ -86,6 +90,10 @@
         },
         {
             "app_dir" : "/system/app/com.ohos.settings.faceauth",
+            "removable" : false
+        },
+        {
+            "app_dir" : "/system/app/com.ohos.useriam.authwidget",
             "removable" : false
         },
         {
@@ -178,6 +186,14 @@
         },
         {
             "app_dir": "/system/app/com.ohos.updateapp",
+            "removable": false
+        },
+        {
+            "app_dir": "/system/app/com.ohos.spooler",
+            "removable": false
+        },
+        {
+            "app_dir": "/system/app/com.ohos.calendardata",
             "removable": false
         }
     ]

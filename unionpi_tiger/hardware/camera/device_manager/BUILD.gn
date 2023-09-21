@@ -88,6 +88,5 @@ ohos_shared_library("camera_device_manager") {
   external_deps += [ "drivers_interface_camera:metadata" ]
   public_configs = [ ":device_manager_config" ]
   install_images = [ chipset_base_dir ]
-  subsystem_name = "unionman_products"
-  part_name = "unionman_products"
+  part_name = "device_unionpi_tiger"
 }

@@ -101,11 +101,11 @@ $(KERNEL_IMAGE_FILE):
 	@$(DEVICE_PATH)/kernel/build/patch_hdf.sh $(OHOS_ROOT_PATH) $(KERNEL_SRC_TMP_PATH) $(HDF_PATCH_FILE)
 	@cp -rf $(KERNEL_LOGO_FILE) $(KERNEL_SRC_TMP_PATH)/drivers/video/logo/logo_linux_clut224.ppm
 	sh $(OHOS_ROOT_PATH)/kernel/linux/$(KERNEL_VERSION)/scripts/kconfig/merge_config.sh -O $(KERNEL_SRC_TMP_PATH)/arch/$(KERNEL_ARCH)/configs/ -m $(DEFCONFIG_TYPE_FILE) $(DEFCONFIG_FORM_FILE) $(DEFCONFIG_ARCH_FILE) $(DEFCONFIG_PROC_FILE) $(DEFCONFIG_BASE_FILE)
-	mv $(KERNEL_SRC_TMP_PATH)/arch/$(KERNEL_ARCH)/configs/.config $(KERNEL_SRC_TMP_PATH)/arch/$(KERNEL_ARCH)/configs/$(DEFCONFIG_FILE)
+	@cp -rf $(KERNEL_CONFIG_FILE) $(KERNEL_SRC_TMP_PATH)/arch/arm64/configs/defconfig
 	@$(KERNEL_MAKE) -C $(KERNEL_SRC_TMP_PATH) LLVM=1 LLVM_IAS=1 ARCH=$(KERNEL_ARCH) TEXT_OFFSET=0x01080000 $(KERNEL_CROSS_COMPILE) $(DEFCONFIG_FILE)
 	@$(KERNEL_MAKE) -C $(KERNEL_SRC_TMP_PATH) LLVM=1 LLVM_IAS=1 ARCH=$(KERNEL_ARCH) TEXT_OFFSET=0x01080000 $(KERNEL_CROSS_COMPILE) modules_prepare
 	@mkdir -p $(KERNEL_OBJ_TMP_PATH)/vendor/include 
-	@cp -rf $(KERNEL_SRC_TMP_PATH)/vendor/include/* $(KERNEL_OBJ_TMP_PATH)/vendor/include 
+	@cp -rf $(KERNEL_SRC_TMP_PATH)/vendor/include/* $(KERNEL_OBJ_TMP_PATH)/vendor/include
 	$(KERNEL_MAKE) -C $(KERNEL_SRC_TMP_PATH) LLVM=1 LLVM_IAS=1 ARCH=$(KERNEL_ARCH) TEXT_OFFSET=0x01080000 $(KERNEL_CROSS_COMPILE) -j128 modules Image Image.gz dtbs
 	if [ -f $(KERNEL_OBJ_TMP_PATH)/vendor/arch/arm64/boot/dts/amlogic/meson-g12b-unionpi-tiger.dtb ]; then \
 		$(DEVICE_PATH)/common/tools/linux/dtbTool -o $(IMAGES_PATH)/dtb.img $(KERNEL_OBJ_TMP_PATH)/vendor/arch/arm64/boot/dts/amlogic/ > /dev/null; \
