@@ -1,0 +1,37 @@
+{
+    "name": "@ohos/device_unionpi_tiger",
+    "version": "4.0",
+    "license": "Apache License 2.0",
+    "private": false,
+    "segment": {
+      "destPath": "device/board/unionman"
+    },
+    "dirs": {},
+    "scripts": {},
+    "component": {
+      "name": "device_unionpi_tiger",
+      "subsystem": "device",
+      "adapted_system_type": ["standard"],
+      "deps": {
+        "components": [
+          "hilog",
+          "c_utils",
+          "hdf_core",
+          "ipc",
+          "drivers_interface_camera",
+          "hitrace",
+          "power_manager"
+        ],
+        "third_party": [
+        ]
+      },
+      "build": {
+        "sub_component": [
+          "//device/board/unionman/${device_name}:unionpi_tiger_group"
+        ],
+        "test": [
+        ],
+        "inner_kits": []
+      }
+    }
+}
