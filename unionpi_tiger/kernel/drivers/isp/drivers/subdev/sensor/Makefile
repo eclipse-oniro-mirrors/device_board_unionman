@@ -53,8 +53,7 @@ iv009_isp_sensor-objs += src/driver/sensor/SC2335_drv.o \
 					src/driver/sensor/IMX335_drv.o \
 					src/driver/sensor/IMX224_drv.o \
 					src/driver/sensor/IMX307_drv.o \
-					src/driver/sensor/ACameraDefault.o \
-					src/driver/sensor/OV5647_drv.o
+					src/driver/sensor/ACameraDefault.o
 
 #INCLUDE_DIRS := $(addprefix -I,$(shell find ../ -type d ))
 
