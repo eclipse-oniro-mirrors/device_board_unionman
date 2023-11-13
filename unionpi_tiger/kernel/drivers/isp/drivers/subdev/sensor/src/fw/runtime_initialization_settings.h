@@ -127,10 +127,6 @@ extern int sensor_detect_sc8238cs( void* sbp);
 #define SENSOR_DEINIT_SUBDEV_FUNCTIONS_OV13858 sensor_deinit_ov13858
 #define SENSOR_DETECT_FUNCTIONS_OV13858 sensor_detect_ov13858
 
-#define SENSOR_INIT_SUBDEV_FUNCTIONS_OV5647 sensor_init_ov5647
-#define SENSOR_DEINIT_SUBDEV_FUNCTIONS_OV5647 sensor_deinit_ov5647
-#define SENSOR_DETECT_FUNCTIONS_OV5647 sensor_detect_ov5647
-
 #define SENSOR_INIT_SUBDEV_FUNCTIONS_SC2232H sensor_init_sc2232h
 #define SENSOR_DEINIT_SUBDEV_FUNCTIONS_SC2232H sensor_deinit_sc2232h
 #define SENSOR_DETECT_FUNCTIONS_SC2232H sensor_detect_sc2232h
