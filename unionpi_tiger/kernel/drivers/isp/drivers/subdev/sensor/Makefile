@@ -38,10 +38,7 @@ iv009_isp_sensor-objs += src/platform/system_timer.o \
 iv009_isp_sensor-objs += src/driver/sensor/sensor_bsp_common.o \
 					src/driver/sensor/Dummy_drv.o \
 					src/driver/sensor/sensor_bus_config.o \
-					src/driver/sensor/IMX290_drv.o \
 					src/driver/sensor/IMX219_drv.o \
-					src/driver/sensor/IMX335_drv.o \
-					src/driver/sensor/IMX307_drv.o \
 					src/driver/sensor/ACameraDefault.o
 
 #INCLUDE_DIRS := $(addprefix -I,$(shell find ../ -type d ))

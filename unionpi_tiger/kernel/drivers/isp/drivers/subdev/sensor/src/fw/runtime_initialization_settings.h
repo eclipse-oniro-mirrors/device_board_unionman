@@ -20,37 +20,10 @@
 #include "acamera_types.h"
 #include "acamera_firmware_config.h"
 
-extern void sensor_init_imx290( void** ctx, sensor_control_t*, void*) ;
-extern void sensor_deinit_imx290( void *ctx );
-extern int sensor_detect_imx290( void* sbp);
-
 extern void sensor_init_imx219( void** ctx, sensor_control_t*, void*) ;
 extern void sensor_deinit_imx219( void *ctx );
 extern int sensor_detect_imx219( void* sbp);
 
-extern void sensor_init_imx307( void** ctx, sensor_control_t*, void*) ;
-extern void sensor_deinit_imx307( void *ctx );
-extern int sensor_detect_imx307( void* sbp);
-
-extern void sensor_init_imx335( void** ctx, sensor_control_t*, void*);
-extern void sensor_deinit_imx335( void *ctx );
-extern int sensor_detect_imx335( void* sbp);
-
-#define SENSOR_INIT_SUBDEV_FUNCTIONS_IMX290 sensor_init_imx290
-#define SENSOR_DEINIT_SUBDEV_FUNCTIONS_IMX290 sensor_deinit_imx290
-#define SENSOR_DETECT_FUNCTIONS_IMX290 sensor_detect_imx290
-
 #define SENSOR_INIT_SUBDEV_FUNCTIONS_IMX219 sensor_init_imx219
 #define SENSOR_DEINIT_SUBDEV_FUNCTIONS_IMX219 sensor_deinit_imx219
 #define SENSOR_DETECT_FUNCTIONS_IMX219 sensor_detect_imx219
-
-#define SENSOR_INIT_SUBDEV_FUNCTIONS_IMX307 sensor_init_imx307
-#define SENSOR_DEINIT_SUBDEV_FUNCTIONS_IMX307 sensor_deinit_imx307
-#define SENSOR_DETECT_FUNCTIONS_IMX307 sensor_detect_imx307
-
-#define SENSOR_INIT_SUBDEV_FUNCTIONS_IMX335 sensor_init_imx335
-#define SENSOR_DEINIT_SUBDEV_FUNCTIONS_IMX335 sensor_deinit_imx335
-#define SENSOR_DETECT_FUNCTIONS_IMX335 sensor_detect_imx335
-
-
-
