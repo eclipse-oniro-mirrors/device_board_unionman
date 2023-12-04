@@ -2945,8 +2945,8 @@ diff -Naur a/drivers/gpu/drm/meson/meson_cursor.h b/drivers/gpu/drm/meson/meson_
 +
 +#endif /* __MESON_CURSOR_H */
 diff -Naur a/drivers/gpu/drm/meson/meson_drv.c b/drivers/gpu/drm/meson/meson_drv.c
---- a/drivers/gpu/drm/meson/meson_drv.c	2022-12-19 17:13:12.677518989 +0800
-+++ b/drivers/gpu/drm/meson/meson_drv.c	2023-02-23 17:02:04.955751014 +0800
+--- a/drivers/gpu/drm/meson/meson_drv.c	2023-11-30 21:03:09.419481221 +0800
++++ b/drivers/gpu/drm/meson/meson_drv.c	2023-12-04 09:42:14.153284521 +0800
 @@ -15,6 +15,7 @@
  #include <linux/platform_device.h>
  #include <linux/soc/amlogic/meson-canvas.h>
@@ -3039,22 +3039,16 @@ diff -Naur a/drivers/gpu/drm/meson/meson_drv.c b/drivers/gpu/drm/meson/meson_drv
  
  	ret = drmm_mode_config_init(drm);
  	if (ret)
-@@ -325,33 +316,47 @@
+@@ -325,7 +316,7 @@
  
  	/* Encoder Initialization */
  
 -	ret = meson_venc_cvbs_create(priv);
 +	ret = meson_encoder_cvbs_init(priv);
  	if (ret)
--		goto free_drm;
-+		goto exit_afbcd;
+ 		goto exit_afbcd;
  
- 	if (has_components) {
- 		ret = component_bind_all(drm->dev, drm);
- 		if (ret) {
- 			dev_err(drm->dev, "Couldn't bind all components\n");
--			goto free_drm;
-+			goto exit_afbcd;
+@@ -337,6 +328,20 @@
  		}
  	}
  
@@ -3074,40 +3068,30 @@ diff -Naur a/drivers/gpu/drm/meson/meson_drv.c b/drivers/gpu/drm/meson/meson_drv
 +
  	ret = meson_plane_create(priv);
  	if (ret)
--		goto free_drm;
-+		goto exit_afbcd;
- 
- 	ret = meson_overlay_create(priv);
+ 		goto unbind_all;
+@@ -349,9 +354,9 @@
  	if (ret)
--		goto free_drm;
-+		goto exit_afbcd;
- 
- 	ret = meson_crtc_create(priv);
- 	if (ret)
--		goto free_drm;
-+		goto exit_afbcd;
+ 		goto unbind_all;
  
 -	ret = drm_irq_install(drm, priv->vsync_irq);
+-	if (ret)
+-		goto unbind_all;
 +	ret = request_irq(priv->vsync_irq, meson_irq, IRQF_SHARED, drm->driver->name, drm);
- 	if (ret)
--		goto free_drm;
++ 	if (ret)
 +		goto exit_afbcd;
  
  	drm_mode_config_reset(drm);
  
-@@ -368,7 +373,10 @@
+@@ -368,7 +373,7 @@
  	return 0;
  
  uninstall_irq:
 -	drm_irq_uninstall(drm);
 +	free_irq(priv->vsync_irq, drm);
-+exit_afbcd:
-+	if (priv->afbcd.ops)
-+		priv->afbcd.ops->exit(priv);
- free_drm:
- 	drm_dev_put(drm);
- 
-@@ -396,7 +404,7 @@
+ unbind_all:
+ 	if (has_components)
+ 		component_unbind_all(drm->dev, drm);
+@@ -402,7 +407,7 @@
  	drm_kms_helper_poll_fini(drm);
  	drm_atomic_helper_shutdown(drm);
  	component_unbind_all(dev, drm);
@@ -3116,7 +3100,7 @@ diff -Naur a/drivers/gpu/drm/meson/meson_drv.c b/drivers/gpu/drm/meson/meson_drv
  	drm_dev_put(drm);
  
  	if (priv->afbcd.ops)
-@@ -443,46 +451,6 @@
+@@ -449,46 +454,6 @@
  	return dev->of_node == data;
  }
  
@@ -3163,7 +3147,7 @@ diff -Naur a/drivers/gpu/drm/meson/meson_drv.c b/drivers/gpu/drm/meson/meson_drv
  static void meson_drv_shutdown(struct platform_device *pdev)
  {
  	struct meson_drm *priv = dev_get_drvdata(&pdev->dev);
-@@ -494,6 +462,13 @@
+@@ -500,6 +465,13 @@
  	drm_atomic_helper_shutdown(priv->drm);
  }
  
@@ -3177,7 +3161,7 @@ diff -Naur a/drivers/gpu/drm/meson/meson_drv.c b/drivers/gpu/drm/meson/meson_drv
  static int meson_drv_probe(struct platform_device *pdev)
  {
  	struct component_match *match = NULL;
-@@ -508,8 +483,21 @@
+@@ -514,8 +486,21 @@
  			continue;
  		}
  
