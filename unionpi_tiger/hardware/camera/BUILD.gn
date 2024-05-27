@@ -27,7 +27,6 @@ ohos_prebuilt_etc("camera_host_config.hcb") {
   source = hcs_outputs[0]
   relative_install_dir = "hdfconfig"
   install_images = [ chipset_base_dir ]
-  subsystem_name = "unionman_products"
   part_name = "unionman_products"
 }
 
@@ -88,7 +87,6 @@ ohos_prebuilt_etc("ipp_algo_config.hcb") {
   source = hcs_outputs[0]
   relative_install_dir = "hdfconfig"
   install_images = [ chipset_base_dir ]
-  subsystem_name = "unionman_products"
   part_name = "unionman_products"
 }
 
@@ -108,7 +106,6 @@ group("chipset_build") {
     ":config.c",
     ":ipp_algo_config.hcb",
     ":params.c",
-    "$board_camera_path/driver_adapter/test/v4l2_test:v4l2_main",
     "$board_camera_path/pipeline_core:camera_ipp_algo_example",
   ]
 }
@@ -225,12 +222,12 @@ ohos_shared_library("camera_host_vdi_impl_1.0") {
   external_deps += [
     "drivers_interface_camera:libbuffer_producer_sequenceable_1.0",
     "drivers_interface_camera:metadata",
+    "drivers_interface_display:libdisplay_composer_proxy_1.0",
     "hitrace:hitrace_meter",
     "ipc:ipc_single",
   ]
   public_configs = [ ":camhdi_impl_config" ]
   install_images = [ chipset_base_dir ]
-  subsystem_name = "unionman_products"
   part_name = "unionman_products"
 }
 
@@ -275,12 +272,12 @@ ohos_static_library("camera_host_vdi_impl_1.0_static") {
   external_deps += [
     "drivers_interface_camera:libbuffer_producer_sequenceable_1.0",
     "drivers_interface_camera:metadata",
+    "drivers_interface_display:libdisplay_composer_proxy_1.0",
     "hitrace:hitrace_meter",
     "ipc:ipc_single",
   ]
 
   public_configs = [ ":camhdi_impl_config" ]
-  subsystem_name = "unionman_products"
   part_name = "unionman_products"
 }
 
@@ -294,7 +291,7 @@ group("camera_board_test") {
       "device_manager/test/unittest:camera_board_device_manager_unittest",
 
       #driver adapter v4l2 test
-      "driver_adapter/test/v4l2_test:v4l2_main",
+      #"driver_adapter/test/v4l2_test:v4l2_main",
 
       #driver adapter v4l2 unittest
       "driver_adapter/test/unittest:v4l2_adapter_unittest",

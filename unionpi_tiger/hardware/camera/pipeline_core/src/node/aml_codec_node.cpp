@@ -135,7 +135,7 @@ static inline uint64_t getTickMs()
     return ts.tv_nsec / 1000000ULL + ts.tv_sec * 1000ULL;
 }
 
-AMLCodecNode::AMLCodecNode(const std::string& name, const std::string& type) : NodeBase(name, type)
+AMLCodecNode::AMLCodecNode(const std::string& name, const std::string& type, const std::string &cameraId) : NodeBase(name, type, cameraId)
 {
     CAMERA_LOGV("%{public}s enter, type(%{public}s)\n", name_.c_str(), type_.c_str());
     ge2d_ = calloc(sizeof(aml_ge2d_t), 1);

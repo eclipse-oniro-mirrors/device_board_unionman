@@ -23,5 +23,4 @@ ohos_executable("aml_reboot") {
   install_images = [ "system" ]
 
   part_name = "unionman_products"
-  subsystem_name = "unionman_products"
 }

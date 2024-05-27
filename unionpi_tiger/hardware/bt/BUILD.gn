@@ -75,8 +75,7 @@ ohos_shared_library("libbt_vendor") {
   include_dirs = [
     "include",
     "//base/hiviewdfx/hilog/interfaces/native/innerkits/include",
-    "//foundation/communication/bluetooth/services/bluetooth/hardware/include",
-    "//drivers/peripheral/bluetooth/hdi/ohos/hardware/bt/v1_0/server/implement",
+    "//foundation/communication/bluetooth_service/services/bluetooth/hardware/include",
   ]
 
   cflags = []
@@ -92,7 +91,6 @@ ohos_shared_library("libbt_vendor") {
   install_images = [ "system" ]
 
   part_name = "unionman_products"
-  subsystem_name = "unionman_products"
 }
 
 group("bluetooth") {
