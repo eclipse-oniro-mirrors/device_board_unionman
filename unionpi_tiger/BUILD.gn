@@ -29,6 +29,5 @@ group("unionpi_tiger_group") {
     "//device/soc/amlogic/a311d/hardware:hardware_group",
     "//device/soc/amlogic/a311d/hardware/display:display_buffer_model",
     "//device/soc/amlogic/a311d/hardware/display:display_composer_model",
-    "//vendor/unionman/unionpi_tiger/sample:sample_group",
   ]
 }

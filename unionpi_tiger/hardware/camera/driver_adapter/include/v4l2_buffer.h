@@ -28,6 +28,14 @@
 #include <stream.h>
 #include <camera.h>
 #endif
+#include "aml_ge2d.h"
+
+using Ge2dCanvasInfo = struct _Ge2dCanvasInfo {
+    uint32_t width;
+    uint32_t height;
+    uint32_t format;
+    int dmaFd;
+};
 
 namespace OHOS::Camera {
 class HosV4L2Buffers {
@@ -58,6 +66,12 @@ private:
     enum v4l2_memory memoryType_;
     enum v4l2_buf_type bufferType_;
 
+    void *ge2dHandle;
+    void *ge2dInit;
+    void *ge2dProcess;
+    void *ge2dExit;
+
+    int doBlit(aml_ge2d_t *ge2d, Ge2dCanvasInfo & srcInfo, Ge2dCanvasInfo & dstInfo);
     RetCode BlitForMMAP(int fd, uint32_t fromIndex, std::shared_ptr<IBuffer> toBuffer);
     void *ge2d_;
 };

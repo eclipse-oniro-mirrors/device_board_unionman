@@ -65,6 +65,5 @@ ohos_executable("v4l2_main") {
   install_enable = true
   public_configs = [ ":v4l2_maintest" ]
   install_images = [ chipset_base_dir ]
-  subsystem_name = "unionman_products"
   part_name = "unionman_products"
 }

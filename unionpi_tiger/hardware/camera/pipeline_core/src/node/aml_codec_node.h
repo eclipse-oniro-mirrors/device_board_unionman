@@ -27,7 +27,7 @@
 namespace OHOS::Camera {
 class AMLCodecNode : public NodeBase {
 public:
-    AMLCodecNode(const std::string& name, const std::string& type);
+    AMLCodecNode(const std::string& name, const std::string& type, const std::string &cameraId);
     ~AMLCodecNode() override;
     RetCode Start(const int32_t streamId) override;
     RetCode Stop(const int32_t streamId) override;

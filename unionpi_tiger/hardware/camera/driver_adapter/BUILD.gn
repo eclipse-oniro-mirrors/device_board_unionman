@@ -80,9 +80,8 @@ ohos_shared_library("camera_v4l2_adapter") {
   } else {
     external_deps = [ "hilog:libhilog" ]
   }
+  install_enable = true
   external_deps += [ "drivers_interface_camera:metadata" ]
-  public_deps = [ "//device/soc/amlogic/a311d/hardware/ge2d:libge2d" ]
-
   public_configs = [ ":v4l2_config" ]
   install_images = [ chipset_base_dir ]
   subsystem_name = "unionman_products"

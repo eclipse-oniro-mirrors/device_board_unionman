@@ -13,17 +13,13 @@
  * limitations under the License.
  */
 
+#include <dlfcn.h>
 #include <unistd.h>
-#include "aml_ge2d.h"
 #include "v4l2_buffer.h"
+
 namespace OHOS::Camera {
 #define OUTPUT_V4L2_PIX_FMT V4L2_PIX_FMT_NV21
-using Ge2dCanvasInfo = struct _Ge2dCanvasInfo {
-    uint32_t width;
-    uint32_t height;
-    uint32_t format;
-    int dmaFd;
-};
+
 static uint32_t pixelFormatV4l2ToGe2d(uint32_t v4l2PixelFmt)
 {
     uint32_t ge2dPixelFmt;
@@ -70,7 +66,7 @@ static uint32_t pixelFormatV4l2ToGe2d(uint32_t v4l2PixelFmt)
     return ge2dPixelFmt;
 }
 
-static int doBlit(aml_ge2d_t *ge2d, Ge2dCanvasInfo & srcInfo, Ge2dCanvasInfo & dstInfo)
+int HosV4L2Buffers::doBlit(aml_ge2d_t *ge2d, Ge2dCanvasInfo & srcInfo, Ge2dCanvasInfo & dstInfo)
 {
     int ret;
     aml_ge2d_info_t *pge2dinfo = &ge2d->ge2dinfo;
@@ -128,10 +124,11 @@ static int doBlit(aml_ge2d_t *ge2d, Ge2dCanvasInfo & srcInfo, Ge2dCanvasInfo & d
     pge2dinfo->dst_info.rect.y = 0;
     pge2dinfo->dst_info.rect.w = dstCanvasW;
     pge2dinfo->dst_info.rect.h = dstCanvasH;
-    
-    ret = aml_ge2d_process(pge2dinfo);
+
+    int (*prtGe2dProcess)(aml_ge2d_info_t *) = (int (*)(aml_ge2d_info_t *))ge2dProcess;
+    ret = prtGe2dProcess(pge2dinfo);
     if (ret) {
-        CAMERA_LOGE("aml_ge2d_process() failed. ret=%{public}d", ret);
+        CAMERA_LOGE("ge2dProcess() failed. ret=%{public}d", ret);
     }
 
     return ret;
@@ -148,15 +145,38 @@ HosV4L2Buffers::HosV4L2Buffers(enum v4l2_memory memType, enum v4l2_buf_type buff
     : memoryType_(memType), bufferType_(bufferType)
 {
     CAMERA_LOGD("HosV4L2Buffers::HosV4L2Buffers enter");
-
+#if defined(__aarch64__)
+    static const char* libge2d = "/vendor/lib64/libge2d.z.so";
+#else
+    static const char* libge2d = "/vendor/lib/libge2d.z.so";
+#endif
     int ret;
+
     ge2d_ = calloc(sizeof(aml_ge2d_t), 1);
     if (!ge2d_) {
         CAMERA_LOGE("No enough memory for ge2d ctx");
         return;
     }
 
-    if (aml_ge2d_init((aml_ge2d_t*)ge2d_)) {
+    if (ge2dHandle == NULL) {
+        ge2dHandle = dlopen(libge2d, RTLD_NOW | RTLD_GLOBAL);
+        if (ge2dHandle == NULL) {
+            CAMERA_LOGE("open lib libge2d so fail, reason:%{public}s", dlerror());
+            return;
+        }
+
+        ge2dInit = dlsym(ge2dHandle, "aml_ge2d_init");
+        ge2dProcess = dlsym(ge2dHandle, "aml_ge2d_process");
+        ge2dExit = dlsym(ge2dHandle, "aml_ge2d_exit");
+        if (ge2dInit == NULL || ge2dProcess == NULL || ge2dExit == NULL) {
+            CAMERA_LOGE("lib libge2d so func not found!");
+            dlclose(&ge2dHandle);
+            return;
+        }
+    }
+
+    int (*ptrGe2dInit)(aml_ge2d_t *) = (int (*)(aml_ge2d_t *))ge2dInit;
+    if (ptrGe2dInit((aml_ge2d_t*)ge2d_)) {
         free(ge2d_);
         ge2d_ = NULL;
         CAMERA_LOGE("aml_ge2d_init() failed.");
@@ -169,8 +189,9 @@ HosV4L2Buffers::HosV4L2Buffers(enum v4l2_memory memType, enum v4l2_buf_type buff
 HosV4L2Buffers::~HosV4L2Buffers()
 {
     if (ge2d_) {
-        aml_ge2d_exit((aml_ge2d_t*)ge2d_);
-        CAMERA_LOGD("aml_ge2d_exit()");
+        void (*ptrGe2dExit)(aml_ge2d_t *) = (void (*)(aml_ge2d_t *))ge2dExit;
+        ptrGe2dExit((aml_ge2d_t*)ge2d_);
+        CAMERA_LOGD("ge2dExit()");
         free(ge2d_);
     }
 }
