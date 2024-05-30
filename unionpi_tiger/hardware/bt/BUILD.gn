@@ -88,7 +88,7 @@ ohos_shared_library("libbt_vendor") {
   ]
 
   install_enable = true
-  install_images = [ "system" ]
+  install_images = [ chipset_base_dir ]
 
   part_name = "unionman_products"
 }
