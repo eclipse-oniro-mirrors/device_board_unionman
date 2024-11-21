@@ -241,101 +241,6 @@ void phydm_set_cckpd_lv_type2(void *dm_void, enum cckpd_lv lv)
 	phydm_write_cck_pd_type2(dm, pd_th, cs_ratio);
 }
 
-#if 0
-void phydm_set_cckpd_lv_type2_bcn(void *dm_void, enum cckpd_lv lv)
-{
-	struct dm_struct *dm = (struct dm_struct *)dm_void;
-	struct phydm_cckpd_struct *cckpd_t = &dm->dm_cckpd_table;
-	u8 pd_th = 0, cs_ratio = 0, cs_2r_offset = 0;
-	u8 cck_n_rx = 1;
-	u8 cs_ratio_pre = 0;
-	u8 bcn_cnt = dm->phy_dbg_info.beacon_cnt_in_period; //BCN CNT
-	u8 ofst = 0;
-	u8 ofst_direc = 0; //0:+, 1:-
-
-	PHYDM_DBG(dm, DBG_CCKPD, "%s ======>\n", __func__);
-	PHYDM_DBG(dm, DBG_CCKPD, "lv: (%d) -> (%d)\n", cckpd_t->cck_pd_lv, lv);
-
-	/*@r_mrx & r_cca_mrc*/
-	cck_n_rx = (odm_get_bb_reg(dm, R_0xa2c, BIT(18)) &&
-		    odm_get_bb_reg(dm, R_0xa2c, BIT(22))) ? 2 : 1;
-	cs_ratio_pre = (u8)((odm_get_bb_reg(dm, R_0xaa8, 0x1f0000)));
-	PHYDM_DBG(dm, DBG_CCKPD, "BCN: %d, pre CS ratio: 0x%x\n", bcn_cnt,
-		  cs_ratio_pre);
-
-	if (cckpd_t->cck_pd_lv == lv && cckpd_t->cck_n_rx == cck_n_rx &&
-	    (bcn_cnt >= 10 && bcn_cnt < 14)) {
-		PHYDM_DBG(dm, DBG_CCKPD, "BCN ok, stay lv=%d, cs ratio=0x%x\n",
-			  lv, cs_ratio_pre);
-		return;
-	}
-
-	cckpd_t->cck_n_rx = cck_n_rx;
-	cckpd_t->cck_pd_lv = lv;
-	cckpd_t->cck_fa_ma = CCK_FA_MA_RESET;
-
-	if (lv == CCK_PD_LV_4) {
-		cs_ratio = cckpd_t->aaa_default + 8;
-		cs_2r_offset = 5;
-		pd_th = 0xd;
-	} else if (lv == CCK_PD_LV_3) {
-		cs_ratio = cckpd_t->aaa_default + 6;
-		cs_2r_offset = 4;
-		pd_th = 0xd;
-	} else if (lv == CCK_PD_LV_2) {
-		cs_ratio = cckpd_t->aaa_default + 4;
-		cs_2r_offset = 3;
-		pd_th = 0xd;
-	} else if (lv == CCK_PD_LV_1) {
-		cs_ratio = cckpd_t->aaa_default + 2;
-		cs_2r_offset = 1;
-		pd_th = 0x7;
-	} else if (lv == CCK_PD_LV_0) {
-		cs_ratio = cckpd_t->aaa_default;
-		cs_2r_offset = 0;
-		pd_th = 0x3;
-	}
-
-	if (cckpd_t->cck_n_rx == 2) {
-		if (cs_ratio >= cs_2r_offset)
-			cs_ratio = cs_ratio - cs_2r_offset;
-		else
-			cs_ratio = 0;
-	}
-
-	if (bcn_cnt >= 18) {
-		ofst_direc = 0;
-		ofst = 0x2;
-	} else if (bcn_cnt >= 14) {
-		ofst_direc = 0;
-		ofst = 0x1;
-	} else if (bcn_cnt >= 10) {
-		ofst_direc = 0;
-		ofst = 0x0;
-	} else if (bcn_cnt >= 5) {
-		ofst_direc = 1;
-		ofst = 0x3;
-	} else {
-		ofst_direc = 1;
-		ofst = 0x4;
-	}
-	PHYDM_DBG(dm, DBG_CCKPD, "bcn:(%d), ofst:(%s%d)\n", bcn_cnt,
-		  ((ofst_direc) ? "-" : "+"), ofst);
-
-	if (ofst_direc == 0)
-		cs_ratio = cs_ratio + ofst;
-	else
-		cs_ratio = cs_ratio - ofst;
-
-	if (cs_ratio == cs_ratio_pre) {
-		PHYDM_DBG(dm, DBG_CCKPD, "Same cs ratio, lv=%d cs_ratio=0x%x\n",
-			  lv, cs_ratio);
-		return;
-	}
-	phydm_write_cck_pd_type2(dm, pd_th, cs_ratio);
-}
-#endif
-
 void phydm_cckpd_type2(void *dm_void)
 {
 	struct dm_struct *dm = (struct dm_struct *)dm_void;
@@ -947,29 +852,6 @@ void phydm_cck_pd_init_type4(void *dm_void)
 
 	PHYDM_DBG(dm, DBG_CCKPD, "[%s]======>\n", __func__);
 
-	#if 0
-	/*@
-	 *cckpd_t[0][0][0][0] =  1ac8[7:0]	r_PD_lim_RFBW20_1R
-	 *cckpd_t[0][1][0][0] =  1ac8[15:8]	r_PD_lim_RFBW20_2R
-	 *cckpd_t[0][2][0][0] =  1ac8[23:16]	r_PD_lim_RFBW20_3R
-	 *cckpd_t[0][3][0][0] =  1ac8[31:24]	r_PD_lim_RFBW20_4R
-	 *cckpd_t[1][0][0][0] =  1acc[7:0]	r_PD_lim_RFBW40_1R
-	 *cckpd_t[1][1][0][0] =  1acc[15:8]	r_PD_lim_RFBW40_2R
-	 *cckpd_t[1][2][0][0] =  1acc[23:16]	r_PD_lim_RFBW40_3R
-	 *cckpd_t[1][3][0][0] =  1acc[31:24]	r_PD_lim_RFBW40_4R
-	 *
-	 *
-	 *cckpd_t[0][0][1][0] =  1ad0[4:0]	r_CS_ratio_RFBW20_1R[4:0]
-	 *cckpd_t[0][1][1][0] =  1ad0[9:5]	r_CS_ratio_RFBW20_2R[4:0]
-	 *cckpd_t[0][2][1][0] =  1ad0[14:10]	r_CS_ratio_RFBW20_3R[4:0]
-	 *cckpd_t[0][3][1][0] =  1ad0[19:15]	r_CS_ratio_RFBW20_4R[4:0]
-	 *cckpd_t[1][0][1][0] =  1ad0[24:20]	r_CS_ratio_RFBW40_1R[4:0]
-	 *cckpd_t[1][1][1][0] =  1ad0[29:25]	r_CS_ratio_RFBW40_2R[4:0]
-	 *cckpd_t[1][2][1][0] =  1ad0[31:30]	r_CS_ratio_RFBW40_3R[1:0]
-	 *			 1ad4[2:0]	r_CS_ratio_RFBW40_3R[4:2]
-	 *cckpd_t[1][3][1][0] =  1ad4[7:3]	r_CS_ratio_RFBW40_4R[4:0]
-	 */
-	#endif
 	/*[Check Nrx]*/
 	cck_n_rx = (u8)odm_get_bb_reg(dm, R_0x1a2c, 0x60000) + 1;
 
@@ -1432,28 +1314,6 @@ void phydm_cck_pd_init_type5(void *dm_void)
 	u8 i = 0;
 
 	PHYDM_DBG(dm, DBG_CCKPD, "[%s]======>\n", __func__);
-	#if 0
-	/*@
-	 *cckpd_t[0][0][0][0] =  1a30[4:0]	r_PD_lim_RFBW20_1R
-	 *cckpd_t[0][1][0][0] =  1a30[9:5]	r_PD_lim_RFBW20_2R
-	 *cckpd_t[0][2][0][0] =  1a30[14:10]	r_PD_lim_RFBW20_3R
-	 *cckpd_t[0][3][0][0] =  1a30[19:15]	r_PD_lim_RFBW20_4R
-	 *cckpd_t[1][0][0][0] =  1a34[4:0]	r_PD_lim_RFBW40_1R
-	 *cckpd_t[1][1][0][0] =  1a34[9:5]	r_PD_lim_RFBW40_2R
-	 *cckpd_t[1][2][0][0] =  1a34[14:10]	r_PD_lim_RFBW40_3R
-	 *cckpd_t[1][3][0][0] =  1a34[19:15]	r_PD_lim_RFBW40_4R
-	 *
-	 *
-	 *cckpd_t[0][0][1][0] =  1a20[4:0]	r_CS_ratio_RFBW20_1R
-	 *cckpd_t[0][1][1][0] =  1a20[9:5]	r_CS_ratio_RFBW20_2R
-	 *cckpd_t[0][2][1][0] =  1a20[14:10]	r_CS_ratio_RFBW20_3R
-	 *cckpd_t[0][3][1][0] =  1a20[19:15]	r_CS_ratio_RFBW20_4R
-	 *cckpd_t[1][0][1][0] =  1a24[4:0]	r_CS_ratio_RFBW40_1R
-	 *cckpd_t[1][1][1][0] =  1a24[9:5]	r_CS_ratio_RFBW40_2R
-	 *cckpd_t[1][2][1][0] =  1a24[14:10]	r_CS_ratio_RFBW40_3R
-	 *cckpd_t[1][3][1][0] =  1a24[19:15]	r_CS_ratio_RFBW40_4R
-	 */
-	#endif
 	/*[Check Nrx]*/
 	cck_n_rx = 1;
 
