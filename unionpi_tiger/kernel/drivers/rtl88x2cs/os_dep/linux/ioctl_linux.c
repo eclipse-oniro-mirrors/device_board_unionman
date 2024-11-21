@@ -95,41 +95,6 @@ static void indicate_wx_custom_event(_adapter *padapter, char *msg)
 }
 #endif
 
-#if 0
-static void request_wps_pbc_event(_adapter *padapter)
-{
-	u8 *buff, *p;
-	union iwreq_data wrqu;
-
-
-	buff = rtw_malloc(IW_CUSTOM_MAX);
-	if (!buff)
-		return;
-
-	_rtw_memset(buff, 0, IW_CUSTOM_MAX);
-
-	p = buff;
-
-	p += sprintf(p, "WPS_PBC_START.request=TRUE");
-
-	_rtw_memset(&wrqu, 0, sizeof(wrqu));
-
-	wrqu.data.length = p - buff;
-
-	wrqu.data.length = (wrqu.data.length < IW_CUSTOM_MAX) ? wrqu.data.length : IW_CUSTOM_MAX;
-
-	RTW_INFO("%s\n", __FUNCTION__);
-
-#ifndef CONFIG_IOCTL_CFG80211
-	wireless_send_event(padapter->pnetdev, IWEVCUSTOM, &wrqu, buff);
-#endif
-
-	if (buff)
-		rtw_mfree(buff, IW_CUSTOM_MAX);
-
-}
-#endif
-
 #ifdef CONFIG_SUPPORT_HW_WPS_PBC
 void rtw_request_wps_pbc_event(_adapter *padapter)
 {
@@ -1368,10 +1333,6 @@ static int rtw_wx_set_mode(struct net_device *dev, struct iw_request_info *a,
 		rtw_ps_deny(padapter, PS_DENY_MONITOR_MODE);
 		LeaveAllPowerSaveMode(padapter);
 
-#if 0
-		dev->type = ARPHRD_IEEE80211; /* IEEE 802.11 : 801 */
-#endif
-
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 24))
 		dev->type = ARPHRD_IEEE80211_RADIOTAP; /* IEEE 802.11 + radiotap header : 803 */
 		RTW_INFO("set_mode = IW_MODE_MONITOR\n");
@@ -1463,18 +1424,6 @@ static int rtw_wx_set_pmkid(struct net_device *dev,
 	struct iw_pmksa  *pPMK = (struct iw_pmksa *) extra;
 	u8     strZeroMacAddress[ETH_ALEN] = { 0x00 };
 	u8     strIssueBssid[ETH_ALEN] = { 0x00 };
-
-#if 0
-	struct iw_pmksa {
-		__u32   cmd;
-		struct sockaddr bssid;
-		__u8    pmkid[IW_PMKID_LEN];   /* IW_PMKID_LEN=16 */
-	}
-	There are the BSSID information in the bssid.sa_data array.
-	If cmd is IW_PMKSA_FLUSH, it means the wpa_suppplicant wants to clear all the PMKID information.
-	If cmd is IW_PMKSA_ADD, it means the wpa_supplicant wants to add a PMKID / BSSID to driver.
-	If cmd is IW_PMKSA_REMOVE, it means the wpa_supplicant wants to remove a PMKID / BSSID from driver.
-#endif
 
 	_rtw_memcpy(strIssueBssid, pPMK->bssid.sa_data, ETH_ALEN);
 	if (pPMK->cmd == IW_PMKSA_ADD) {
@@ -1779,19 +1728,6 @@ static int rtw_wx_set_wap(struct net_device *dev,
 	while (1) {
 
 		if ((rtw_end_of_queue_search(phead, pmlmepriv->pscanned)) == _TRUE) {
-#if 0
-			ret = -EINVAL;
-			goto cancel_ps_deny;
-
-			if (check_fwstate(pmlmepriv, WIFI_ADHOC_STATE) == _TRUE) {
-				rtw_set_802_11_bssid(padapter, temp->sa_data);
-				goto cancel_ps_deny;
-			} else {
-				ret = -EINVAL;
-				goto cancel_ps_deny;
-			}
-#endif
-
 			break;
 		}
 
@@ -1864,15 +1800,6 @@ static int rtw_wx_set_mlme(struct net_device *dev,
 			   struct iw_request_info *info,
 			   union iwreq_data *wrqu, char *extra)
 {
-#if 0
-	/* SIOCSIWMLME data */
-	struct	iw_mlme {
-		__u16		cmd; /* IW_MLME_* */
-		__u16		reason_code;
-		struct sockaddr	addr;
-	};
-#endif
-
 	int ret = 0;
 	u16 reason;
 	_adapter *padapter = (_adapter *)rtw_netdev_priv(dev);
@@ -2063,12 +1990,6 @@ int rtw_wx_set_scan(struct net_device *dev, struct iw_request_info *a,
 					pos += 1;
 					len -= 1;
 					break;
-#if 0
-				case WEXT_CSCAN_NPROBE_SECTION:
-					RTW_INFO("WEXT_CSCAN_NPROBE_SECTION\n");
-					break;
-#endif
-
 				default:
 					/* RTW_INFO("Unknown CSCAN section %c\n", section); */
 					len = 0; /* stop parsing */
@@ -2314,17 +2235,6 @@ static int rtw_wx_set_essid(struct net_device *dev,
 
 		while (1) {
 			if (rtw_end_of_queue_search(phead, pmlmepriv->pscanned) == _TRUE) {
-#if 0
-				if (check_fwstate(pmlmepriv, WIFI_ADHOC_STATE) == _TRUE) {
-					rtw_set_802_11_ssid(padapter, &ndis_ssid);
-
-					goto cancel_ps_deny;
-				} else {
-					ret = -EINVAL;
-					goto cancel_ps_deny;
-				}
-#endif
-
 				break;
 			}
 
@@ -2411,84 +2321,7 @@ static int rtw_wx_set_rate(struct net_device *dev,
 			   struct iw_request_info *a,
 			   union iwreq_data *wrqu, char *extra)
 {
-	int ret = 0;
-#if 0
-	int i;
-	_adapter *padapter = (_adapter *)rtw_netdev_priv(dev);
-	u8	datarates[NumRates];
-	u32	target_rate = wrqu->bitrate.value;
-	u32	fixed = wrqu->bitrate.fixed;
-	u32	ratevalue = 0;
-	u8 mpdatarate[NumRates] = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 0xff};
-
-
-
-	if (target_rate == -1) {
-		ratevalue = 11;
-		goto set_rate;
-	}
-	target_rate = target_rate / 100000;
-
-	switch (target_rate) {
-	case 10:
-		ratevalue = 0;
-		break;
-	case 20:
-		ratevalue = 1;
-		break;
-	case 55:
-		ratevalue = 2;
-		break;
-	case 60:
-		ratevalue = 3;
-		break;
-	case 90:
-		ratevalue = 4;
-		break;
-	case 110:
-		ratevalue = 5;
-		break;
-	case 120:
-		ratevalue = 6;
-		break;
-	case 180:
-		ratevalue = 7;
-		break;
-	case 240:
-		ratevalue = 8;
-		break;
-	case 360:
-		ratevalue = 9;
-		break;
-	case 480:
-		ratevalue = 10;
-		break;
-	case 540:
-		ratevalue = 11;
-		break;
-	default:
-		ratevalue = 11;
-		break;
-	}
-
-set_rate:
-
-	for (i = 0; i < NumRates; i++) {
-		if (ratevalue == mpdatarate[i]) {
-			datarates[i] = mpdatarate[i];
-			if (fixed == 0)
-				break;
-		} else
-			datarates[i] = 0xff;
-
-	}
-
-	if (rtw_setdatarate_cmd(padapter, datarates) != _SUCCESS) {
-		ret = -1;
-	}
-
-#endif
-	return ret;
+	return 0;
 }
 
 static int rtw_wx_get_rate(struct net_device *dev,
@@ -2604,29 +2437,6 @@ static int rtw_wx_get_retry(struct net_device *dev,
 	return 0;
 
 }
-
-#if 0
-	#define IW_ENCODE_INDEX		0x00FF	/* Token index (if needed) */
-	#define IW_ENCODE_FLAGS		0xFF00	/* Flags defined below */
-	#define IW_ENCODE_MODE		0xF000	/* Modes defined below */
-	#define IW_ENCODE_DISABLED	0x8000	/* Encoding disabled */
-	#define IW_ENCODE_ENABLED	0x0000	/* Encoding enabled */
-	#define IW_ENCODE_RESTRICTED	0x4000	/* Refuse non-encoded packets */
-	#define IW_ENCODE_OPEN		0x2000	/* Accept non-encoded packets */
-	#define IW_ENCODE_NOKEY		0x0800  /* Key is write only, so not present */
-	#define IW_ENCODE_TEMP		0x0400  /* Temporary key */
-	/*
-	iwconfig wlan0 key on->flags = 0x6001->maybe it means auto
-	iwconfig wlan0 key off->flags = 0x8800
-	iwconfig wlan0 key open->flags = 0x2800
-	iwconfig wlan0 key open 1234567890->flags = 0x2000
-	iwconfig wlan0 key restricted->flags = 0x4800
-	iwconfig wlan0 key open [3] 1234567890->flags = 0x2003
-	iwconfig wlan0 key restricted [2] 1234567890->flags = 0x4002
-	iwconfig wlan0 key open [3] -> flags = 0x2803
-	iwconfig wlan0 key restricted [2] -> flags = 0x4802
-	*/
-#endif
 
 static int rtw_wx_set_enc(struct net_device *dev,
 			  struct iw_request_info *info,
@@ -3139,55 +2949,7 @@ static int rtw_wx_get_nick(struct net_device *dev,
 		_rtw_memcpy(extra, "<WIFI@REALTEK>", 14);
 	}
 
-	/* rtw_signal_process(pid, SIGUSR1); */ /* for test */
-
-	/* dump debug info here	 */
-#if 0
-	u32 dot11AuthAlgrthm;		/*  802.11 auth, could be open, shared, and 8021x */
-	u32 dot11PrivacyAlgrthm;	/*  This specify the privacy for shared auth. algorithm. */
-	u32 dot118021XGrpPrivacy;	/*  This specify the privacy algthm. used for Grp key */
-	u32 ndisauthtype;
-	u32 ndisencryptstatus;
-#endif
-
-	/* RTW_INFO("auth_alg=0x%x, enc_alg=0x%x, auth_type=0x%x, enc_type=0x%x\n",  */
-	/*		psecuritypriv->dot11AuthAlgrthm, psecuritypriv->dot11PrivacyAlgrthm, */
-	/*		psecuritypriv->ndisauthtype, psecuritypriv->ndisencryptstatus); */
-
-	/* RTW_INFO("enc_alg=0x%x\n", psecuritypriv->dot11PrivacyAlgrthm); */
-	/* RTW_INFO("auth_type=0x%x\n", psecuritypriv->ndisauthtype); */
-	/* RTW_INFO("enc_type=0x%x\n", psecuritypriv->ndisencryptstatus); */
-
-#if 0
-	RTW_INFO("dbg(0x210)=0x%x\n", rtw_read32(padapter, 0x210));
-	RTW_INFO("dbg(0x608)=0x%x\n", rtw_read32(padapter, 0x608));
-	RTW_INFO("dbg(0x280)=0x%x\n", rtw_read32(padapter, 0x280));
-	RTW_INFO("dbg(0x284)=0x%x\n", rtw_read32(padapter, 0x284));
-	RTW_INFO("dbg(0x288)=0x%x\n", rtw_read32(padapter, 0x288));
-
-	RTW_INFO("dbg(0x664)=0x%x\n", rtw_read32(padapter, 0x664));
-
-
-	RTW_INFO("\n");
-
-	RTW_INFO("dbg(0x430)=0x%x\n", rtw_read32(padapter, 0x430));
-	RTW_INFO("dbg(0x438)=0x%x\n", rtw_read32(padapter, 0x438));
-
-	RTW_INFO("dbg(0x440)=0x%x\n", rtw_read32(padapter, 0x440));
-
-	RTW_INFO("dbg(0x458)=0x%x\n", rtw_read32(padapter, 0x458));
-
-	RTW_INFO("dbg(0x484)=0x%x\n", rtw_read32(padapter, 0x484));
-	RTW_INFO("dbg(0x488)=0x%x\n", rtw_read32(padapter, 0x488));
-
-	RTW_INFO("dbg(0x444)=0x%x\n", rtw_read32(padapter, 0x444));
-	RTW_INFO("dbg(0x448)=0x%x\n", rtw_read32(padapter, 0x448));
-	RTW_INFO("dbg(0x44c)=0x%x\n", rtw_read32(padapter, 0x44c));
-	RTW_INFO("dbg(0x450)=0x%x\n", rtw_read32(padapter, 0x450));
-#endif
-
 	return 0;
-
 }
 #endif
 
@@ -6601,28 +6363,7 @@ static int wpa_set_param(struct net_device *dev, u8 name, u32 value)
 		 * can use this to determine if the CAP_PRIVACY_ON bit should
 		 * be set.
 		 */
-
-#if 0
-		struct ieee80211_security sec = {
-			.flags = SEC_ENABLED,
-			.enabled = value,
-		};
-		ieee->drop_unencrypted = value;
-		/* We only change SEC_LEVEL for open mode. Others
-		 * are set by ipw_wpa_set_encryption.
-		 */
-		if (!value) {
-			sec.flags |= SEC_LEVEL;
-			sec.level = SEC_LEVEL_0;
-		} else {
-			sec.flags |= SEC_LEVEL;
-			sec.level = SEC_LEVEL_1;
-		}
-		if (ieee->set_security)
-			ieee->set_security(ieee->dev, &sec);
-#endif
 		break;
-
 	}
 	case IEEE_PARAM_PRIVACY_INVOKED:
 
@@ -7099,17 +6840,6 @@ static int rtw_add_sta(struct net_device *dev, struct ieee_param *param)
 	    param->sta_addr[4] == 0xff && param->sta_addr[5] == 0xff)
 		return -EINVAL;
 
-#if 0
-	psta = rtw_get_stainfo(pstapriv, param->sta_addr);
-	if (psta) {
-		RTW_INFO("rtw_add_sta(), free has been added psta=%p\n", psta);
-		/* _enter_critical_bh(&(pstapriv->sta_hash_lock), &irqL);		 */
-		rtw_free_stainfo(padapter,  psta);
-		/* _exit_critical_bh(&(pstapriv->sta_hash_lock), &irqL); */
-
-		psta = NULL;
-	}
-#endif
 	/* psta = rtw_alloc_stainfo(pstapriv, param->sta_addr); */
 	psta = rtw_get_stainfo(pstapriv, param->sta_addr);
 	if (psta) {
@@ -7234,23 +6964,6 @@ static int rtw_ioctl_get_sta_data(struct net_device *dev, struct ieee_param *par
 
 	psta = rtw_get_stainfo(pstapriv, param_ex->sta_addr);
 	if (psta) {
-#if 0
-		struct {
-			u16 aid;
-			u16 capability;
-			int flags;
-			u32 sta_set;
-			u8 tx_supp_rates[16];
-			u32 tx_supp_rates_len;
-			struct rtw_ieee80211_ht_cap ht_cap;
-			u64	rx_pkts;
-			u64	rx_bytes;
-			u64	rx_drops;
-			u64	tx_pkts;
-			u64	tx_bytes;
-			u64	tx_drops;
-		} get_sta;
-#endif
 		psta_data->aid = (u16)psta->cmn.aid;
 		psta_data->capability = psta->capability;
 		psta_data->flags = psta->flags;
@@ -8572,20 +8285,6 @@ static int rtw_mp_efuse_get(struct net_device *dev,
 			err = -EFAULT;
 			goto exit;
 		}
-
-#if 0
-		RTW_INFO("OFFSET\tVALUE(hex)\n");
-		for (i = 0; i < mapLen; i += 16) {
-			RTW_INFO("0x%02x\t", i);
-			for (j = 0; j < 8; j++)
-				RTW_INFO("%02X ", efuse[i + j]);
-			RTW_INFO("\t");
-			for (; j < 16; j++)
-				RTW_INFO("%02X ", efuse[i + j]);
-			RTW_INFO("\n");
-		}
-		RTW_INFO("\n");
-#endif
 
 		shift = blksz * order;
 		efuse += shift;
@@ -11597,11 +11296,6 @@ static s32 createpseudoadhoc(PADAPTER padapter)
 
 	_exit_critical_bh(&pmlmepriv->lock, &irqL);
 
-#if 0
-	err = rtw_create_ibss_cmd(padapter, 0);
-	if (err == _FAIL)
-		return _FAIL;
-#else
 	{
 		struct wlan_network *pcur_network;
 		struct sta_info *psta;
@@ -11628,7 +11322,6 @@ static s32 createpseudoadhoc(PADAPTER padapter)
 		Set_MSR(padapter, WIFI_FW_ADHOC_STATE);
 
 	}
-#endif
 
 	return _SUCCESS;
 }
@@ -11713,34 +11406,6 @@ static struct xmit_frame *createloopbackpkt(PADAPTER padapter, u32 size)
 
 	fill_default_txdesc(pframe, (u8 *)desc);
 
-#if 0
-	/* Hw set sequence number */
-	((PTXDESC)desc)->hwseq_en = 0; /* HWSEQ_EN, 0:disable, 1:enable
- * ((PTXDESC)desc)->hwseq_sel = 0;  */ /* HWSEQ_SEL */
-
-	((PTXDESC)desc)->disdatafb = 1;
-
-	/* convert to little endian */
-	desc->txdw0 = cpu_to_le32(desc->txdw0);
-	desc->txdw1 = cpu_to_le32(desc->txdw1);
-	desc->txdw2 = cpu_to_le32(desc->txdw2);
-	desc->txdw3 = cpu_to_le32(desc->txdw3);
-	desc->txdw4 = cpu_to_le32(desc->txdw4);
-	desc->txdw5 = cpu_to_le32(desc->txdw5);
-	desc->txdw6 = cpu_to_le32(desc->txdw6);
-	desc->txdw7 = cpu_to_le32(desc->txdw7);
-#ifdef CONFIG_PCI_HCI
-	desc->txdw8 = cpu_to_le32(desc->txdw8);
-	desc->txdw9 = cpu_to_le32(desc->txdw9);
-	desc->txdw10 = cpu_to_le32(desc->txdw10);
-	desc->txdw11 = cpu_to_le32(desc->txdw11);
-	desc->txdw12 = cpu_to_le32(desc->txdw12);
-	desc->txdw13 = cpu_to_le32(desc->txdw13);
-	desc->txdw14 = cpu_to_le32(desc->txdw14);
-	desc->txdw15 = cpu_to_le32(desc->txdw15);
-#endif
-#endif
-
 	cal_txdesc_chksum(padapter, (u8*)desc);
 	/* dump_txdesc_data(padapter, (u8*)desc); */
 
@@ -11798,11 +11463,6 @@ static void printdata(u8 *pbuf, u32 len)
 		for (; i < len, i++)
 			printk("%02X", pbuf + i);
 #else /* CONFIG_LITTLE_ENDIAN */
-#if 0
-		val = 0;
-		_rtw_memcpy(&val, pbuf + i, len - i);
-		printk("%8X", val);
-#else
 		u8 str[9];
 		u8 n;
 		val = 0;
@@ -11811,7 +11471,6 @@ static void printdata(u8 *pbuf, u32 len)
 		sprintf(str, "%08X", val);
 		n = (4 - n) * 2;
 		printk("%8s", str + n);
-#endif
 #endif /* CONFIG_LITTLE_ENDIAN */
 	}
 	printk("\n");
@@ -11820,11 +11479,6 @@ static void printdata(u8 *pbuf, u32 len)
 static u8 pktcmp(PADAPTER padapter, u8 *txbuf, u32 txsz, u8 *rxbuf, u32 rxsz)
 {
 	struct rx_pkt_attrib rx_desc;
-#if 0
-	struct recv_stat *prxstat;
-	struct recv_stat report;
-	PRXREPORT prxreport;
-#endif
 	u32 rxpktsize;
 	u8 drvinfosize;
 	u8 shiftsize;
@@ -11834,20 +11488,6 @@ static u8 pktcmp(PADAPTER padapter, u8 *txbuf, u32 txsz, u8 *rxbuf, u32 rxsz)
 	rxpktsize = rx_desc.pkt_len;
 	drvinfosize = rx_desc.drvinfo_sz;
 	shiftsize = rx_desc.shift_sz;
-
-#if 0
-	prxstat = (struct recv_stat *)rxbuf;
-	report.rxdw0 = le32_to_cpu(prxstat->rxdw0);
-	report.rxdw1 = le32_to_cpu(prxstat->rxdw1);
-	report.rxdw2 = le32_to_cpu(prxstat->rxdw2);
-	report.rxdw3 = le32_to_cpu(prxstat->rxdw3);
-	report.rxdw4 = le32_to_cpu(prxstat->rxdw4);
-	report.rxdw5 = le32_to_cpu(prxstat->rxdw5);
-
-	prxreport = (PRXREPORT)&report;
-	drvinfosize = prxreport->drvinfosize << 3;
-	rxpktsize = prxreport->pktlen;
-#endif
 
 	if (rtw_hal_rcr_check(padapter, RCR_APPFCS))
 		rxpktsize -= IEEE80211_FCS_LEN;
@@ -12309,11 +11949,6 @@ static const struct iw_priv_args rtw_private_args[] = {
 		SIOCIWFIRSTPRIV + 0xD,
 		IW_PRIV_TYPE_INT | IW_PRIV_SIZE_FIXED | 2, IW_PRIV_TYPE_CHAR | IW_PRIV_SIZE_FIXED | IFNAMSIZ, "rfr"
 	},
-#if 0
-	{
-		SIOCIWFIRSTPRIV + 0xE, 0, 0, "wowlan_ctrl"
-	},
-#endif
 	{
 		SIOCIWFIRSTPRIV + 0x10,
 		IW_PRIV_TYPE_CHAR | 1024, 0, "p2p_set"

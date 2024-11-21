@@ -133,22 +133,9 @@ void btc_set_gnt_wl_bt_8822c(
 		odm_set_mac_reg(dm, R_0x70, BIT(26), 0x1);
 		/*force GNT_WL=1, GNT_BT=0*/
 		_btc_write_indirect_reg_8822c(dm, 0x38, 0xFF00, 0x77);
-#if 0
-		RF_DBG(dm, DBG_RF_DPK, "[DPK] ori 0x70 / 0x38 = 0x%x / 0x%x\n",
-		       dpk_info->gnt_control, dpk_info->gnt_value);
-
-		RF_DBG(dm, DBG_RF_DPK, "[DPK] set 0x70/0x38 = 0x%x/0x%x\n",
-		       odm_get_mac_reg(dm, R_0x70, MASKDWORD),
-		       _btc_read_indirect_reg_8822c(dm, 0x38));
-#endif
 	} else {
 		_btc_write_indirect_reg_8822c(dm, 0x38, MASKDWORD, dpk_info->gnt_value);
 		odm_set_mac_reg(dm, R_0x70, MASKDWORD, dpk_info->gnt_control);
-#if 0
-		RF_DBG(dm, DBG_RF_DPK, "[DPK] load 0x70 / 0x38 = 0x%x / 0x%x\n",
-		       odm_get_mac_reg(dm, R_0x70, MASKDWORD),
-		       _btc_read_indirect_reg_8822c(dm, 0x38));
-#endif
 	}
 }
 
@@ -162,10 +149,6 @@ void _backup_mac_bb_registers_8822c(
 
 	for (i = 0; i < reg_num; i++) {
 		reg_backup[i] = odm_read_4byte(dm, reg[i]);
-#if 0
-		RF_DBG(dm, DBG_RF_DPK, "[DPK] Backup MAC/BB 0x%x = 0x%x\n",
-		       reg[i], reg_backup[i]);
-#endif
 	}
 }
 
@@ -181,12 +164,6 @@ void _backup_rf_registers_8822c(
 			rf_reg[i], RFREG_MASK);
 		rf_reg_backup[i][RF_PATH_B] = odm_get_rf_reg(dm, RF_PATH_B,
 			rf_reg[i], RFREG_MASK);
-#if 0
-		RF_DBG(dm, DBG_RF_DPK, "[DPK] Backup RF_A 0x%x = 0x%x\n",
-		       rf_reg[i], rf_reg_backup[i][RF_PATH_A]);
-		RF_DBG(dm, DBG_RF_DPK, "[DPK] Backup RF_B 0x%x = 0x%x\n",
-		       rf_reg[i], rf_reg_backup[i][RF_PATH_B]);
-#endif
 	}
 }
 
@@ -206,10 +183,6 @@ void _reload_mac_bb_registers_8822c(
 
 	for (i = 0; i < reg_num; i++) {
 		odm_write_4byte(dm, reg[i], reg_backup[i]);
-#if 0
-		RF_DBG(dm, DBG_RF_DPK, "[DPK] Reload MAC/BB 0x%x = 0x%x\n",
-		       reg[i], reg_backup[i]);
-#endif
 	}
 	odm_set_bb_reg(dm, R_0x1b00, 0x0000000f, 0xc); /*subpage 2*/
 	odm_set_bb_reg(dm, R_0x1bd4, 0x000000f0, 0x4); /*force CLK off for power saving*/
@@ -227,22 +200,7 @@ void _reload_rf_registers_8822c(
 			       rf_reg_backup[i][RF_PATH_A]);
 		odm_set_rf_reg(dm, RF_PATH_B, rf_reg[i], RFREG_MASK,
 			       rf_reg_backup[i][RF_PATH_B]);
-#if 0
-		RF_DBG(dm, DBG_RF_DPK, "[DPK] Reload RF_A 0x%x = 0x%x\n",
-		       rf_reg[i], rf_reg_backup[i][RF_PATH_A]);
-		RF_DBG(dm, DBG_RF_DPK, "[DPK] Reload RF_B 0x%x = 0x%x\n",
-		       rf_reg[i], rf_reg_backup[i][RF_PATH_B]);
-#endif
 	}
-#if 0
-	/*reload RF 0x8f for non-saving power mode*/
-	for (i = 0; i < DPK_RF_PATH_NUM_8822C; i++) {
-		rf_reg_8f[i] = odm_get_rf_reg(dm, (enum rf_path)i,
-			RF_0x8f, 0x00fff);
-		odm_set_rf_reg(dm, (enum rf_path)i, RF_0x8f, RFREG_MASK,
-			       0xa8000 | rf_reg_8f[i]);
-	}
-#endif
 }
 
 void _dpk_information_8822c(
@@ -553,22 +511,6 @@ u32 _dpk_rf_setting_8822c(
 	u32 value32 = 0, ori_txbb = 0;
 	u8 i;
 
-#if 0
-	if (phydm_set_bb_dbg_port(dm, DBGPORT_PRI_1, 0x944 | (path << 9))) {
-		value32 = phydm_get_bb_dbg_port_val(dm);
-		phydm_release_bb_dbg_port(dm);
-	}	
-
-	txidx_offset = (value32 >> 8) & 0x7f;
-
-	if ((txidx_offset >> 6) == 1)
-		txidx_offset = (txidx_offset - 0x80) / 4;
-	else 
-		txidx_offset = txidx_offset / 4;	
-
-	RF_DBG(dm, DBG_RF_DPK, "[DPK] S%d txidx_offset = 0x%x\n",
-	       path, txidx_offset);
-#endif
 	if (dpk_info->dpk_band == 0x0) { /*2G*/
 		/*TXAGC for gainloss*/
 		odm_set_rf_reg(dm, (enum rf_path)path,
@@ -800,10 +742,6 @@ u32 _dpk_pas_read_8822c(
 		for (k = 0; k < 64; k++) {
 			odm_set_bb_reg(dm, R_0x1b4c, MASKDWORD,
 				       (0x00080000 | (k << 24)));
-#if 0
-			RF_DBG(dm, DBG_RF_DPK, "[DPK] 0x1b4c[%d] = 0x%x\n", k,
-			       odm_get_bb_reg(dm, R_0x1b4c, MASKDWORD));
-#endif
 			reg_1bfc = odm_get_bb_reg(dm, R_0x1bfc, MASKDWORD);
 			RF_DBG(dm, DBG_RF_DPK, "[DPK] PA scan_S%d = 0x%08x\n",
 			       path, reg_1bfc);
@@ -1335,15 +1273,6 @@ u32 _dpk_gainloss_8822c(
 	_dpk_one_shot_8822c(dm, path, GAIN_LOSS);
 #endif
 
-#if 0
-	RF_DBG(dm, DBG_RF_DPK,
-	       "[DPK][GL] S%d RF_0x0=0x%x, 0x63=0x%x, 0x8a=0x%x, 0x1a=0x%x, 0x8f=0x%x\n",
-	       path, odm_get_rf_reg(dm, (enum rf_path)path, RF_0x00, RFREG_MASK),
-	       odm_get_rf_reg(dm, (enum rf_path)path, RF_0x63, RFREG_MASK),
-	       odm_get_rf_reg(dm, (enum rf_path)path, RF_0x8a, RFREG_MASK),
-	       odm_get_rf_reg(dm, (enum rf_path)path, RF_0x1a, RFREG_MASK),
-	       odm_get_rf_reg(dm, (enum rf_path)path, RF_0x8f, RFREG_MASK));
-#endif
 	tx_agc_search = _dpk_gainloss_result_8822c(dm, path);
 
 	if (tx_bb < tx_agc_search) /*aviod txbb < 0*/
@@ -1377,21 +1306,6 @@ u8 _dpk_by_path_8822c(
 
 	u8 result = 1;
 	u16 dc_i, dc_q;
-#if 0
-	tx_agc = (odm_get_rf_reg(dm, (enum rf_path)path, RF_0x00,
-				 RFREG_MASK) & ~0x1f) | tx_agc;
-	RF_DBG(dm, DBG_RF_DPK, "[DPK][DO_DPK] RF0x0 = 0x%x\n", tx_agc);
-
-	/*TXAGC for DPK*/
-	odm_set_rf_reg(dm, (enum rf_path)path, RF_0x00, RFREG_MASK, tx_agc);
-
-	RF_DBG(dm, DBG_RF_DPK,
-	       "[DPK][GL] S%d RF 0x63=0x%x, 0x8a=0x%x, 0x1a=0x%x, 0x8f=0x%x\n",
-	       path, odm_get_rf_reg(dm, (enum rf_path)path, RF_0x63, RFREG_MASK),
-	       odm_get_rf_reg(dm, (enum rf_path)path, RF_0x8a, RFREG_MASK),
-	       odm_get_rf_reg(dm, (enum rf_path)path, RF_0x1a, RFREG_MASK),
-	       odm_get_rf_reg(dm, (enum rf_path)path, RF_0x8f, RFREG_MASK));
-#endif
 	result = _dpk_one_shot_8822c(dm, path, DO_DPK);
 
 	odm_set_bb_reg(dm, R_0x1b00, 0x0000000f, 0x8 | (path << 1));
@@ -1404,18 +1318,6 @@ u8 _dpk_by_path_8822c(
 
 	_dpk_get_coef_8822c(dm, path);
 
-#if 0
-	odm_write_4byte(dm, 0x1bd4, 0x000900F0);
-	dc_i = (u16)odm_get_bb_reg(dm, 0x1bfc, 0x0fff0000);
-	dc_q = (u16)odm_get_bb_reg(dm, 0x1bfc, 0x00000fff);
-
-	if (dc_i >> 11 == 1)
-		dc_i = 0x1000 - dc_i;
-	if (dc_q >> 11 == 1)
-		dc_q = 0x1000 - dc_q;
-
-	RF_DBG(dm, DBG_RF_DPK, "[DPK] S%d DC i/q = %d / %d\n", path, dc_i, dc_q);
-#endif
 #if (DPK_PAS_DBG_8822C)
 	_dpk_pas_read_8822c(dm, path, PAS_READ);
 #endif
@@ -1488,9 +1390,6 @@ void _dpk_cal_gs_8822c(
 	odm_set_bb_reg(dm, R_0x1bd4, 0x001f0000, 0x0);
 
 	tmp_gs = (u16)odm_get_bb_reg(dm, R_0x1bfc, 0x0FFF0000);
-#if 0
-	RF_DBG(dm, DBG_RF_DPK, "[DPK] tmp_gs = 0x%x\n", tmp_gs);
-#endif
 	tmp_gs = (tmp_gs * 910) >> 10; /*910 = 0x5b * 10*/
 
 	if ((tmp_gs % 10) >= 5)
@@ -2045,15 +1944,6 @@ void dpk_track_8822c(
 
 	/*Calculate Average ThermalValue after average enough times*/
 	if (thermal_dpk_avg_count) {
-#if 0
-		RF_DBG(dm, DBG_RF_DPK,
-		       "[DPK_track] S0 ThermalValue_DPK_AVG (count) = %d (%d))\n",
-		       thermal_dpk_avg[0], thermal_dpk_avg_count);
-
-		RF_DBG(dm, DBG_RF_DPK,
-		       "[DPK_track] S1 ThermalValue_DPK_AVG (count) = %d (%d))\n",
-		       thermal_dpk_avg[1], thermal_dpk_avg_count);
-#endif
 		thermal_value[0] = (u8)(thermal_dpk_avg[0] / thermal_dpk_avg_count);
 		thermal_value[1] = (u8)(thermal_dpk_avg[1] / thermal_dpk_avg_count);
 
@@ -2233,23 +2123,5 @@ void dpk_c2h_report_transfer_8822c(
 		dpk_info->thermal_dpk[i] = dpk_c2h_report.therm[idx][i];
 		dpk_info->thermal_dpk_delta[i] = dpk_c2h_report.therm_delta[idx][i];
 	}
-#if 0
-	for (i = 0; i < DPK_C2H_REPORT_LEN_8822C; i++)
-		RF_DBG(dm, DBG_RF_DPK, "[DPK] buf[%d] = 0x%x\n", i, *(buf + i));
-
-	RF_DBG(dm, DBG_RF_DPK, "[DPK] result[0] = 0x%x\n", dpk_c2h_report.result[0]);
-	RF_DBG(dm, DBG_RF_DPK, "[DPK] result[1] = 0x%x\n", dpk_c2h_report.result[1]);
-	RF_DBG(dm, DBG_RF_DPK, "[DPK] thermal_dpk[0][0] = 0x%x\n", dpk_c2h_report.therm[0][0]);
-	RF_DBG(dm, DBG_RF_DPK, "[DPK] thermal_dpk[0][1] = 0x%x\n", dpk_c2h_report.therm[0][1]);
-	RF_DBG(dm, DBG_RF_DPK, "[DPK] thermal_dpk[1][0] = 0x%x\n", dpk_c2h_report.therm[1][0]);
-	RF_DBG(dm, DBG_RF_DPK, "[DPK] thermal_dpk[1][1] = 0x%x\n", dpk_c2h_report.therm[1][1]);
-	RF_DBG(dm, DBG_RF_DPK, "[DPK] thermal_dpk_delta[0][0] = 0x%x\n", dpk_c2h_report.therm_delta[0][0]);
-	RF_DBG(dm, DBG_RF_DPK, "[DPK] thermal_dpk_delta[0][1] = 0x%x\n", dpk_c2h_report.therm_delta[0][1]);
-	RF_DBG(dm, DBG_RF_DPK, "[DPK] thermal_dpk_delta[1][0] = 0x%x\n", dpk_c2h_report.therm_delta[1][0]);
-	RF_DBG(dm, DBG_RF_DPK, "[DPK] thermal_dpk_delta[1][1] = 0x%x\n", dpk_c2h_report.therm_delta[1][1]);
-	RF_DBG(dm, DBG_RF_DPK, "[DPK] dpk_rf18[0] = 0x%x\n", dpk_c2h_report.dpk_rf18[0]);
-	RF_DBG(dm, DBG_RF_DPK, "[DPK] dpk_rf18[1] = 0x%x\n", dpk_c2h_report.dpk_rf18[1]);
-	RF_DBG(dm, DBG_RF_DPK, "[DPK] dpk_status = 0x%x\n", dpk_c2h_report.dpk_status);
-#endif
 }
 #endif

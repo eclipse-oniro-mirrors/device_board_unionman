@@ -421,42 +421,7 @@ void halrf_mode_8822c(struct dm_struct *dm, u32 *i_value, u32 *q_value)
 			break;
 		}
 	} while (c < 100);
-#if 0
-	for (i = 0; i < SN; i++) {
-		for (j = 0; j < SN; j++) {
-			if (i != j) {
-				if (iv[i] == iv[j])
-					im[i]++;
-				if (qv[i] == qv[j])
-					qm[i]++;
-			}
-		}
-	}
 
-	for (i = 0; i < SN; i++)
-		RF_DBG(dm, DBG_RF_DACK, "[DACK]iv[%d] = 0x%x\n", i, iv[i]);
-
-	for (i = 0; i < SN; i++)
-		RF_DBG(dm, DBG_RF_DACK, "[DACK]qv[%d] = 0x%x\n", i, qv[i]);
-
-	for (i = 1; i < SN; i++) {
-		if (im[ii] < im[i])
-			ii = i;
-		if (qm[qi] < qm[i])
-			qi = i;
-	}
-
-	*i_value = iv[ii];
-	*q_value = qv[qi];
-#endif
-#if 1
-#if 0
-	for (i = 0; i < SN; i++)
-		RF_DBG(dm, DBG_RF_DACK, "[DACK]iv[%d] = 0x%x\n", i, iv[i]);
-
-	for (i = 0; i < SN; i++)
-		RF_DBG(dm, DBG_RF_DACK, "[DACK]qv[%d] = 0x%x\n", i, qv[i]);
-#endif
 	/*i*/
 	m = 0;
 	p = 0;
@@ -496,7 +461,6 @@ void halrf_mode_8822c(struct dm_struct *dm, u32 *i_value, u32 *q_value)
 			t = 0x400 - t;
 	}
 	*q_value = t;
-#endif
 }
 
 void halrf_biask_backup_8822c(void *dm_void)

@@ -1080,9 +1080,6 @@ void phydm_get_sq(struct dm_struct *dm, struct phydm_phyinfo_struct *phy_info,
 		}
 	}
 
-#if 0
-	/* @dbg_print("cck sq = %d\n", sq); */
-#endif
 	phy_info->signal_quality = sq;
 }
 
@@ -1514,12 +1511,6 @@ void phydm_process_rssi_for_dm(struct dm_struct *dm,
 			  "[Send to FW] PWDB=%d, ofdm_pkt=%d, cck_pkt=%d\n",
 			  rssi_all, rssi_t->ofdm_pkt_cnt, rssi_t->cck_pkt_cnt);
 	}
-
-#if 0
-	/* @dbg_print("ofdm_pkt=%d, weighting=%d\n", ofdm_pkt_cnt, weighting);*/
-	/* @dbg_print("rssi_ofdm_tmp=%d, rssi_all=%d, rssi_cck_tmp=%d\n", */
-	/*	rssi_ofdm_tmp, rssi_all, rssi_cck_tmp); */
-#endif
 }
 #endif
 
@@ -1608,10 +1599,6 @@ void phydm_physts_auto_switch_jgr3_set(void *dm_void, boolean enable,
 
 	if (!(dm->support_ic_type & PHYSTS_AUTO_SWITCH_IC))
 		return;
-#if 0
-	if (!(dm->support_ic_type & PHYSTS_3RD_TYPE_IC))
-		return;
-#endif
 	pkt_proc->physts_auto_swch_en = enable;
 	pkt_proc->page_bitmap_target = bitmap_en;
 	phydm_physts_auto_switch_jgr3_reset(dm);
@@ -1912,46 +1899,6 @@ void phydm_reset_phy_info_jgr3(struct dm_struct *phydm,
 		phy_info->rx_snr[i] = 0;
 	}
 }
-
-#if 0
-void phydm_per_path_info_3rd(u8 rx_path, s8 pwr, s8 rx_evm, s8 cfo_tail,
-			     s8 rx_snr, struct phydm_phyinfo_struct *phy_info)
-{
-	u8 evm_dbm = 0;
-	u8 evm_percentage = 0;
-
-	/* SNR is S(8,1), EVM is S(8,1), CFO is S(8,7) */
-
-	evm_dbm = (rx_evm == -128) ? 0 : ((u8)(0 - rx_evm) >> 1);
-	evm_percentage = (evm_dbm >= 34) ? 100 : evm_dbm * 3;
-
-	phy_info->rx_pwr[rx_path] = pwr;
-
-	/*@CFO(kHz) = CFO_tail * 312.5(kHz) / 2^7 ~= CFO tail * 5/2 (kHz)*/
-	phy_info->cfo_tail[rx_path] = (cfo_tail * 5) >> 1;
-	phy_info->rx_mimo_evm_dbm[rx_path] = evm_dbm;
-	phy_info->rx_mimo_signal_strength[rx_path] = phydm_pw_2_percent(pwr);
-	phy_info->rx_mimo_signal_quality[rx_path] = evm_percentage;
-	phy_info->rx_snr[rx_path] = rx_snr >> 1;
-}
-
-void phydm_common_phy_info_jgr3(s8 rx_power, u8 channel, boolean is_beamformed,
-				boolean is_mu_packet, u8 bandwidth,
-				u8 signal_quality, u8 rxsc,
-				struct phydm_phyinfo_struct *phy_info)
-{
-	phy_info->rx_power = rx_power; /* RSSI in dB */
-	phy_info->recv_signal_power = rx_power; /* RSSI in dB */
-	phy_info->channel = channel; /* @channel number */
-	phy_info->is_beamformed = is_beamformed; /* @apply BF */
-	phy_info->is_mu_packet = is_mu_packet; /* @MU packet */
-	phy_info->rxsc = rxsc;
-
-	phy_info->rx_pwdb_all = phydm_pw_2_percent(rx_power); /*percentage */
-	phy_info->signal_quality = signal_quality; /* signal quality */
-	phy_info->band_width = bandwidth; /* @bandwidth */
-}
-#endif
 
 void phydm_get_physts_0_jgr3(struct dm_struct *dm, u8 *phy_status_inf,
 			     struct phydm_perpkt_info_struct *pktinfo,
@@ -2433,36 +2380,6 @@ void phydm_rx_physts_jgr3(void *dm_void, u8 *phy_sts,
 		break;
 	}
 
-#if 0
-	PHYDM_DBG(dm, DBG_PHY_STATUS, "RSSI: {%d, %d}\n",
-		  phy_info->rx_mimo_signal_strength[0],
-		  phy_info->rx_mimo_signal_strength[1]);
-	PHYDM_DBG(dm, DBG_PHY_STATUS, "rxdb: {%d, %d}\n",
-		  phy_info->rx_pwr[0], phy_info->rx_pwr[1]);
-	PHYDM_DBG(dm, DBG_PHY_STATUS, "EVM: {%d, %d}\n",
-		  phy_info->rx_mimo_evm_dbm[0], phy_info->rx_mimo_evm_dbm[1]);
-	PHYDM_DBG(dm, DBG_PHY_STATUS, "SQ: {%d, %d}\n",
-		  phy_info->rx_mimo_signal_quality[0],
-		  phy_info->rx_mimo_signal_quality[1]);
-	PHYDM_DBG(dm, DBG_PHY_STATUS, "SNR: {%d, %d}\n",
-		  phy_info->rx_snr[0], phy_info->rx_snr[1]);
-	PHYDM_DBG(dm, DBG_PHY_STATUS, "CFO: {%d, %d}\n",
-		  phy_info->cfo_tail[0], phy_info->cfo_tail[1]);
-	PHYDM_DBG(dm, DBG_PHY_STATUS,
-		  "rx_pwdb_all = %d, rx_power = %d, recv_signal_power = %d\n",
-		  phy_info->rx_pwdb_all, phy_info->rx_power,
-		  phy_info->recv_signal_power);
-	PHYDM_DBG(dm, DBG_PHY_STATUS, "signal_quality = %d\n",
-		  phy_info->signal_quality);
-	PHYDM_DBG(dm, DBG_PHY_STATUS,
-		  "is_beamformed = %d, is_mu_packet = %d, rx_count = %d\n",
-		  phy_info->is_beamformed, phy_info->is_mu_packet,
-		  phy_info->rx_count);
-	PHYDM_DBG(dm, DBG_PHY_STATUS,
-		  "channel = %d, rxsc = %d, band_width = %d\n",
-		  phy_info->channel, phy_info->rxsc, phy_info->band_width);
-#endif
-
 	/*@[Step 1]*/
 	phydm_print_phystat_jgr3(dm, phy_sts, pktinfo, phy_info);
 }
@@ -2524,10 +2441,6 @@ void phydm_print_phy_sts_jgr2(struct dm_struct *dm, u8 *phy_status_inf,
 	}
 
 	dbg->show_phy_sts_cnt++;
-	#if 0
-	dbg_print("cnt=%d, max=%d\n",
-		  dbg->show_phy_sts_cnt, dbg->show_phy_sts_max_cnt);
-	#endif
 
 	if (dbg->show_phy_sts_max_cnt != SHOW_PHY_STATUS_UNLIMITED) {
 		if (dbg->show_phy_sts_cnt > dbg->show_phy_sts_max_cnt)
@@ -2645,22 +2558,6 @@ void phydm_set_per_path_phy_info(u8 rx_path, s8 pwr, s8 rx_evm, s8 cfo_tail,
 	phy_info->rx_mimo_signal_quality[rx_path] = evm_percentage;
 	phy_info->rx_snr[rx_path] = rx_snr >> 1;
 	phy_info->ant_idx[rx_path] = ant_idx;
-
-#if 0
-	if (!pktinfo->is_packet_match_bssid)
-		return;
-
-	dbg_print("path (%d)--------\n", rx_path);
-	dbg_print("rx_pwr = %d, Signal strength = %d\n",
-		  phy_info->rx_pwr[rx_path],
-		  phy_info->rx_mimo_signal_strength[rx_path]);
-	dbg_print("evm_dbm = %d, Signal quality = %d\n",
-		  phy_info->rx_mimo_evm_dbm[rx_path],
-		  phy_info->rx_mimo_signal_quality[rx_path]);
-	dbg_print("CFO = %d, SNR = %d\n",
-		  phy_info->cfo_tail[rx_path], phy_info->rx_snr[rx_path]);
-
-#endif
 }
 
 void phydm_set_common_phy_info(s8 rx_power, u8 channel, boolean is_beamformed,
@@ -2679,22 +2576,6 @@ void phydm_set_common_phy_info(s8 rx_power, u8 channel, boolean is_beamformed,
 	phy_info->rx_pwdb_all = phydm_pw_2_percent(rx_power);
 	phy_info->signal_quality = signal_quality; /* signal quality */
 	phy_info->band_width = bandwidth; /* @bandwidth */
-
-#if 0
-	if (!pktinfo->is_packet_match_bssid)
-		return;
-
-	dbg_print("rx_pwdb_all = %d, rx_power = %d, recv_signal_power = %d\n",
-		  phy_info->rx_pwdb_all, phy_info->rx_power,
-		  phy_info->recv_signal_power);
-	dbg_print("signal_quality = %d\n", phy_info->signal_quality);
-	dbg_print("is_beamformed = %d, is_mu_packet = %d, rx_count = %d\n",
-		  phy_info->is_beamformed, phy_info->is_mu_packet,
-		  phy_info->rx_count + 1);
-	dbg_print("channel = %d, rxsc = %d, band_width = %d\n", channel,
-		  rxsc, bandwidth);
-
-#endif
 }
 
 void phydm_get_phy_sts_type0(struct dm_struct *dm, u8 *phy_status_inf,
